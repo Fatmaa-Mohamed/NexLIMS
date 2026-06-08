@@ -11,7 +11,7 @@
         public bool IsSelectedForCalculation { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
-
+        public  string VolumePlated {  get; set; }
         public EnumerationData EnumerationData { get; set; }
         public Tenant Tenant { get; set; }
     }
