@@ -8,6 +8,7 @@ using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
 using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.Roles;
+using NextLIMS.BLL.Services.SignupService;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Repositories;
 using System.Text;
@@ -29,7 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default"));
 });
-//
+///
 builder.Services.AddScoped< IEmailService,EmailService>();
 builder.Services.AddScoped<InvitationService>();
 builder.Services.AddScoped<UserAuthenticationService>();
@@ -39,11 +40,12 @@ builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped< UserRepository>();
 builder.Services.AddScoped< EmployeeRepository>();
 builder.Services.AddScoped< InvitationRepository>();
-builder.Services.AddScoped<
-    PasswordResetRepository>();
+builder.Services.AddScoped<PasswordResetRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped< PermissionRepository>();
-//
+builder.Services.AddScoped<ISignupService, SignupService>();
+
+///
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
