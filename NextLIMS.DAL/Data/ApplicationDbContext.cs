@@ -26,6 +26,9 @@ namespace NextLIMS.DAL.Data
         public DbSet<SampleWorkflow> SampleWorkflows { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
         public DbSet<PasswordReset>passwordResets { get; set; }
+        public DbSet<SampleType> SampleTypes { get; set; }
+        public DbSet<TestSampleType> TestSampleTypes { get; set; }
+        public DbSet<TenantTestSampleType> TenantTestSampleTypes { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -170,11 +173,13 @@ namespace NextLIMS.DAL.Data
                 e.Property(x => x.TestName).IsRequired();
                 e.Property(x => x.TestType).IsRequired();
                 e.HasIndex(x => x.DepartmentId);
+                e.HasIndex(x => x.TenantId);
 
                 e.HasOne(x => x.Department)
                  .WithMany(x => x.Tests)
                  .HasForeignKey(x => x.DepartmentId)
                  .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // ── ConfirmationTestTemplate ─────────────────────────────────────────
@@ -278,6 +283,54 @@ namespace NextLIMS.DAL.Data
                  .WithMany()
                  .HasForeignKey(x => x.ApprovedBy)
                  .IsRequired(false)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ── SampleType ─────────────────────────────────────────────────
+            modelBuilder.Entity<SampleType>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.Property(x => x.Name).IsRequired().HasMaxLength(100);
+                e.HasIndex(x => x.Name).IsUnique();
+            });
+
+            // ── TestSampleType ─────────────────────────────────────────────────
+            modelBuilder.Entity<TestSampleType>(e =>
+            {
+                e.HasKey(x => new { x.TestId, x.SampleTypeId });
+
+                e.HasOne(x => x.Test)
+                 .WithMany(x => x.TestSampleTypes)
+                 .HasForeignKey(x => x.TestId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasOne(x => x.SampleType)
+                 .WithMany(x => x.TestSampleTypes)
+                 .HasForeignKey(x => x.SampleTypeId)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ── TenantTestSampleType ─────────────────────────────────────────────────
+            modelBuilder.Entity<TenantTestSampleType>(e =>
+            {
+                e.HasKey(x => x.Id);
+
+                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.HasIndex(x => new
+                {
+                    x.TenantTestId,
+                    x.SampleTypeId
+                }).IsUnique();
+
+                e.HasOne(x => x.TenantTest)
+                 .WithMany(x => x.TenantTestSampleTypes)
+                 .HasForeignKey(x => x.TenantTestId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasOne(x => x.SampleType)
+                 .WithMany(x => x.TenantTestSampleTypes)
+                 .HasForeignKey(x => x.SampleTypeId)
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
