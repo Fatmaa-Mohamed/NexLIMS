@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace NexLIMS.API.Data.Models
+namespace NextLIMS.DAL.Data.Models
 {
     public class Tenant
     {

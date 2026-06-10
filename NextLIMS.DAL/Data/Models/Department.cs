@@ -1,6 +1,6 @@
 ﻿using static System.Net.Mime.MediaTypeNames;
 
-namespace NexLIMS.API.Data.Models
+namespace NextLIMS.DAL.Data.Models
 {
     public class Department
     {

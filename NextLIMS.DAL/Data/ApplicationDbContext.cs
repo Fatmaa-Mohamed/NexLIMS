@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NexLIMS.API.Data.Models;
+using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.Data.Models;
 
-namespace NexLIMS.API.Data
+namespace NextLIMS.DAL.Data
 {
     public class ApplicationDbContext:DbContext
     {
@@ -24,7 +25,7 @@ namespace NexLIMS.API.Data
         public DbSet<SampleConfirmationTest> SampleConfirmationTests { get; set; }
         public DbSet<SampleWorkflow> SampleWorkflows { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
-
+        public DbSet<PasswordReset>passwordResets { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)

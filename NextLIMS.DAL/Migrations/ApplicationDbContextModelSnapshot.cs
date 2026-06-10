@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NexLIMS.API.Data;
+using NextLIMS.DAL.Data;
 
 #nullable disable
 
-namespace NexLIMS.API.Migrations
+namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace NexLIMS.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.AuditLog", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.AuditLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Client", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,7 +117,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.ConfirmationTestTemplate", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.ConfirmationTestTemplate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +144,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("ConfirmationTestTemplates");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Department", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.DetectionData", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.DetectionData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -208,7 +208,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("DetectionData");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.EnumerationData", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.EnumerationData", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +248,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("EnumerationData");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.EnumerationDilution", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.EnumerationDilution", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,7 +302,35 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("EnumerationDilutions");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Permission", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.PasswordReset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("passwordResets");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,7 +354,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Role", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -367,7 +395,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.RolePermission", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.RolePermission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -401,7 +429,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Sample", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Sample", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -447,7 +475,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Samples");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleConfirmationTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleConfirmationTest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -483,7 +511,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("SampleConfirmationTests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleTest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -537,7 +565,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("SampleTests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleWorkflow", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleWorkflow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -587,7 +615,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("SampleWorkflows");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Tenant", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -640,7 +668,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Tenants");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.TenantDepartment", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantDepartment", b =>
                 {
                     b.Property<int>("TenantId")
                         .HasColumnType("int");
@@ -660,7 +688,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("TenantDepartments");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.TenantTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -713,7 +741,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("TenantTests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Test", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -746,7 +774,7 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Tests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.User", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -796,25 +824,25 @@ namespace NexLIMS.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.AuditLog", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.AuditLog", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Sample", "Sample")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Sample", "Sample")
                         .WithMany("AuditLogs")
                         .HasForeignKey("SampleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.SampleTest", "SampleTest")
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleTest", "SampleTest")
                         .WithMany("AuditLogs")
                         .HasForeignKey("SampleTestId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("AuditLogs")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.User", "User")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -829,9 +857,9 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Client", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Client", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("Clients")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -840,14 +868,14 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.ConfirmationTestTemplate", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.ConfirmationTestTemplate", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.Test", "Test")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
                         .WithMany("ConfirmationTestTemplates")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -858,15 +886,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.DetectionData", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.DetectionData", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.SampleTest", "SampleTest")
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleTest", "SampleTest")
                         .WithOne("DetectionData")
-                        .HasForeignKey("NexLIMS.API.Data.Models.DetectionData", "SampleTestId")
+                        .HasForeignKey("NextLIMS.DAL.Data.Models.DetectionData", "SampleTestId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -877,15 +905,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.EnumerationData", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.EnumerationData", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.SampleTest", "SampleTest")
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleTest", "SampleTest")
                         .WithOne("EnumerationData")
-                        .HasForeignKey("NexLIMS.API.Data.Models.EnumerationData", "SampleTestId")
+                        .HasForeignKey("NextLIMS.DAL.Data.Models.EnumerationData", "SampleTestId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -896,15 +924,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.EnumerationDilution", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.EnumerationDilution", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.EnumerationData", "EnumerationData")
+                    b.HasOne("NextLIMS.DAL.Data.Models.EnumerationData", "EnumerationData")
                         .WithMany("EnumerationDilutions")
                         .HasForeignKey("EnumerationDataId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -915,9 +943,18 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Role", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.PasswordReset", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Role", b =>
+                {
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("Roles")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -926,15 +963,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.RolePermission", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.RolePermission", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Permission", "Permission")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Permission", "Permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Role", "Role")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -945,15 +982,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Sample", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Sample", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Client", "Client")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Client", "Client")
                         .WithMany("Samples")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("Samples")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -964,15 +1001,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleConfirmationTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleConfirmationTest", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.User", "PerformedBySeniorAnalyst")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "PerformedBySeniorAnalyst")
                         .WithMany()
                         .HasForeignKey("PerformedBySeniorAnalystId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.SampleTest", "SampleTest")
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleTest", "SampleTest")
                         .WithMany("SampleConfirmationTests")
                         .HasForeignKey("SampleTestId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -983,25 +1020,25 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("SampleTest");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleTest", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.User", "ApprovedByUser")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "ApprovedByUser")
                         .WithMany()
                         .HasForeignKey("ApprovedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.User", "AssignedToUser")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "AssignedToUser")
                         .WithMany()
                         .HasForeignKey("AssignedToUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.Sample", "Sample")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Sample", "Sample")
                         .WithMany("SampleTests")
                         .HasForeignKey("SampleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.TenantTest", "TenantTest")
+                    b.HasOne("NextLIMS.DAL.Data.Models.TenantTest", "TenantTest")
                         .WithMany("SampleTests")
                         .HasForeignKey("TenantTestId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1016,20 +1053,20 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("TenantTest");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleWorkflow", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleWorkflow", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.User", "AssignedTo")
+                    b.HasOne("NextLIMS.DAL.Data.Models.User", "AssignedTo")
                         .WithMany()
                         .HasForeignKey("AssignedToId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NexLIMS.API.Data.Models.Sample", "Sample")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Sample", "Sample")
                         .WithMany("SampleWorkflows")
                         .HasForeignKey("SampleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("SampleWorkflows")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1042,15 +1079,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.TenantDepartment", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantDepartment", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Department", "Department")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Department", "Department")
                         .WithMany("TenantDepartments")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("TenantDepartments")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1061,15 +1098,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.TenantTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTest", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("TenantTests")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Test", "Test")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
                         .WithMany("TenantTests")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1080,9 +1117,9 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Test", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Department", "Department")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Department", "Department")
                         .WithMany("Tests")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1091,15 +1128,15 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.User", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.User", b =>
                 {
-                    b.HasOne("NexLIMS.API.Data.Models.Role", "Role")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NexLIMS.API.Data.Models.Tenant", "Tenant")
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("Users")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1110,36 +1147,36 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Client", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Client", b =>
                 {
                     b.Navigation("Samples");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Department", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Department", b =>
                 {
                     b.Navigation("TenantDepartments");
 
                     b.Navigation("Tests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.EnumerationData", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.EnumerationData", b =>
                 {
                     b.Navigation("EnumerationDilutions");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Permission", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Role", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Role", b =>
                 {
                     b.Navigation("RolePermissions");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Sample", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Sample", b =>
                 {
                     b.Navigation("AuditLogs");
 
@@ -1148,7 +1185,7 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("SampleWorkflows");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.SampleTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleTest", b =>
                 {
                     b.Navigation("AuditLogs");
 
@@ -1161,7 +1198,7 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("SampleConfirmationTests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Tenant", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
                 {
                     b.Navigation("AuditLogs");
 
@@ -1180,12 +1217,12 @@ namespace NexLIMS.API.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.TenantTest", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTest", b =>
                 {
                     b.Navigation("SampleTests");
                 });
 
-            modelBuilder.Entity("NexLIMS.API.Data.Models.Test", b =>
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
                 {
                     b.Navigation("ConfirmationTestTemplates");
 
