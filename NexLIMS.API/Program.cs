@@ -8,7 +8,9 @@ using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
 using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.Roles;
+using NextLIMS.DAL;
 using NextLIMS.DAL.Data;
+using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Repositories;
 using System.Text;
 
@@ -62,8 +64,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             )
         };
     });
+
 ///End//
 var app = builder.Build();
+
+// seed data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    await DataSeeder.SeedAsync(context);
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
