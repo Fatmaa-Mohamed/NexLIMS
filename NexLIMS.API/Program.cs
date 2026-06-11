@@ -10,6 +10,7 @@ using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.Roles;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Repositories;
+using NextLIMS.DAL.Repository.SampleRepo;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +44,7 @@ builder.Services.AddScoped<
     PasswordResetRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped< PermissionRepository>();
+builder.Services.AddScoped< SampleRepository>();
 //
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
