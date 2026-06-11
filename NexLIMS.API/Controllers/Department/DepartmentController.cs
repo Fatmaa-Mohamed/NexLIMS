@@ -30,17 +30,16 @@ namespace NexLIMS.API.Controllers.Department
         }
 
         [HttpPost("tenant/departments")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> SelectDepartment(
             [FromBody] SelectDepartmentRequestDto request,
             CancellationToken ct)
         {
-            //var tenantIdClaim = User.FindFirstValue("TenantId");
-            //if (tenantIdClaim == null)
-            //    return Unauthorized();
+            var tenantIdClaim = User.FindFirstValue("TenantId");
+            if (tenantIdClaim == null)
+               return Unauthorized();
 
-            //var tenantId = int.Parse(tenantIdClaim);
-            var tenantId = 3;
+            var tenantId = int.Parse(tenantIdClaim);
 
             try
             {
