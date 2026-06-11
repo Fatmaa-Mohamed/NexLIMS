@@ -75,7 +75,7 @@ namespace NextLIMS.DAL.Repository.Test
                 .AnyAsync(td => td.TenantId == tenantId && td.DepartmentId == departmentId, ct);
         }
 
-        public async Task<List<TenantTest>> AddTenantTestsAsync(List<TenantTest> tenantTests, CancellationToken ct = default)
+        public async Task<List<Data.Models.TenantTest>> AddTenantTestsAsync(List<Data.Models.TenantTest> tenantTests, CancellationToken ct = default)
         {
             await _context.TenantTests.AddRangeAsync(tenantTests, ct);
             await _context.SaveChangesAsync(ct);
@@ -89,7 +89,7 @@ namespace NextLIMS.DAL.Repository.Test
             return test;
         }
 
-        public async Task<TenantTest?> GetTenantTestByIdAsync(int tenantTestId, int tenantId, CancellationToken ct = default)
+        public async Task<Data.Models.TenantTest?> GetTenantTestByIdAsync(int tenantTestId, int tenantId, CancellationToken ct = default)
         {
             return await _context.TenantTests
                 .Include(tt => tt.Test)
@@ -114,6 +114,91 @@ namespace NextLIMS.DAL.Repository.Test
                 .AsNoTracking()
                 .Where(st => sampleTypeIds.Contains(st.Id))
                 .ToListAsync(ct);
+        }
+
+        public async Task<(List<TenantTest> Items, int TotalCount)> GetAdminTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            bool? isActive,
+            int page,
+            int pageSize,
+            CancellationToken ct = default)
+        {
+            var query = _context.TenantTests
+                .AsNoTracking()
+                .Where(tt => tt.TenantId == tenantId)
+                .Include(tt => tt.Test)
+                    .ThenInclude(t => t.Department)
+                .Include(tt => tt.TenantTestSampleTypes)
+                    .ThenInclude(tts => tts.SampleType)
+                .Include(tt => tt.Test)
+                    .ThenInclude(t => t.ConfirmationTestTemplates
+                        .Where(c => c.TenantId == null || c.TenantId == tenantId))
+                .AsQueryable();
+
+            if (departmentId.HasValue)
+                query = query.Where(tt => tt.Test.DepartmentId == departmentId.Value);
+
+            if (!string.IsNullOrEmpty(testType))
+                query = query.Where(tt => tt.Test.TestType.ToLower() == testType.ToLower());
+
+            if (sampleTypeId.HasValue)
+                query = query.Where(tt => tt.TenantTestSampleTypes
+                    .Any(tts => tts.SampleTypeId == sampleTypeId.Value));
+
+            if (isActive.HasValue)
+                query = query.Where(tt => tt.IsActive == isActive.Value);
+
+            var totalCount = await query.CountAsync(ct);
+
+            var items = await query
+                .OrderBy(tt => tt.Test.TestName)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(ct);
+
+            return (items, totalCount);
+        }
+
+        public async Task<(List<TenantTest> Items, int TotalCount)> GetPublicTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            int page,
+            int pageSize,
+            CancellationToken ct = default)
+        {
+            var query = _context.TenantTests
+                .AsNoTracking()
+                .Where(tt => tt.TenantId == tenantId && tt.IsActive)
+                .Include(tt => tt.Test)
+                    .ThenInclude(t => t.Department)
+                .Include(tt => tt.TenantTestSampleTypes)
+                    .ThenInclude(tts => tts.SampleType)
+                .AsQueryable();
+
+            if (departmentId.HasValue)
+                query = query.Where(tt => tt.Test.DepartmentId == departmentId.Value);
+
+            if (!string.IsNullOrEmpty(testType))
+                query = query.Where(tt => tt.Test.TestType.ToLower() == testType.ToLower());
+
+            if (sampleTypeId.HasValue)
+                query = query.Where(tt => tt.TenantTestSampleTypes
+                    .Any(tts => tts.SampleTypeId == sampleTypeId.Value));
+
+            var totalCount = await query.CountAsync(ct);
+
+            var items = await query
+                .OrderBy(tt => tt.Test.TestName)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(ct);
+
+            return (items, totalCount);
         }
     }
 }
