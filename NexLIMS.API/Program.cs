@@ -8,10 +8,12 @@ using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
 using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.Roles;
+using NextLIMS.BLL.Services.Tests;
 using NextLIMS.DAL;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Repositories;
+using NextLIMS.DAL.Repository.Test;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +47,10 @@ builder.Services.AddScoped<
     PasswordResetRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped< PermissionRepository>();
+
+
+builder.Services.AddScoped<ITestRepository, TestRepository>();
+builder.Services.AddScoped<ITestService, TestService>();
 //
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -69,12 +75,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 // seed data
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    await DataSeeder.SeedAsync(context);
-}
+//    await DataSeeder.SeedAsync(context);
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
