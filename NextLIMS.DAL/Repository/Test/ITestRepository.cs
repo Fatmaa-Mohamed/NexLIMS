@@ -10,13 +10,33 @@ namespace NextLIMS.DAL.Repository.Test
         Task<List<int>> GetDuplicateTenantTestIdsAsync(int tenantId, List<int> testIds, CancellationToken ct = default);
         Task<bool> SampleTypeExistsAsync(int sampleTypeId, CancellationToken ct = default);
         Task<bool> TenantDepartmentExistsAsync(int tenantId, int departmentId, CancellationToken ct = default);
-        Task<List<TenantTest>> AddTenantTestsAsync(List<TenantTest> tenantTests, CancellationToken ct = default);
+        Task<List<Data.Models.TenantTest>> AddTenantTestsAsync(List<Data.Models.TenantTest> tenantTests, CancellationToken ct = default);
         Task<Data.Models.Test> AddTestAsync(Data.Models.Test test, CancellationToken ct = default);
         Task<SampleType?> GetSampleTypeByIdAsync(int sampleTypeId, CancellationToken ct = default);
 
         // Edit & Status
-        Task<TenantTest?> GetTenantTestByIdAsync(int tenantTestId, int tenantId, CancellationToken ct = default);
+        Task<Data.Models.TenantTest?> GetTenantTestByIdAsync(int tenantTestId, int tenantId, CancellationToken ct = default);
         Task<bool> HasActiveSamplesAsync(int tenantTestId, CancellationToken ct = default);
         Task<List<SampleType>> GetSampleTypesByIdsAsync(List<int> sampleTypeIds, CancellationToken ct = default);
+
+        // View Tenant tests
+        Task<(List<TenantTest> Items, int TotalCount)> GetAdminTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            bool? isActive,
+            int page,
+            int pageSize,
+            CancellationToken ct = default);
+
+        Task<(List<TenantTest> Items, int TotalCount)> GetPublicTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            int page,
+            int pageSize,
+            CancellationToken ct = default);
     }
 }

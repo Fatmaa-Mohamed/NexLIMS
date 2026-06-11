@@ -342,5 +342,101 @@ namespace NextLIMS.BLL.Services.Tests
                 IsActive = tenantTest.IsActive
             };
         }
+
+        public async Task<PagedResult<AdminTenantTestDto>> GetAdminTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            bool? isActive,
+            int page,
+            int pageSize,
+            CancellationToken ct = default)
+        {
+            if (!string.IsNullOrEmpty(testType) && !ValidTestTypes.Contains(testType))
+                throw new ArgumentException($"Invalid testType '{testType}'. Accepted values: Enumeration, Traditional Detection, PCR Detection, Molecular.");
+
+            var (items, totalCount) = await _testRepository.GetAdminTenantTestsAsync(
+                tenantId, departmentId, testType, sampleTypeId, isActive, page, pageSize, ct);
+
+            return new PagedResult<AdminTenantTestDto>
+            {
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize),
+                Items = items.Select(tt => new AdminTenantTestDto
+                {
+                    TenantTestId = tt.Id,
+                    TestId = tt.TestId,
+                    TestName = tt.Test.TestName,
+                    TestType = tt.Test.TestType,
+                    Department = new DepartmentDto
+                    {
+                        Id = tt.Test.Department.Id,
+                        Name = tt.Test.Department.Name
+                    },
+                    Price = tt.Price ?? 0,
+                    StandardMethod = tt.StandardMethod,
+                    TurnaroundTime = tt.TurnaroundTime,
+                    IsActive = tt.IsActive,
+                    SampleTypes = tt.TenantTestSampleTypes
+                        .Select(tts => new SampleTypeDto
+                        {
+                            Id = tts.SampleType.Id,
+                            Name = tts.SampleType.Name
+                        }).ToList(),
+                    ConfirmationTests = tt.Test.ConfirmationTestTemplates
+                        .Select(c => new ConfirmationTestDto
+                        {
+                            Id = c.Id,
+                            Name = c.ConfirmationTestName
+                        }).ToList()
+                }).ToList()
+            };
+        }
+
+        public async Task<PagedResult<PublicTenantTestDto>> GetPublicTenantTestsAsync(
+            int tenantId,
+            int? departmentId,
+            string? testType,
+            int? sampleTypeId,
+            int page,
+            int pageSize,
+            CancellationToken ct = default)
+        {
+            if (!string.IsNullOrEmpty(testType) && !ValidTestTypes.Contains(testType))
+                throw new ArgumentException($"Invalid testType '{testType}'. Accepted values: Enumeration, Traditional Detection, PCR Detection, Molecular.");
+
+            var (items, totalCount) = await _testRepository.GetPublicTenantTestsAsync(
+                tenantId, departmentId, testType, sampleTypeId, page, pageSize, ct);
+
+            return new PagedResult<PublicTenantTestDto>
+            {
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize),
+                Items = items.Select(tt => new PublicTenantTestDto
+                {
+                    TenantTestId = tt.Id,
+                    TestName = tt.Test.TestName,
+                    TestType = tt.Test.TestType,
+                    Department = new DepartmentDto
+                    {
+                        Id = tt.Test.Department.Id,
+                        Name = tt.Test.Department.Name
+                    },
+                    Price = tt.Price ?? 0,
+                    TurnaroundTime = tt.TurnaroundTime,
+                    SampleTypes = tt.TenantTestSampleTypes
+                        .Select(tts => new SampleTypeDto
+                        {
+                            Id = tts.SampleType.Id,
+                            Name = tts.SampleType.Name
+                        }).ToList()
+                }).ToList()
+            };
+        }
     }
 }
