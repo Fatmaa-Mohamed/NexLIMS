@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260612124819_adding-nulls-forSampleTests")]
+    partial class addingnullsforSampleTests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -539,14 +542,14 @@ namespace NextLIMS.DAL.Migrations
                     b.Property<string>("Result")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SampleId")
+                    b.Property<int>("SampleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TenantTestId")
+                    b.Property<int>("TenantTestId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -712,15 +715,17 @@ namespace NextLIMS.DAL.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("StandardMethod")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupportedSampleTypes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TestId")
+                    b.Property<int>("TestId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TurnaroundTime")
@@ -733,8 +738,7 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TestId");
 
                     b.HasIndex("TenantId", "TestId")
-                        .IsUnique()
-                        .HasFilter("[TenantId] IS NOT NULL AND [TestId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("TenantTests");
                 });
@@ -1033,12 +1037,14 @@ namespace NextLIMS.DAL.Migrations
                     b.HasOne("NextLIMS.DAL.Data.Models.Sample", "Sample")
                         .WithMany("SampleTests")
                         .HasForeignKey("SampleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("NextLIMS.DAL.Data.Models.TenantTest", "TenantTest")
                         .WithMany("SampleTests")
                         .HasForeignKey("TenantTestId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ApprovedByUser");
 
@@ -1099,12 +1105,14 @@ namespace NextLIMS.DAL.Migrations
                     b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("TenantTests")
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
                         .WithMany("TenantTests")
                         .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Tenant");
 
