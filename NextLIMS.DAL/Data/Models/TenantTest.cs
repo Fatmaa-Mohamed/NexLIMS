@@ -9,12 +9,12 @@
         public decimal? Price { get; set; }
         public string ?StandardMethod { get; set; }
         public int? TurnaroundTime { get; set; }
-        public string ?SupportedSampleTypes { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
 
-        public Tenant? Tenant { get; set; }
-        public Test ?Test { get; set; }
-        public ICollection<SampleTest>? SampleTests { get; set; }
+        public Tenant Tenant { get; set; }
+        public Test Test { get; set; }
+        public ICollection<SampleTest> SampleTests { get; set; }
+        public ICollection<TenantTestSampleType> TenantTestSampleTypes { get; set; }
     }
 }
