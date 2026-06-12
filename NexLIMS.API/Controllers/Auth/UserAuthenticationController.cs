@@ -14,8 +14,7 @@ namespace NexLIMS.API.Controllers.Auth
     [ApiController]
     public class UserAuthenticationController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private readonly ApplicationDbContext _context;
+        
         private readonly UserAuthenticationService userAuthenticationService;
         public UserAuthenticationController(
           UserAuthenticationService userAuthenticationService
