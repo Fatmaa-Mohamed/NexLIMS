@@ -1,4 +1,6 @@
-﻿using NexLIMS.BLL.DTO.Invite;
+﻿using Azure.Core;
+using NexLIMS.BLL.DTO.Invite;
+using NextLIMS.BLL.DTO.ForgetPassword;
 using NextLIMS.BLL.Services.Invitation;
 using NextLIMS.DAL.Repositories;
 
@@ -22,7 +24,26 @@ namespace NextLIMS.BLL.Services.EmployeeService
             return await _invitationService
                 .InviteEmployeeAsync(request.Email, request.RoleId);
         }
+        public async Task<(bool Success, string Message)> resetPasswordAsync(ResetPassword request)
+        {
+            var invitation = await _employeeRepository
+             .GetPasswordResetWithUserAsync(request.token);
 
+            if (invitation == null || invitation.IsUsed)
+                return (false, "Invalid or already used token.");
+
+            if (invitation.ExpiresAt < DateTime.UtcNow)
+                return (false, "Token has expired.");
+
+            invitation.user.PasswordHash =
+              BCrypt.Net.BCrypt.HashPassword(request.Password);
+            invitation.user.IsActive = true;
+            invitation.IsUsed = true;
+
+            await _employeeRepository.SaveChangesAsync();
+
+            return (true, "Password reseted successfully.");
+        }
         public async Task<(bool Success, string Message)> SetPasswordAsync(SetPassword request)
         {
             var invitation = await _employeeRepository

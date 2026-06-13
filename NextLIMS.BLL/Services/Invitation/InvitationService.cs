@@ -126,7 +126,7 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.SaveChangesAsync();
 
                 var appUrl = _config["App:BaseUrl"];
-                var link = $"{appUrl}/set-password?token={token}";
+                var link = $"{appUrl}/reset-password?token={token}";
 
                 var body = $@"
                     <h3>Password Reset</h3>

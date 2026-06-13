@@ -53,7 +53,24 @@ namespace NexLIMS.API.Controllers.Employee
 
             return Ok(result.Message);
         }
+        [HttpPost("reset-password/{token}")]
+        public async Task<IActionResult> ResetPassword(
+        [FromRoute] string token,
+        [FromBody] PasswordDto password )
+        {
+            var request = new ResetPassword
+            {
+                token = token,
+                Password = password.Password,
+            };
 
+            var result = await _employeeService.resetPasswordAsync(request);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(result.Message);
+        }
         [HttpGet("{tenantId}")]
         public async Task<IActionResult> GetEmployeesByTenant(int tenantId)
         {
