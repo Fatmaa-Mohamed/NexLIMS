@@ -64,6 +64,22 @@ builder.Services.AddScoped<SampleService>();
 builder.Services.AddScoped<ISignupService,SignupService>();
 
 ////////////////
+///cors
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("OpenCorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+
+///
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -86,6 +102,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 ///End//
 var app = builder.Build();
 
+
 // seed data
 using (var scope = app.Services.CreateScope())
 {
@@ -100,6 +117,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("OpenCorsPolicy");
 
 app.UseHttpsRedirection();
 
