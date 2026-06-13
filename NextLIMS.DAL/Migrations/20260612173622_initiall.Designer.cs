@@ -12,8 +12,8 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260612124819_adding-nulls-forSampleTests")]
-    partial class addingnullsforSampleTests
+    [Migration("20260612173622_initiall")]
+    partial class initiall
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -542,14 +542,14 @@ namespace NextLIMS.DAL.Migrations
                     b.Property<string>("Result")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SampleId")
+                    b.Property<int?>("SampleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TenantTestId")
+                    b.Property<int?>("TenantTestId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -565,6 +565,27 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TenantTestId");
 
                     b.ToTable("SampleTests");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SampleTypes");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleWorkflow", b =>
@@ -715,14 +736,9 @@ namespace NextLIMS.DAL.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("StandardMethod")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SupportedSampleTypes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TenantId")
+                    b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<int>("TestId")
@@ -738,9 +754,34 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TestId");
 
                     b.HasIndex("TenantId", "TestId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[TenantId] IS NOT NULL");
 
                     b.ToTable("TenantTests");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTestSampleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SampleTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantTestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SampleTypeId");
+
+                    b.HasIndex("TenantTestId", "SampleTypeId")
+                        .IsUnique();
+
+                    b.ToTable("TenantTestSampleTypes");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
@@ -758,6 +799,9 @@ namespace NextLIMS.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TestName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -773,7 +817,24 @@ namespace NextLIMS.DAL.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TestSampleType", b =>
+                {
+                    b.Property<int>("TestId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SampleTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TestId", "SampleTypeId");
+
+                    b.HasIndex("SampleTypeId");
+
+                    b.ToTable("TestSampleTypes");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.User", b =>
@@ -1037,14 +1098,12 @@ namespace NextLIMS.DAL.Migrations
                     b.HasOne("NextLIMS.DAL.Data.Models.Sample", "Sample")
                         .WithMany("SampleTests")
                         .HasForeignKey("SampleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLIMS.DAL.Data.Models.TenantTest", "TenantTest")
                         .WithMany("SampleTests")
                         .HasForeignKey("TenantTestId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ApprovedByUser");
 
@@ -1105,8 +1164,7 @@ namespace NextLIMS.DAL.Migrations
                     b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
                         .WithMany("TenantTests")
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
                         .WithMany("TenantTests")
@@ -1119,6 +1177,25 @@ namespace NextLIMS.DAL.Migrations
                     b.Navigation("Test");
                 });
 
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTestSampleType", b =>
+                {
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleType", "SampleType")
+                        .WithMany("TenantTestSampleTypes")
+                        .HasForeignKey("SampleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NextLIMS.DAL.Data.Models.TenantTest", "TenantTest")
+                        .WithMany("TenantTestSampleTypes")
+                        .HasForeignKey("TenantTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SampleType");
+
+                    b.Navigation("TenantTest");
+                });
+
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
                 {
                     b.HasOne("NextLIMS.DAL.Data.Models.Department", "Department")
@@ -1127,7 +1204,32 @@ namespace NextLIMS.DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("NextLIMS.DAL.Data.Models.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId");
+
                     b.Navigation("Department");
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.TestSampleType", b =>
+                {
+                    b.HasOne("NextLIMS.DAL.Data.Models.SampleType", "SampleType")
+                        .WithMany("TestSampleTypes")
+                        .HasForeignKey("SampleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
+                        .WithMany("TestSampleTypes")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SampleType");
+
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.User", b =>
@@ -1198,6 +1300,13 @@ namespace NextLIMS.DAL.Migrations
                     b.Navigation("SampleConfirmationTests");
                 });
 
+            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SampleType", b =>
+                {
+                    b.Navigation("TenantTestSampleTypes");
+
+                    b.Navigation("TestSampleTypes");
+                });
+
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
                 {
                     b.Navigation("AuditLogs");
@@ -1220,6 +1329,8 @@ namespace NextLIMS.DAL.Migrations
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantTest", b =>
                 {
                     b.Navigation("SampleTests");
+
+                    b.Navigation("TenantTestSampleTypes");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Test", b =>
@@ -1227,6 +1338,8 @@ namespace NextLIMS.DAL.Migrations
                     b.Navigation("ConfirmationTestTemplates");
 
                     b.Navigation("TenantTests");
+
+                    b.Navigation("TestSampleTypes");
                 });
 #pragma warning restore 612, 618
         }

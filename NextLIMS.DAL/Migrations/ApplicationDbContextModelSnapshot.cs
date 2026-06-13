@@ -735,10 +735,10 @@ namespace NextLIMS.DAL.Migrations
                     b.Property<string>("StandardMethod")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TenantId")
+                    b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TestId")
+                    b.Property<int>("TestId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TurnaroundTime")
@@ -752,7 +752,7 @@ namespace NextLIMS.DAL.Migrations
 
                     b.HasIndex("TenantId", "TestId")
                         .IsUnique()
-                        .HasFilter("[TenantId] IS NOT NULL AND [TestId] IS NOT NULL");
+                        .HasFilter("[TenantId] IS NOT NULL");
 
                     b.ToTable("TenantTests");
                 });
@@ -1166,7 +1166,8 @@ namespace NextLIMS.DAL.Migrations
                     b.HasOne("NextLIMS.DAL.Data.Models.Test", "Test")
                         .WithMany("TenantTests")
                         .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Tenant");
 
