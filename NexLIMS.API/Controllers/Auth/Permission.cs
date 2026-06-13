@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NextLIMS.BLL.Services.Permissions;
 
 namespace NexLIMS.API.Controllers.Auth
@@ -14,7 +15,7 @@ namespace NexLIMS.API.Controllers.Auth
         {
             _permissionService = permissionService;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllPermissions()
         {

@@ -1,4 +1,5 @@
-﻿using NextLIMS.DAL.Data.Models;
+﻿using NexLIMS.BLL.DTO.PermissionDto;
+using NextLIMS.DAL.Data.Models;
 
 namespace NexLIMS.BLL.DTO.RoleDto
 {
@@ -10,7 +11,7 @@ namespace NexLIMS.BLL.DTO.RoleDto
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<RolePermission>? RolePermissions { get; set; }
+        public ICollection<PermissionDTO>? Permissions { get; set; }
 
     }
 }

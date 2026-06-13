@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.Services.SampleServic;
@@ -15,12 +16,14 @@ namespace NexLIMS.API.Controllers.Sample
         {
             this._service = service;
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSample(SampleDTO sample)
         {
             var result = await _service.CreateSampleAsync(sample);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllSamplesAsync([FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -28,6 +31,7 @@ namespace NexLIMS.API.Controllers.Sample
             var result = await _service.getAllSamplesAsync(page, pageSize);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSampleWithItsTests(int id)
         {
@@ -35,19 +39,21 @@ namespace NexLIMS.API.Controllers.Sample
 
             return Ok(result);
         }
+        [Authorize]
         [HttpPost("attach/{id}")]
         public async Task attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
             await _service.attachTestsToSample(id, TestsIds);
         }
 
-
+        [Authorize]
         [HttpPost("detach/{id}")]
         public async Task detachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
             await _service.detachTestsfromSample(id, TestsIds);
 
         }
+        [Authorize]
         [HttpGet("filter")]
         public async Task<IActionResult> FilterSamples(
 
@@ -57,6 +63,7 @@ namespace NexLIMS.API.Controllers.Sample
             var result = await _service.filterSampleByoptions(sampleId, clientId);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet("status/filter")]
         public async Task<IActionResult> FilterByStatus([FromQuery] string status)
         {

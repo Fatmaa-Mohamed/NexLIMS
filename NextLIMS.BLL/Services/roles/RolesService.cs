@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NexLIMS.BLL.DTO.RoleDto;
+using NextLIMS.BLL.DTO.RoleDto;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Repositories;
 using System.Security.Claims;
@@ -27,7 +28,7 @@ namespace NextLIMS.BLL.Services.Roles
             int.Parse(_httpContextAccessor.HttpContext!
                 .User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        public async Task<Role> CreateRole(CreateRoleDTO dto)
+        public async Task<CreateRoleResponseDto> CreateRole(CreateRoleDTO dto)
         {
             var role = new Role
             {
@@ -41,14 +42,23 @@ namespace NextLIMS.BLL.Services.Roles
 
             await _repository.AddRoleAsync(role);
             await _repository.SaveChangesAsync();
-
-            return role;
+            var response = new CreateRoleResponseDto
+            {
+                Id = role.Id,  // Add this if needed
+                Name = role.Name,
+                Description = role.Description,
+                IsActive = role.IsActive,
+                CreatedAt = role.CreatedAt,
+                CreatedBy = role.CreatedBy
+            };
+            return response;
         }
 
-        public async Task<List<Role>> GetRoles()
+        public async Task<List<RoleDTO>> GetRoles()
         {
-            return await _repository
-                .GetRolesByTenantAsync(TenantId);
+            List<Role> result = await _repository.GetRolesByTenantAsync(TenantId);
+
+            return result.ToDTOList().ToList();
         }
 
         public async Task<string> AttachPermissions(
@@ -98,19 +108,23 @@ namespace NextLIMS.BLL.Services.Roles
             return "Success";
         }
 
-        public async Task<bool> DetachPermission(
-            int roleId,
-            int permissionId)
+        public async Task<bool> DetachPermissions(int roleId, AttachPermissionDto dto)
         {
-            var rolePermission =
-                await _repository.GetRolePermissionAsync(
-                    roleId,
-                    permissionId);
+            // Verify the role belongs to the current tenant
+            bool roleBelongsToTenant = await _repository.RoleExistsForTenantAsync(roleId, TenantId);
 
-            if (rolePermission == null)
+            if (!roleBelongsToTenant)
                 return false;
 
-            _repository.RemoveRolePermission(rolePermission);
+            if (dto.PermissionIds == null || !dto.PermissionIds.Any())
+                return false;
+
+            var rolePermissions = await _repository.GetRolePermissionsAsync2(roleId, dto.PermissionIds);
+
+            if (!rolePermissions.Any())
+                return false;
+
+            _repository.RemoveRolePermissionsRange(rolePermissions);
 
             await _repository.SaveChangesAsync();
 

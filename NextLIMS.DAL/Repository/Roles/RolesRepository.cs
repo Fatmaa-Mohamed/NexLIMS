@@ -78,9 +78,15 @@ namespace NextLIMS.DAL.Repositories
         {
             _context.RolePermissions.Remove(rolePermission);
         }
+        public async Task<bool> RoleExistsForTenantAsync(int roleId, int tenantId)
+        {
+            return await _context.Roles
+                .AnyAsync(r => r.Id == roleId && r.TenantId == tenantId);
+        }
 
         public async Task<List<object>> GetRolePermissionsAsync(
-            int roleId)
+            int roleId
+            )
         {
             return await _context.RolePermissions
                 .Where(rp => rp.RoleId == roleId)
@@ -92,6 +98,24 @@ namespace NextLIMS.DAL.Repositories
                 .Cast<object>()
                 .ToListAsync();
         }
+
+        //role permissions
+        public async Task<List<RolePermission>> GetRolePermissionsAsync2(
+            int roleId,
+            ICollection<int> permissionIds
+            )
+        {
+            return await _context.RolePermissions
+                .Where(rp => rp.RoleId == roleId && permissionIds.Contains(rp.PermissionId))
+                .ToListAsync();
+        }
+
+        public void RemoveRolePermissionsRange(IEnumerable<RolePermission> rolePermissions)
+        {
+            _context.RolePermissions.RemoveRange(rolePermissions);
+        }
+
+
 
         public async Task SaveChangesAsync()
         {

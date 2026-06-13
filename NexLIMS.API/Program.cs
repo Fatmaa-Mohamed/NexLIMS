@@ -15,6 +15,7 @@ using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
+using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
 using NextLIMS.DAL.Repository.Test;
 using NextLIMS.DAL.Repository.Department;
@@ -29,7 +30,9 @@ builder.Services.AddControllers(
     options => options.Filters.Add<PermissionBasedAuthFilter>()
     );
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+builder.Services.Configure<FawaterkSettings>(builder.Configuration.GetSection("Fawaterk"));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,29 +42,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default"));
 });
-/////Radwan///
-builder.Services.AddScoped< IEmailService,EmailService>();
+////////
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<InvitationService>();
 builder.Services.AddScoped<UserAuthenticationService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<PermissionService>();
 builder.Services.AddScoped<EmployeeService>();
-builder.Services.AddScoped< UserRepository>();
-builder.Services.AddScoped< EmployeeRepository>();
-builder.Services.AddScoped< InvitationRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<InvitationRepository>();
 builder.Services.AddScoped<PasswordResetRepository>();
 builder.Services.AddScoped<RoleRepository>();
-builder.Services.AddScoped< PermissionRepository>();
+builder.Services.AddScoped<PermissionRepository>();
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 //
-builder.Services.AddScoped< SampleRepository>();
+builder.Services.AddScoped<SampleRepository>();
 builder.Services.AddScoped<SampleService>();
 ////////////////
 //sayed/////////////
-builder.Services.AddScoped<ISignupService,SignupService>();
+builder.Services.AddScoped<ISignupService, SignupService>();
 
 ////////////////
 ///cors
@@ -106,9 +109,9 @@ var app = builder.Build();
 // seed data
 using (var scope = app.Services.CreateScope())
 {
-   var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-   await DataSeeder.SeedAsync(context);
+    await DataSeeder.SeedAsync(context);
 }
 
 // Configure the HTTP request pipeline.
@@ -121,6 +124,7 @@ app.UseCors("OpenCorsPolicy");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

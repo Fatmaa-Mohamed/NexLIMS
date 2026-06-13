@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NexLIMS.BLL.DTO.Invite;
@@ -23,6 +24,7 @@ namespace NexLIMS.API.Controllers.Employee
             _employeeService = employeeService;
         }
 
+        [Authorize]
         [HttpPost("invite")]
         public async Task<IActionResult> InviteEmployee(InviteDTo request)
         {
@@ -71,6 +73,7 @@ namespace NexLIMS.API.Controllers.Employee
 
             return Ok(result.Message);
         }
+        [Authorize]
         [HttpGet("{tenantId}")]
         public async Task<IActionResult> GetEmployeesByTenant(int tenantId)
         {

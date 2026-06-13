@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NexLIMS.API.Middlewares;
 using NexLIMS.BLL.DTO.RoleDto;
 using NextLIMS.BLL.Services.Roles;
 
@@ -15,7 +17,7 @@ namespace NexLIMS.API.Controllers.Auth
         {
             _roleService = roleService;
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleDTO dto)
         {
@@ -23,14 +25,15 @@ namespace NexLIMS.API.Controllers.Auth
 
             return Ok(role);
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
             return Ok(await _roleService.GetRoles());
         }
 
-        [HttpPost("{roleId}/permissions")]
+        [Authorize]
+        [HttpPost("{roleId}/permissions")]//AttachPermissionsToRole
         public async Task<IActionResult> AttachPermission(
             int roleId,
             AttachPermissionDto dto)
@@ -46,5 +49,18 @@ namespace NexLIMS.API.Controllers.Auth
                 _ => Ok()
             };
         }
+        [HttpPost("{roleId}/detach-permissions")]
+        [Authorize]
+        public async Task<IActionResult> DetachPermissions(int roleId, [FromBody] AttachPermissionDto dto)
+        {
+            var result = await _roleService.DetachPermissions(roleId, dto);
+
+            if (!result)
+                return NotFound("Role not found for this tenant, or no matching permissions to detach.");
+
+            return Ok("Permissions detached successfully.");
+        }
+
+
     }
 }
