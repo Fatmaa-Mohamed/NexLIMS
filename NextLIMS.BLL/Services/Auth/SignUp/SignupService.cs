@@ -30,12 +30,16 @@ namespace NextLIMS.BLL.Services.SignupService
                     Name = request.TenantName,
                     Location = request.Location,
                     SubscriptionTier = request.SubscriptionTier,
-                    SubscriptionStatus = "Active", 
-                    CreatedAt = DateTime.UtcNow
+                    SubscriptionStartDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    SubscriptionEndDate = DateOnly.FromDateTime(DateTime.UtcNow).AddMonths(1),
+                    SubscriptionStatus = "Active",
+                    CreatedAt = DateTime.UtcNow,
+                    MonthlySampleLimit = request.NumberofSampleInMonth
+
                 };
 
                 _context.Tenants.Add(tenant);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
 
                 var adminUser = new User
                 {

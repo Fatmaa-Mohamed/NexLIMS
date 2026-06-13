@@ -31,5 +31,8 @@ namespace NexLIMS.BLL.DTO
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public int NumberofSampleInMonth { get; set; }
+        public int PaymentMethodId { get; set; }
+        public int Amount { get; set; }
     }
 }
