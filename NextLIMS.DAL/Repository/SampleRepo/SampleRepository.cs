@@ -154,6 +154,10 @@ namespace NextLIMS.DAL.Repository.SampleRepo
 
             return result;
         }
+        public async Task<Client> findClient(int tenantId,string nid)
+        {
+            return await _context.Clients.FirstOrDefaultAsync(e=>e.TenantId==tenantId&&e.NID== nid);
+        }
     }
 }
 //var samples = await _context.Samples.AsNoTracking()

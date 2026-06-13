@@ -30,42 +30,55 @@ namespace NextLIMS.BLL.Services.SampleServic
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User
                 .FindFirst("TenantId").Value);
 
-            var newClient = new Client
-            {
-                Name = sampleDto.Client.Name,
-                NID = sampleDto.Client.NID,
-                PhoneNumber = sampleDto.Client.PhoneNumber,
-                CreatedAt = DateTime.UtcNow,
-                CreatedBy = createdBy,
-                TenantId = tenantId,
-            };
+            int clientId;
+            var existingClient = await _sampleRepository.findClient(tenantId, sampleDto.Client.NID);
 
-            var savedClient = await _sampleRepository.addClientAsync(newClient);  // upsert
-            int clientId = savedClient.Id;
+            if (existingClient != null)
+            {
+                clientId = existingClient.Id;
+            }
+            else
+            {
+                var newClient = new Client
+                {
+                    Name = sampleDto.Client.Name,
+                    NID = sampleDto.Client.NID,
+                    PhoneNumber = sampleDto.Client.PhoneNumber,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = createdBy,
+                    TenantId = tenantId,
+                };
+
+                var savedClient = await _sampleRepository.addClientAsync(newClient);
+                clientId = savedClient.Id;
+            }
+
             var sample = new Sample
             {
                 SampleName = sampleDto.SampleName,
                 SampleType = sampleDto.SampleType,
                 Status = "pending",
                 CreatedAt = DateTime.UtcNow,
-                ClientId = clientId,   // ✅ use the returned client's Id
+                ClientId = clientId,
                 CreatedBy = createdBy,
                 TenantId = tenantId,
             };
-            var first = await _sampleRepository.AddSample(sample);
 
-            var result = new SampleResponseDto
+            var savedSample = await _sampleRepository.AddSample(sample);
+
+            var response = new SampleResponseDto
             {
                 ClientId = clientId,
                 ClientName = sampleDto.Client.Name,
                 ClientNID = sampleDto.Client.NID,
-                CreatedAt = DateTime.UtcNow,
-                Id = first.Id,
-                SampleName = first.SampleName,
-                SampleType = sampleDto.SampleType,
-                Status = first.Status
+                CreatedAt = savedSample.CreatedAt,
+                Id = savedSample.Id,
+                SampleName = savedSample.SampleName,
+                SampleType = savedSample.SampleType,
+                Status = savedSample.Status
             };
-            return result;
+
+            return response;
         }
         public async Task<List<SampleDataDto>> getAllSamplesAsync(int page, int pageSize)
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NexLIMS.API.Middlewares;
 using NextLIMS.DAL.Data;
 
 namespace NexLIMS.API.Controllers.Tenants_NeedRefactor_
@@ -15,6 +16,7 @@ namespace NexLIMS.API.Controllers.Tenants_NeedRefactor_
         _context = context;
         }
         [HttpGet]
+        [CheckPermissionAttribute("GetALlTenants")]
         public async Task<IActionResult> GetAllTenants()
         {
             var result = await _context.Tenants
