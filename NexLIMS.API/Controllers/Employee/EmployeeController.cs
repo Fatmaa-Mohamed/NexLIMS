@@ -37,12 +37,13 @@ namespace NexLIMS.API.Controllers.Employee
         [HttpPost("set-password/{token}")]
         public async Task<IActionResult> SetPassword(
         [FromRoute] string token,
-        [FromBody] NewPasswordDTO newPassword)
+        [FromBody] NewPasswordDTO newPasswordAndUsername)
         {
             var request = new SetPassword
             {
                 Token = token,
-                NewPassword = newPassword.NewPassword // ✅ use the actual property
+                NewPassword = newPasswordAndUsername.NewPassword,
+                username = newPasswordAndUsername.userName
             };
 
             var result = await _employeeService.SetPasswordAsync(request);

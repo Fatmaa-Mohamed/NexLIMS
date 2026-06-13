@@ -9,5 +9,6 @@ namespace NextLIMS.BLL.DTO.Invite
     public class NewPasswordDTO
     {
         public string NewPassword { get; set; }
+        public string userName { get; set; }
     }
 }

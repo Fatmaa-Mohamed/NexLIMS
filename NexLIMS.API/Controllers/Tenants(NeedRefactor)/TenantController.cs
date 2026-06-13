@@ -16,7 +16,6 @@ namespace NexLIMS.API.Controllers.Tenants_NeedRefactor_
         _context = context;
         }
         [HttpGet]
-        [CheckPermissionAttribute("GetALlTenants")]
         public async Task<IActionResult> GetAllTenants()
         {
             var result = await _context.Tenants

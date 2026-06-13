@@ -36,10 +36,10 @@ namespace NextLIMS.BLL.Services.EmployeeService
 
             invitation.user.PasswordHash =
                 BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-
+            invitation.user.Name = request.username;
             invitation.user.IsActive = true;
             invitation.IsUsed = true;
-
+            
             await _employeeRepository.SaveChangesAsync();
 
             return (true, "Password set successfully.");
@@ -70,5 +70,7 @@ namespace NextLIMS.BLL.Services.EmployeeService
             return await _invitationService
                 .EmployeeForgetPasswordAsync(email);
         }
+
+        
     }
 }
