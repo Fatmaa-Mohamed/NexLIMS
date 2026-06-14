@@ -1,0 +1,731 @@
+[
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Total plate count (Pour Plate)",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 4833-1",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [1,2,3,4]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Total plate count (Surface Plate)",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 4833-2",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [1,2,3,4]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Total plate count at 36°C",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 6222",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Total plate count at 22°C",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 6222",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Anaerobic plate count",
+    "TestType": "Enumeration",
+    "StandardMethod": "General Laboratory Guidelines: references ISO 7218",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [1,2,4]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Aerobic spore forming bacteria",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 7218, ISO 7932:2004",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Anaerobic spore forming bacteria",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 7218, ISO 15213:2023",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Yeasts",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 21527",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2, 3, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Molds",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 21527",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2, 3, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Yeasts",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 21527",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Molds",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 21527",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Coliforms",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 4832",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Coliforms",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 9308-1",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Fecal coliforms",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 7218, ISO 4832",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Fecal coliforms",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) references ISO 7218, ISO 9308-1",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Enterobacteriaceae",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 21528-2",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Enterobacteriaceae",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 21528-2, ISO 7704:2023",
+    "TurnaroundTime": 2,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E. coli",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 16649-2",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E. coli",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 9308-1",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Sulfite reducing Clostridium spp.",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 15213-1:2023",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Sulfite reducing bacteria",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 6461-2",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Thermophilic Sulfite reducing bacteria",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 15213:2023",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Clostridium perfringens",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 15213-2:2023",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Clostridium perfringens",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 14189",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Lactic acid bacteria",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 15214:1998",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [1]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Enterococcus fecalis",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 7899-2",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Intestinal Enterococcus",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 7899-2",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Bacillus cereus",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 7932:2004",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 3, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Bacillus cereus",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 7932:2004, ISO 7704:2023",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Coag. (+) Staphylococcus aureus",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 6888-1",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 3, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Coag. (+) Staphylococcus aureus",
+    "TestType": "Enumeration",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 6888-1, ISO 7704:2023",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria monocytogenes",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 11290-2:2017",
+    "TurnaroundTime": 6,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Campylobacter spp.",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 10272-2:2017",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Pseudomonas aeruginosa",
+    "TestType": "Enumeration",
+    "StandardMethod": "ISO 16266:2006",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Salmonella spp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 6579-1:2017",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Salmonella spp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 19250:2010",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Salmonella serotyping",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO/TR 6579-3:2014, White-Kauffmann-Le Minor scheme",
+    "TurnaroundTime": 7,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria monocytogenes",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 11290-1:2017",
+    "TurnaroundTime": 6,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria sp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 11290-1:2017",
+    "TurnaroundTime": 6,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria monocytogenes",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 11290-1:2017, ISO 7704:2023",
+    "TurnaroundTime": 6,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria sp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 11290-1:2017, ISO 7704:2023",
+    "TurnaroundTime": 6,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Campylobacter spp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 10272-1:2017",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Shigella sp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 21567:2004",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Shigella sp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 21567:2004, ISO 7704:2023",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Cronobacter spp.",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 22964:2017",
+    "TurnaroundTime": 5,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Vibrio parahaemolyticus, Vibrio cholerae and Vibrio vulnificus",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 21872-1:2017",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Vibrio parahaemolyticus, Vibrio cholerae and Vibrio vulnificus",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 21872-1:2017, ISO 7704:2023",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E.coli (O157)",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 16654:2001",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E.coli (O157)",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 16654:2001, ISO 7704:2023",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Pseudomonas aeruginosa",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "ISO 16266:2006",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Pseudomonas aeruginosa",
+    "TestType": "Traditional Detection",
+    "StandardMethod": "Internal Standard Operating Procedures (SOPs) adapted from ISO 16266:2006",
+    "TurnaroundTime": 3,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Pseudomonas aeruginosa",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 16266:2006 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Pseudomonas aeruginosa",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 16266:2006 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Salmonella spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 6579-1:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Salmonella spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024, ISO 7704:2023; validated against ISO 19250:2010 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria monocytogenes",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 11290-1:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria monocytogenes",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024, ISO 7704:2023; validated against ISO 11290-1:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Listeria spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 11290-1:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Campylobacter spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 10272-1:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Shigella spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 21567:2004 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Shigella spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024, ISO 7704:2023; validated against ISO 21567:2004 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Cronobacter spp.",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 22964:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Cronobacter sakazakii",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 22964:2017 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Vibrio parahaemolyticus, Vibrio cholerae and Vibrio vulnificus",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; molecular confirmation per ISO 21872-1:2017",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Vibrio parahaemolyticus, Vibrio cholerae and Vibrio vulnificus",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024, ISO 7704:2023; validated against ISO 21872-1:2017",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E. coli O157",
+    "TestType": "PCR Detection",
+    "StandardMethod": "ISO/TS 13136:2012",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "E. coli O157",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP adapted from ISO/TS 13136:2012, ISO 7704:2023",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Verotoxin-producing E. coli (VTEC/STEC)",
+    "TestType": "PCR Detection",
+    "StandardMethod": "ISO/TS 13136:2012",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Verotoxin-producing E. coli (VTEC/STEC)",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP adapted from ISO/TS 13136:2012, ISO 7704:2023",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Verotoxin E.coli Serotyping",
+    "TestType": "PCR Detection",
+    "StandardMethod": "ISO/TS 13136:2012",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Verotoxin E.coli Serotyping",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP adapted from ISO/TS 13136:2012, ISO 7704:2023",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Staphylococcus aureus",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 6888-1 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Bacillus cereus",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 7932:2004 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Clostridium perfringens",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP per ISO 22174:2024; validated against ISO 15213-2:2023 via [AOAC/AFNOR]",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 4 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Clostridium botulinum",
+    "TestType": "PCR Detection",
+    "StandardMethod": "ISO/TS 17919:2013",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [ 1, 2 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Clostridium botulinum",
+    "TestType": "PCR Detection",
+    "StandardMethod": "Internal SOP adapted from ISO/TS 17919:2013, ISO 7704:2023",
+    "TurnaroundTime": 4,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Legionella pneumophila",
+    "TestType": "PCR Detection",
+    "StandardMethod": "ISO/TS 12869:2019",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [5]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Hepatitis A Virus",
+    "TestType": "Molecular",
+    "StandardMethod": "ISO 15216-2:2017",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Noro Virus",
+    "TestType": "Molecular",
+    "StandardMethod": "ISO 15216-2:2017",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [ 1, 2, 5 ]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Genetically Modified Organisms (GMO) Screening",
+    "TestType": "Molecular",
+    "StandardMethod": "ISO 21569:2005/Amd 1:2013",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [1]
+  },
+  {
+    "DepartmentId": 1,
+    "TenantId": null,
+    "TestName": "Porcine DNA (Pork) detection",
+    "TestType": "Molecular",
+    "StandardMethod": "ISO/TS 20224-3:2020",
+    "TurnaroundTime": 1,
+    "SampleTypeIds": [1]
+  }
+]
