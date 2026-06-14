@@ -57,6 +57,7 @@ namespace NextLIMS.BLL.Services.Roles
         public async Task<List<RoleDTO>> GetRoles()
         {
             List<Role> result = await _repository.GetRolesByTenantAsync(TenantId);
+            
 
             return result.ToDTOList().ToList();
         }
@@ -84,20 +85,26 @@ namespace NextLIMS.BLL.Services.Roles
                 await _repository.GetAttachedPermissionIdsAsync(
                     roleId);
 
-            var permissionsToAttach =
-                existingPermissions
-                    .Except(attachedPermissions)
-                    .ToList();
+            //var permissionsToAttach =
+            //    existingPermissions
+            //        .Except(attachedPermissions)
+            //        .ToList();
+            var permissionsToAttach = existingPermissions
+    .Where(p => !attachedPermissions.Contains(p))
+    .ToList();
 
             if (!permissionsToAttach.Any())
                 return "AlreadyAttached";
 
+            var userId = int.Parse( _httpContextAccessor.HttpContext.User.Claims
+    .First(c => c.Type == ClaimTypes.NameIdentifier).Value);
             var rolePermissions =
                 permissionsToAttach.Select(id =>
                     new RolePermission
                     {
                         RoleId = roleId,
-                        PermissionId = id
+                        PermissionId = id,
+                         GrantedBy=userId
                     });
 
             await _repository

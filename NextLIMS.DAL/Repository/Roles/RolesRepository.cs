@@ -32,7 +32,7 @@ namespace NextLIMS.DAL.Repositories
             int tenantId)
         {
             return await _context.Roles
-                .Where(r => r.TenantId == tenantId)
+                .Where(r => r.TenantId == tenantId||r.TenantId==null)
                 .Include(r => r.RolePermissions)
                 .ThenInclude(rp => rp.Permission)
                 .ToListAsync();
@@ -47,7 +47,7 @@ namespace NextLIMS.DAL.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<int>> GetAttachedPermissionIdsAsync(
+        public async Task<List<int?>> GetAttachedPermissionIdsAsync(
             int roleId)
         {
             return await _context.RolePermissions
@@ -106,7 +106,7 @@ namespace NextLIMS.DAL.Repositories
             )
         {
             return await _context.RolePermissions
-                .Where(rp => rp.RoleId == roleId && permissionIds.Contains(rp.PermissionId))
+                .Where(rp => rp.RoleId == roleId && permissionIds.Contains(rp.PermissionId.Value))
                 .ToListAsync();
         }
 

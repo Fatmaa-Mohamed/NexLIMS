@@ -21,6 +21,7 @@ using NextLIMS.DAL.Repository.Test;
 using NextLIMS.DAL.Repository.Department;
 using NextLIMS.DAL.Repository.SampleRepo;
 using System.Text;
+using NextLIMS.BLL.Services.PasswordReset;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,7 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<InvitationRepository>();
 builder.Services.AddScoped<PasswordResetRepository>();
+builder.Services.AddScoped<PasswordResetService>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<PermissionRepository>();
 builder.Services.AddScoped<ITestRepository, TestRepository>();
