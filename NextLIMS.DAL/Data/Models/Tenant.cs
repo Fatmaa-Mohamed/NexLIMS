@@ -13,6 +13,7 @@ namespace NextLIMS.DAL.Data.Models
         public DateOnly? SubscriptionEndDate { get; set; }
         public int SamplesUsedThisMonth { get; set; }
         public int? MonthlySampleLimit { get; set; }
+        public string Slug { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
 
