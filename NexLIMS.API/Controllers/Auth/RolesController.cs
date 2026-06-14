@@ -17,7 +17,9 @@ namespace NexLIMS.API.Controllers.Auth
         {
             _roleService = roleService;
         }
+
         [Authorize]
+
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleDTO dto)
         {

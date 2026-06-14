@@ -62,11 +62,14 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         public async Task<Sample?> getSampleWithItsTests(int id, int tenantid)
         {
             return await _context.Samples
-   .Include(s => s.SampleTests)
-   .FirstOrDefaultAsync(s => s.Id == id &&
-                             s.TenantId == tenantid &&
-                             s.Status == "pending");
-
+        .Include(s => s.SampleTests)
+            .ThenInclude(st => st.TenantTest)
+                .ThenInclude(tt => tt.Test)
+        .Include(s => s.SampleTests)
+            .ThenInclude(st => st.AssignedToUser)
+        .FirstOrDefaultAsync(s => s.Id == id &&
+                                  s.TenantId == tenantid &&
+                                  s.Status == "pending");
         }
         public async Task AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
