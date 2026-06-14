@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260614203907_seeding_RolePermissionSeeder")]
+    partial class seeding_RolePermissionSeeder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -484,7 +487,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8544),
+                            CreatedAt = new DateTime(2026, 6, 14, 23, 39, 7, 255, DateTimeKind.Local).AddTicks(1901),
                             Description = "Has full access to lab configuration, settings, users, and system management",
                             IsActive = true,
                             Name = "Admin"
@@ -492,7 +495,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8594),
+                            CreatedAt = new DateTime(2026, 6, 14, 23, 39, 7, 255, DateTimeKind.Local).AddTicks(1945),
                             Description = "Can view and log samples into the system",
                             IsActive = true,
                             Name = "Receptionist"
@@ -500,7 +503,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8597),
+                            CreatedAt = new DateTime(2026, 6, 14, 23, 39, 7, 255, DateTimeKind.Local).AddTicks(1948),
                             Description = "Performs the first step of laboratory tests",
                             IsActive = true,
                             Name = "Analyst"
@@ -508,7 +511,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8599),
+                            CreatedAt = new DateTime(2026, 6, 14, 23, 39, 7, 255, DateTimeKind.Local).AddTicks(1949),
                             Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
                             IsActive = true,
                             Name = "Senior Analyst"
@@ -516,7 +519,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8601),
+                            CreatedAt = new DateTime(2026, 6, 14, 23, 39, 7, 255, DateTimeKind.Local).AddTicks(1951),
                             Description = "Approves test results, authorizes retests, and reassigns tasks",
                             IsActive = true,
                             Name = "Department Director"
@@ -1251,63 +1254,6 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "ahmed.hassan@labtest.com",
-                            IsActive = true,
-                            Name = "Ahmed Hassan",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 1,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "mona.khaled@labtest.com",
-                            IsActive = true,
-                            Name = "Mona Khaled",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 2,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "youssef.adel@labtest.com",
-                            IsActive = true,
-                            Name = "Youssef Adel",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 3,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "sara.mostafa@labtest.com",
-                            IsActive = true,
-                            Name = "Sara Mostafa",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 4,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "khaled.ibrahim@labtest.com",
-                            IsActive = true,
-                            Name = "Khaled Ibrahim",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 5,
-                            TenantId = 3
-                        });
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.AuditLog", b =>

@@ -19,7 +19,7 @@ namespace NexLIMS.API.Controllers.middlewares
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var permissionString = context.ActionDescriptor.EndpointMetadata
-                .OfType<CheckPermissionAttribute>()
+                .OfType<CheckPermission>()
                 .FirstOrDefault()?.Permission;
 
             if (permissionString == null) return;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NexLIMS.API.Middlewares;
 using NexLIMS.BLL.DTO.Invite;
 using NextLIMS.BLL.DTO.ForgetPassword;
 using NextLIMS.BLL.DTO.Invite;
@@ -26,6 +27,7 @@ namespace NexLIMS.API.Controllers.Employee
 
         [Authorize]
         [HttpPost("invite")]
+        [CheckPermission("Invite_employee")]
         public async Task<IActionResult> InviteEmployee(InviteDTo request)
         {
             var success = await _employeeService.InviteEmployeeAsync(request);
@@ -37,6 +39,7 @@ namespace NexLIMS.API.Controllers.Employee
         }
 
         [HttpPost("set-password/{token}")]
+       
         public async Task<IActionResult> SetPassword(
         [FromRoute] string token,
         [FromBody] NewPasswordDTO newPasswordAndUsername)
@@ -75,6 +78,7 @@ namespace NexLIMS.API.Controllers.Employee
         }
         [Authorize]
         [HttpGet("{tenantId}")]
+        [CheckPermission("GetEmployeeByLab")]
         public async Task<IActionResult> GetEmployeesByTenant(int tenantId)
         {
             var employees = await _employeeService.GetEmployeesByTenantAsync(tenantId);

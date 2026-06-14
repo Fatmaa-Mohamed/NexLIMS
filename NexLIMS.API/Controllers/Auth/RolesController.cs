@@ -19,7 +19,7 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
-
+        [CheckPermission("CreateRole")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleDTO dto)
         {
@@ -28,6 +28,7 @@ namespace NexLIMS.API.Controllers.Auth
             return Ok(role);
         }
         [Authorize]
+        [CheckPermission("GetRoles")]
         [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
@@ -35,6 +36,7 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
+        [CheckPermission("Add_Permissions_to_Role")]
         [HttpPost("{roleId}/permissions")]//AttachPermissionsToRole
         public async Task<IActionResult> AttachPermission(
             int roleId,
@@ -53,6 +55,7 @@ namespace NexLIMS.API.Controllers.Auth
         }
         [HttpPost("{roleId}/detach-permissions")]
         [Authorize]
+        [CheckPermission("Remove_Permission_from_User")]
         public async Task<IActionResult> DetachPermissions(int roleId, [FromBody] AttachPermissionDto dto)
         {
             var result = await _roleService.DetachPermissions(roleId, dto);
@@ -63,6 +66,7 @@ namespace NexLIMS.API.Controllers.Auth
             return Ok("Permissions detached successfully.");
         }
 
+        
 
     }
 }

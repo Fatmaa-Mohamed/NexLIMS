@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260614200845_seeding_permissions")]
+    partial class seeding_permissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -479,48 +482,6 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8544),
-                            Description = "Has full access to lab configuration, settings, users, and system management",
-                            IsActive = true,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8594),
-                            Description = "Can view and log samples into the system",
-                            IsActive = true,
-                            Name = "Receptionist"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8597),
-                            Description = "Performs the first step of laboratory tests",
-                            IsActive = true,
-                            Name = "Analyst"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8599),
-                            Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
-                            IsActive = true,
-                            Name = "Senior Analyst"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 15, 0, 9, 57, 343, DateTimeKind.Local).AddTicks(8601),
-                            Description = "Approves test results, authorizes retests, and reassigns tasks",
-                            IsActive = true,
-                            Name = "Department Director"
-                        });
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.RolePermission", b =>
@@ -556,246 +517,6 @@ namespace NextLIMS.DAL.Migrations
                         .HasFilter("[RoleId] IS NOT NULL AND [PermissionId] IS NOT NULL");
 
                     b.ToTable("RolePermissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 1,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 2,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 3,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 4,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 5,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 6,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 7,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 8,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 9,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 10,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 11,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 12,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 13,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 14,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 14,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 15,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 8,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 16,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 9,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 17,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 10,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 18,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 13,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 19,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 14,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = 20,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 9,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 21,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 10,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 22,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 11,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 23,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 14,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = 24,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 9,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 25,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 10,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 26,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 11,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 27,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 12,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 28,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 14,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 29,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 3,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 30,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 7,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 31,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 9,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 32,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 10,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 33,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 12,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 34,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 14,
-                            RoleId = 5
-                        });
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Sample", b =>
@@ -1251,63 +972,6 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "ahmed.hassan@labtest.com",
-                            IsActive = true,
-                            Name = "Ahmed Hassan",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 1,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "mona.khaled@labtest.com",
-                            IsActive = true,
-                            Name = "Mona Khaled",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 2,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "youssef.adel@labtest.com",
-                            IsActive = true,
-                            Name = "Youssef Adel",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 3,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "sara.mostafa@labtest.com",
-                            IsActive = true,
-                            Name = "Sara Mostafa",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 4,
-                            TenantId = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "khaled.ibrahim@labtest.com",
-                            IsActive = true,
-                            Name = "Khaled Ibrahim",
-                            PasswordHash = "$2b$12$Qe1daAScKU/Vt97doG0Y4.UU7kgptQzPFovBjfUucyRm/scg3sYDW",
-                            RoleId = 5,
-                            TenantId = 3
-                        });
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.AuditLog", b =>

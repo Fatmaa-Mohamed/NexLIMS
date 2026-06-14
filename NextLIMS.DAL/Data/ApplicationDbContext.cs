@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.MRSeeders.AuthSeeder;
 
 namespace NextLIMS.DAL.Data
 {
@@ -486,6 +487,11 @@ namespace NextLIMS.DAL.Data
                  .HasForeignKey(x => x.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.ApplyConfiguration(new PermissionSeeder());
+            modelBuilder.ApplyConfiguration(new RoleSeeder());
+            modelBuilder.ApplyConfiguration(new RolePermissionSeeder());
+            modelBuilder.ApplyConfiguration(new UserSeeder());
         }
     }
 }

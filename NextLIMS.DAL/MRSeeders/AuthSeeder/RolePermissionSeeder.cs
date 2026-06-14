@@ -14,10 +14,55 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
         public void Configure(EntityTypeBuilder<RolePermission> builder)
         {
             builder.HasData(
-                new RolePermission {Id=0, PermissionId = 1, RoleId = 1 }
 
-                );
+    // ===== Admin (Id = 1) — Full access to everything =====
+    new RolePermission { Id = 1, RoleId = 1, PermissionId = 1 },   // GET_ALL_Permissions
+    new RolePermission { Id = 2, RoleId = 1, PermissionId = 2 },   // CreateRole
+    new RolePermission { Id = 3, RoleId = 1, PermissionId = 3 },   // GetRoles
+    new RolePermission { Id = 4, RoleId = 1, PermissionId = 4 },   // Add_Permissions_to_Role
+    new RolePermission { Id = 5, RoleId = 1, PermissionId = 5 },   // Remove_Permission_from_User
+    new RolePermission { Id = 6, RoleId = 1, PermissionId = 6 },   // Invite_employee
+    new RolePermission { Id = 7, RoleId = 1, PermissionId = 7 },   // GetEmployeesByLab
+    new RolePermission { Id = 8, RoleId = 1, PermissionId = 8 },   // CreateSample
+    new RolePermission { Id = 9, RoleId = 1, PermissionId = 9 },   // GetAllSamples
+    new RolePermission { Id = 10, RoleId = 1, PermissionId = 10 }, // GetSampleWithItsTests
+    new RolePermission { Id = 11, RoleId = 1, PermissionId = 11 }, // Add_Sample_To_Test
+    new RolePermission { Id = 12, RoleId = 1, PermissionId = 12 }, // Remove_Sample_From_Test
+    new RolePermission { Id = 13, RoleId = 1, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
+    new RolePermission { Id = 14, RoleId = 1, PermissionId = 14 }, // Filter_Samples_by_Status
+
+    // ===== Receptionist (Id = 2) — View/Log samples =====
+    new RolePermission { Id = 15, RoleId = 2, PermissionId = 8 },  // CreateSample
+    new RolePermission { Id = 16, RoleId = 2, PermissionId = 9 },  // GetAllSamples
+    new RolePermission { Id = 17, RoleId = 2, PermissionId = 10 }, // GetSampleWithItsTests
+    new RolePermission { Id = 18, RoleId = 2, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
+    new RolePermission { Id = 19, RoleId = 2, PermissionId = 14 }, // Filter_Samples_by_Status
+
+    // ===== Analyst (Id = 3) — First step of tests =====
+    new RolePermission { Id = 20, RoleId = 3, PermissionId = 9 },  // GetAllSamples
+    new RolePermission { Id = 21, RoleId = 3, PermissionId = 10 }, // GetSampleWithItsTests
+    new RolePermission { Id = 22, RoleId = 3, PermissionId = 11 }, // Add_Sample_To_Test
+    new RolePermission { Id = 23, RoleId = 3, PermissionId = 14 }, // Filter_Samples_by_Status
+
+    // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
+    new RolePermission { Id = 24, RoleId = 4, PermissionId = 9 },  // GetAllSamples
+    new RolePermission { Id = 25, RoleId = 4, PermissionId = 10 }, // GetSampleWithItsTests
+    new RolePermission { Id = 26, RoleId = 4, PermissionId = 11 }, // Add_Sample_To_Test
+    new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test
+    new RolePermission { Id = 28, RoleId = 4, PermissionId = 14 }, // Filter_Samples_by_Status
+
+    // ===== Department Director (Id = 5) — Approve results, retest, reassign tasks =====
+    new RolePermission { Id = 29, RoleId = 5, PermissionId = 3 },  // GetRoles
+    new RolePermission { Id = 30, RoleId = 5, PermissionId = 7 },  // GetEmployeesByLab
+    new RolePermission { Id = 31, RoleId = 5, PermissionId = 9 },  // GetAllSamples
+    new RolePermission { Id = 32, RoleId = 5, PermissionId = 10 }, // GetSampleWithItsTests
+    new RolePermission { Id = 33, RoleId = 5, PermissionId = 12 }, // Remove_Sample_From_Test
+    new RolePermission { Id = 34, RoleId = 5, PermissionId = 14 } // Filter_Samples_by_Status
+
   
+
+);
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.Services.SampleServic;
 
@@ -18,6 +19,7 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpPost]
+        [CheckPermission("CreateSample")]
         public async Task<IActionResult> CreateSample(SampleDTO sample)
         {
             var result = await _service.CreateSampleAsync(sample);
@@ -25,6 +27,7 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpGet]
+        [CheckPermission("GetAllSamples")]
         public async Task<IActionResult> GetAllSamplesAsync([FromQuery] int page, [FromQuery] int pageSize)
         {
 
@@ -33,6 +36,7 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpGet("{id}")]
+        [CheckPermission("GetSampleWithItsTests")]
         public async Task<IActionResult> GetSampleWithItsTests(int id)
         {
             var result = await _service.getSampleWithTestsById(id);
@@ -41,6 +45,7 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpPost("attach/{id}")]
+        [CheckPermission("Add_Sample_To_Test")]
         public async Task attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
             await _service.attachTestsToSample(id, TestsIds);
@@ -48,6 +53,7 @@ namespace NexLIMS.API.Controllers.Sample
 
         [Authorize]
         [HttpPost("detach/{id}")]
+        [CheckPermission("Remove_Sample_From_Test")]
         public async Task detachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
             await _service.detachTestsfromSample(id, TestsIds);
@@ -55,6 +61,7 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpGet("filter")]
+        [CheckPermission("Filter_Samples_by_sampleId_OR_ClientId")]
         public async Task<IActionResult> FilterSamples(
 
       [FromQuery] int? sampleId,
@@ -65,6 +72,8 @@ namespace NexLIMS.API.Controllers.Sample
         }
         [Authorize]
         [HttpGet("status/filter")]
+        [CheckPermission("Filter_Samples_by_Status")]
+
         public async Task<IActionResult> FilterByStatus([FromQuery] string status)
         {
             var result = await _service.filterSampleByStatus(status);

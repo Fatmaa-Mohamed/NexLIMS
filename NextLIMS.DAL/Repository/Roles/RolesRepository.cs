@@ -115,8 +115,16 @@ namespace NextLIMS.DAL.Repositories
             _context.RolePermissions.RemoveRange(rolePermissions);
         }
 
+        //public async Task<Role> GetRoleWithItsPermissions(int roleId)
+        //{
+        //    var result = await _context.Roles
+        //        .Where(e => e.Id == roleId)
+        //        .Include(e => e.RolePermissions)
+        //            .ThenInclude(e => e.Permission)
+        //        .FirstOrDefaultAsync();
 
-
+        //    return result;
+        //} bokre khalash
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
