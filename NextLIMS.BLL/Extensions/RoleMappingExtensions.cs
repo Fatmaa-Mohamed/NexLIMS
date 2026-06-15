@@ -12,7 +12,7 @@ namespace NexLIMS.BLL.DTO.RoleDto
             return new RoleDTO
             {
                 Id = role.Id,
-                TenantId = role.TenantId.Value,
+                TenantId = role.TenantId.GetValueOrDefault(),
                 Name = role.Name,
                 Description = role.Description,
                 IsActive = role.IsActive,

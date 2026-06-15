@@ -19,6 +19,15 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
+       // [CheckPermission("GetRolesWithItsPermissions")]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetRoleWithItsPermissions()
+        {
+            return Ok(await _roleService.GetRoleWithItsPermissions());
+        }
+
+
+        [Authorize]
         [CheckPermission("CreateRole")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleDTO dto)

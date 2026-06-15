@@ -7,21 +7,24 @@ using NextLIMS.BLL.Services.Department;
 using NextLIMS.BLL.Services.EmailService;
 using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
+using NextLIMS.BLL.Services.PasswordReset;
 using NextLIMS.BLL.Services.Permissions;
+using NextLIMS.BLL.Services.prep.DetectionService;
+using NextLIMS.BLL.Services.prep.EnumerationService;
 using NextLIMS.BLL.Services.Roles;
-using NextLIMS.BLL.Services.Tests;
-using NextLIMS.DAL;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
+using NextLIMS.BLL.Services.Tests;
+using NextLIMS.DAL;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
-using NextLIMS.DAL.Repository.Test;
+using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.Department;
 using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.Test;
 using System.Text;
-using NextLIMS.BLL.Services.PasswordReset;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,7 +70,9 @@ builder.Services.AddScoped<SampleService>();
 ////////////////
 //sayed/////////////
 builder.Services.AddScoped<ISignupService, SignupService>();
-
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IEnumerationService, EnumerationService>();
+builder.Services.AddScoped<IDetectionService, DetectionService>();
 ////////////////
 ///cors
 

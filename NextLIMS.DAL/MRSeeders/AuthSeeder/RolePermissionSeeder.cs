@@ -30,6 +30,10 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 12, RoleId = 1, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 13, RoleId = 1, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
     new RolePermission { Id = 14, RoleId = 1, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 39, RoleId = 1, PermissionId = 16 }, // Get_Confirmation_Templates //NEW
+    new RolePermission { Id = 40, RoleId = 1, PermissionId = 17 }, // Save_Enumeration_Prep
+    new RolePermission { Id = 41, RoleId = 1, PermissionId = 18 }, // Save_Detection_Prep
+    new RolePermission { Id = 43, RoleId = 1, PermissionId = 19 }, // Save_Molecular_Prep
 
     // ===== Receptionist (Id = 2) — View/Log samples =====
     new RolePermission { Id = 15, RoleId = 2, PermissionId = 8 },  // CreateSample
@@ -43,12 +47,17 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 21, RoleId = 3, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 22, RoleId = 3, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 23, RoleId = 3, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 36, RoleId = 3, PermissionId = 16 }, // Get_Confirmation_Templates //NEW
+    new RolePermission { Id = 37, RoleId = 3, PermissionId = 17 }, // Save_Enumeration_Prep
+    new RolePermission { Id = 38, RoleId = 3, PermissionId = 18 }, // Save_Detection_Prep
+    new RolePermission { Id = 42, RoleId = 3, PermissionId = 19 }, // Save_Molecular_Prep
+
 
     // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
     new RolePermission { Id = 24, RoleId = 4, PermissionId = 9 },  // GetAllSamples
     new RolePermission { Id = 25, RoleId = 4, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 26, RoleId = 4, PermissionId = 11 }, // Add_Sample_To_Test
-    new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test
+    new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test 
     new RolePermission { Id = 28, RoleId = 4, PermissionId = 14 }, // Filter_Samples_by_Status
 
     // ===== Department Director (Id = 5) — Approve results, retest, reassign tasks =====

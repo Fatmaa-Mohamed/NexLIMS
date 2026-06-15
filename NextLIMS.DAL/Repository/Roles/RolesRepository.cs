@@ -37,7 +37,16 @@ namespace NextLIMS.DAL.Repositories
                 .ThenInclude(rp => rp.Permission)
                 .ToListAsync();
         }
-
+        public async Task <List<Role>> GetRoleAndItsPermissionsByTenantAsync(
+           int tenantId,
+            int roleId)
+        {
+            return await _context.Roles
+                .Where(r => (r.TenantId == tenantId || r.TenantId == null)&&r.Id==roleId)
+                .Include(r => r.RolePermissions)
+                .ThenInclude(rp => rp.Permission)
+                .ToListAsync();
+        }
         public async Task<List<int>> GetExistingPermissionIdsAsync(
             ICollection<int> permissionIds)
         {
@@ -115,16 +124,11 @@ namespace NextLIMS.DAL.Repositories
             _context.RolePermissions.RemoveRange(rolePermissions);
         }
 
-        //public async Task<Role> GetRoleWithItsPermissions(int roleId)
-        //{
-        //    var result = await _context.Roles
-        //        .Where(e => e.Id == roleId)
-        //        .Include(e => e.RolePermissions)
-        //            .ThenInclude(e => e.Permission)
-        //        .FirstOrDefaultAsync();
-
-        //    return result;
-        //} bokre khalash
+      public async Task<User> getUserById(int userid)
+        {
+            var result=await _context.Users.FirstOrDefaultAsync(e=>e.Id==userid);
+            return result;
+        }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

@@ -146,5 +146,11 @@ namespace NextLIMS.BLL.Services.SampleServic
             return await _sampleRepository.filterByStatus( status,tenantId);
         }
 
+        public async Task<List<string>>? GetConfirmationTemplatesByTestId(int TestId)
+        {
+            var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
+            return await _sampleRepository.GetConfirmationTemplatesByTestIdAsync(TestId, tenantId);
+        }
+
     }
 }

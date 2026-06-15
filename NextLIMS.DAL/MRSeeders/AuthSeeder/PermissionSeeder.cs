@@ -29,7 +29,11 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
      new Permission { Id = 11, Name = "Add_Sample_To_Test", Description = "Allows linking a sample to a specific test" },
      new Permission { Id = 12, Name = "Remove_Sample_From_Test", Description = "Allows removing a sample from a specific test" },
      new Permission { Id = 13, Name = "Filter_Samples_by_sampleId_OR_ClientId", Description = "Allows filtering samples by sample ID or client ID" },
-     new Permission { Id = 14, Name = "Filter_Samples_by_Status", Description = "Allows filtering samples by their current status" }
+     new Permission { Id = 14, Name = "Filter_Samples_by_Status", Description = "Allows filtering samples by their current status" },
+     new Permission { Id = 16 , Name = "Get_Confirmation_Templates" , Description = "Get Confirmation Templates By TestId" },
+     new Permission { Id = 17 , Name = "Save_Enumeration_Prep", Description = "Save Enumeration Prep For Sample Test" },
+     new Permission { Id = 18 , Name = "Save_Detection_Prep", Description = "Save Detection Prep For Sample Test" },
+     new Permission { Id = 19 , Name = "Save_Molecular_Prep", Description = "Save Molecular Prep For Sample Test" }
      );
 
 

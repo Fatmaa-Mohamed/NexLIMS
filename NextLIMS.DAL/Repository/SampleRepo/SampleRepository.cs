@@ -161,6 +161,13 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         {
             return await _context.Clients.FirstOrDefaultAsync(e=>e.TenantId==tenantId&&e.NID== nid);
         }
+        public async Task<List<string>>? GetConfirmationTemplatesByTestIdAsync(int testid, int tenantId)
+        {
+            return await _context.ConfirmationTestTemplates
+                                .Where(s => s.TestId == testid && s.TenantId == tenantId)
+                                .Select(S=>S.ConfirmationTestName).ToListAsync();
+                                
+        }
     }
 }
 //var samples = await _context.Samples.AsNoTracking()

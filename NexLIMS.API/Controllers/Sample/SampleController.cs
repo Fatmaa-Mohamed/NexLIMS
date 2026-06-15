@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.Services.SampleServic;
+using NextLIMS.DAL.Repository.SampleRepo;
 
 namespace NexLIMS.API.Controllers.Sample
 {
@@ -79,5 +80,14 @@ namespace NexLIMS.API.Controllers.Sample
             var result = await _service.filterSampleByStatus(status);
             return Ok(result);
         }
+        [Authorize]
+        [HttpGet("confirmation/{TestId}")]
+        [CheckPermission("Get_Confirmation_Templates")]
+        public async Task<IActionResult> GetConfirmationTemplates([FromRoute] int TestId)
+        {
+            var templates = await _service.GetConfirmationTemplatesByTestId(TestId);
+            return Ok(new { confirmation = templates ?? new List<string>() });
+        }
+
     }
 }
