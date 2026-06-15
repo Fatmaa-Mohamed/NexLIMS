@@ -78,7 +78,7 @@ namespace NexLIMS.API.Controllers.Employee
         }
         [Authorize]
         [HttpGet("{tenantId}")]
-        [CheckPermission("GetEmployeeByLab")]
+        [CheckPermission("GetEmployeesByLab")]
         public async Task<IActionResult> GetEmployeesByTenant(int tenantId)
         {
             var employees = await _employeeService.GetEmployeesByTenantAsync(tenantId);

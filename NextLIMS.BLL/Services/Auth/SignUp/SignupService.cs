@@ -47,7 +47,7 @@ namespace NextLIMS.BLL.Services.SignupService
                     Name = request.AdminName,
                     Email = request.Email,
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    RoleId = 5 ,  // what is admain role Id
+                    RoleId = 1 ,  // what is admain role Id
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow
                 };
