@@ -23,7 +23,20 @@ namespace NexLIMS.API.Controllers.Auth
         [HttpGet("me")]
         public async Task<IActionResult> GetRoleWithItsPermissions()
         {
-            return Ok(await _roleService.GetRoleWithItsPermissions());
+            var result = await _roleService.GetRoleWithItsPermissions();
+            var status = await _roleService.getTenantById();
+            return Ok(new
+            {
+                result, status
+            });
+        }
+
+        [Authorize]
+        [HttpPatch("completeWizard")]
+        public async Task<IActionResult> completeSetup()
+        {
+            await _roleService.updateConfigurationStatusAsync();
+            return Ok("Status Updated");
         }
 
 
