@@ -57,10 +57,22 @@ namespace NextLIMS.BLL.Services.Roles
         public async Task<List<RoleDTO>> GetRoles()
         {
             List<Role> result = await _repository.GetRolesByTenantAsync(TenantId);
-            
+           
+            return result.ToDTOList().ToList();
+        }
+
+        //get role with its ppermission
+        public async Task<List<RoleDTO>> GetRoleWithItsPermissions()
+        {
+         
+            int userId = int.Parse(_httpContextAccessor.HttpContext!
+                .User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var user=await _repository.getUserById(userId);
+            var result = await _repository.GetRoleAndItsPermissionsByTenantAsync(TenantId,user.RoleId);
 
             return result.ToDTOList().ToList();
         }
+
 
         public async Task<string> AttachPermissions(
             int roleId,
