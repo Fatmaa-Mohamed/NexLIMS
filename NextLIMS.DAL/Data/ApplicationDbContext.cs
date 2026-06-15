@@ -46,7 +46,9 @@ namespace NextLIMS.DAL.Data
                 e.Property(x => x.SubscriptionTier).IsRequired();
                 e.Property(x => x.SubscriptionStatus).IsRequired();
                 e.Property(x => x.SamplesUsedThisMonth).HasDefaultValue(0);
+                e.Property(x => x.Slug).IsRequired().HasMaxLength(100);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                e.HasIndex(x => x.Slug).IsUnique();
                 e.HasIndex(x => x.CreatedBy);
             });
 

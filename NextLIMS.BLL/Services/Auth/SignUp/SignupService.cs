@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using NexLIMS.BLL.DTO;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Models;
@@ -19,6 +20,21 @@ namespace NextLIMS.BLL.Services.SignupService
             _context = context;
         }
 
+        private async Task<string> GenerateUniqueSlugAsync(string tenantName)
+        {
+            var baseSlug = SlugHelper.Generate(tenantName);
+            var slug = baseSlug;
+            var counter = 1;
+
+            while (await _context.Tenants.AnyAsync(t => t.Slug == slug))
+            {
+                slug = $"{baseSlug}-{counter}";
+                counter++;
+            }
+
+            return slug;
+        }
+
         public async Task<bool> SignupAsync(RegisterDto request)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -33,6 +49,7 @@ namespace NextLIMS.BLL.Services.SignupService
                     SubscriptionStartDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     SubscriptionEndDate = DateOnly.FromDateTime(DateTime.UtcNow).AddMonths(1),
                     SubscriptionStatus = "Active",
+                    Slug = await GenerateUniqueSlugAsync(request.TenantName),
                     CreatedAt = DateTime.UtcNow,
                     MonthlySampleLimit = request.NumberofSampleInMonth
 
