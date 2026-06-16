@@ -161,23 +161,19 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         {
             return await _context.Clients.FirstOrDefaultAsync(e=>e.TenantId==tenantId&&e.NID== nid);
         }
+
+     public async Task addsampleWorkflowAsync(SampleWorkflow sampleWorkflow)
+        {
+            await _context.SampleWorkflows.AddAsync(sampleWorkflow);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> getDirectorBytenantandDepartment(int tenantId)
+        {
+            var result = await _context.Users.Include(e => e.Role).Where(e => e.Role.Name == "Department Director" && e.TenantId == tenantId).FirstOrDefaultAsync();
+
+            return result;
+        
+        }
     }
 }
-//var samples = await _context.Samples.AsNoTracking()
-//    .Include(o=>o.Client)
-//    .Include(o=>o.Tenant)
-//    .ThenInclude(e=>e.TenantDepartments)
-//    .ThenInclude(e=>e.Department)
-//    .Where(e => e.TenantId == tenantId)
-//    .Select(e => new SampleDataDto
-//    {
-//        sampleId = e.Id,
-//        departmentName = e.Tenant.TenantDepartments.Select(e=>e.Department.Name).ToString(),
-//        nid=e.Client.NID,
-//        RegisteredAt=e.CreatedAt,
-//        status=e.Status,
-//    })
-//    .Skip((page-1)*pagesize)
-//    .Take(pagesize)
-//    .AsSplitQuery().
-//    ToListAsync();

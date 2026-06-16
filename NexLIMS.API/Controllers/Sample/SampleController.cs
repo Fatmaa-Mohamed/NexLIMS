@@ -79,5 +79,16 @@ namespace NexLIMS.API.Controllers.Sample
             var result = await _service.filterSampleByStatus(status);
             return Ok(result);
         }
+
+        [HttpGet("testing")]
+        [CheckPermission("test permission")]
+        public async Task<IActionResult> test()
+        {
+            return Ok(new
+            {
+                test="testing permission endpoint"
+            });
+        }
+
     }
 }

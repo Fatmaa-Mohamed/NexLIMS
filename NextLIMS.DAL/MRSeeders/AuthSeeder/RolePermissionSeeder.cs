@@ -30,6 +30,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 12, RoleId = 1, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 13, RoleId = 1, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
     new RolePermission { Id = 14, RoleId = 1, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
 
     // ===== Receptionist (Id = 2) — View/Log samples =====
     new RolePermission { Id = 15, RoleId = 2, PermissionId = 8 },  // CreateSample
@@ -43,7 +44,6 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 21, RoleId = 3, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 22, RoleId = 3, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 23, RoleId = 3, PermissionId = 14 }, // Filter_Samples_by_Status
-
     // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
     new RolePermission { Id = 24, RoleId = 4, PermissionId = 9 },  // GetAllSamples
     new RolePermission { Id = 25, RoleId = 4, PermissionId = 10 }, // GetSampleWithItsTests
@@ -59,7 +59,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 33, RoleId = 5, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 34, RoleId = 5, PermissionId = 14 } // Filter_Samples_by_Status
 
-  
+
 
 );
 

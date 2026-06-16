@@ -19,7 +19,6 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
-       // [CheckPermission("GetRolesWithItsPermissions")]
         [HttpGet("me")]
         public async Task<IActionResult> GetRoleWithItsPermissions()
         {
@@ -32,6 +31,7 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
+        [CheckPermission("SetupWizard")]
         [HttpPatch("completeWizard")]
         public async Task<IActionResult> completeSetup()
         {

@@ -2,6 +2,7 @@
 using NextLIMS.BLL.DTO.Client;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.DTO.SampleDTO;
+using NextLIMS.BLL.Enums;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Repository.SampleRepo;
 using System;
@@ -57,15 +58,29 @@ namespace NextLIMS.BLL.Services.SampleServic
             {
                 SampleName = sampleDto.SampleName,
                 SampleType = sampleDto.SampleType,
-                Status = "pending",
+                Status =SampleStatuses.Registered,
                 CreatedAt = DateTime.UtcNow,
                 ClientId = clientId,
                 CreatedBy = createdBy,
                 TenantId = tenantId,
             };
-
+            //continue from notion
             var savedSample = await _sampleRepository.AddSample(sample);
+          //  var direcotor = await _sampleRepository.getDirectorBytenantandDepartment(tenantId);
 
+
+            var sampleWorkflow = new SampleWorkflow
+            {
+                TenantId = tenantId,
+                SampleId = savedSample.Id,
+                Level = 0,
+                AssignedToId = null,
+                StartDate = DateTime.UtcNow,
+                 Action=SampleStatuses.Registered,
+                Flag = null,
+                Reason = null
+            };
+            await _sampleRepository.addsampleWorkflowAsync(sampleWorkflow);
             var response = new SampleResponseDto
             {
                 ClientId = clientId,
@@ -145,6 +160,6 @@ namespace NextLIMS.BLL.Services.SampleServic
 
             return await _sampleRepository.filterByStatus( status,tenantId);
         }
-
+        
     }
 }

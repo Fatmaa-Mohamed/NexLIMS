@@ -29,7 +29,9 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
      new Permission { Id = 11, Name = "Add_Sample_To_Test", Description = "Allows linking a sample to a specific test" },
      new Permission { Id = 12, Name = "Remove_Sample_From_Test", Description = "Allows removing a sample from a specific test" },
      new Permission { Id = 13, Name = "Filter_Samples_by_sampleId_OR_ClientId", Description = "Allows filtering samples by sample ID or client ID" },
-     new Permission { Id = 14, Name = "Filter_Samples_by_Status", Description = "Allows filtering samples by their current status" }
+     new Permission { Id = 14, Name = "Filter_Samples_by_Status", Description = "Allows filtering samples by their current status" },
+          new Permission { Id = 15, Name = "SetupWizard", Description = "Apply Wizard changes " }
+
      );
 
 
