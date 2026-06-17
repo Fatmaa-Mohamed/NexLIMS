@@ -62,32 +62,36 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
         public async Task<DepartmentWorkloadDto> GetDepartmentWorkload(int tenantId)
         {
             var users = await _context.Users
-                .Where(u => u.TenantId == tenantId)
-                .Select(u => new UserWorkloadDto
-                {
-                    UserId = u.Id,
-                    UserName = u.Name,
+      .Where(u => u.TenantId == tenantId)
+      .Select(u => new UserWorkloadDto
+      {
+          UserId = u.Id,
+          UserName = u.Name,
+          AssignedSamples = _context.SampleWorkflows
+              .Where(w => w.AssignedToId == u.Id)
+              .GroupBy(w => w.SampleId)
+              .Select(g => g
+                  .OrderByDescending(w => w.Id)
+                  .Select(w => new AssignedSampleDto
+                  {
+                      SampleId = w.SampleId,
+                      SampleName = w.Sample.SampleName,
+                      Status = w.Sample.Status,
+                      WorkflowId = w.Id,
+                      StartDate = w.StartDate,
+                      EndDate = w.EndDate,
+                      Action = w.Action
+                  })
+                  .First())
+              .ToList(),
 
-                    TotalSamplesCount = _context.SampleWorkflows
-                .Count(w => w.AssignedToId == u.Id),
-
-                    AssignedSamples = _context.SampleWorkflows
-                        .Where(w => w.AssignedToId == u.Id)
-                        //                     .OrderByDescending(w => w.Id)
-                        //.Take(1)
-                        .Select(w => new AssignedSampleDto
-                        {
-                            SampleId = w.SampleId,
-                            SampleName = w.Sample.SampleName,
-                            Status = w.Sample.Status,
-                            WorkflowId = w.Id,
-                            StartDate = w.StartDate,
-                            EndDate = w.EndDate,
-                            Action = w.Action
-                        })
-                        .ToList()
-                })
-                .ToListAsync();
+          TotalSamplesCount = _context.SampleWorkflows
+              .Where(w => w.AssignedToId == u.Id)
+              .Select(w => w.SampleId)
+              .Distinct()
+              .Count()
+      })
+      .ToListAsync();
 
             return new DepartmentWorkloadDto
             {
