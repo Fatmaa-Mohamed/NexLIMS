@@ -1,27 +1,34 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NexLIMS.API.Controllers.middlewares;
+using NextLIMS.BLL.Settings;
 using NextLIMS.BLL.Services.Auth;
+using NextLIMS.BLL.Services.ClientPortal;
+using NextLIMS.BLL.Services.ClientService;
 using NextLIMS.BLL.Services.Department;
 using NextLIMS.BLL.Services.EmailService;
 using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
+using NextLIMS.BLL.Services.PasswordReset;
 using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.Roles;
-using NextLIMS.BLL.Services.Tests;
-using NextLIMS.DAL;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
+using NextLIMS.BLL.Services.Tests;
+using NextLIMS.DAL;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
-using NextLIMS.DAL.Repository.Test;
+using NextLIMS.DAL.Repository.ClientPortal;
+using NextLIMS.DAL.Repository.ClientRepo;
 using NextLIMS.DAL.Repository.Department;
 using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.TenantRepo;
+using NextLIMS.DAL.Repository.Test;
 using System.Text;
-using NextLIMS.BLL.Services.PasswordReset;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +50,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default"));
 });
+
+// Twilio Configurations and Client Portal Settings
+builder.Services.Configure<TwilioSettings>(
+    builder.Configuration.GetSection("Twilio"));
+
+builder.Services.Configure<ClientPortalSettings>(
+    builder.Configuration.GetSection("ClientPortal"));
+
+builder.Services.Configure<ClientOtpSettings>(
+    builder.Configuration.GetSection("ClientOtp"));
+
 ////////
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<InvitationService>();
@@ -61,6 +79,15 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IJwtAuthenticationService, JwtAuthenticationService>();
+builder.Services.AddScoped<ITenantRepository, TenantRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientPortalRepository, ClientPortalRepository>();
+builder.Services.AddScoped<IClientPortalService, ClientPortalService>();
+builder.Services.AddScoped<IWhatsAppService, TwilioWhatsAppService>();
+builder.Services.AddScoped<IClientPortalInvitationService, ClientPortalInvitationService>();
+builder.Services.AddScoped<IClientOtpService, ClientOtpService>();
+
 //
 builder.Services.AddScoped<SampleRepository>();
 builder.Services.AddScoped<SampleService>();
@@ -103,6 +130,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             )
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(
+        "ClientOnly",
+        policy =>
+        {
+            policy.RequireAuthenticatedUser();
+
+            policy.RequireClaim(
+                "ActorType",
+                "Client");
+
+            policy.RequireClaim("ClientId");
+            policy.RequireClaim("TenantId");
+            policy.RequireClaim("TenantSlug");
+        });
+});
 
 ///End//
 var app = builder.Build();

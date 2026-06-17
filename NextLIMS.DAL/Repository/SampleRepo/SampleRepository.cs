@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace NextLIMS.DAL.Repository.SampleRepo
 {
@@ -160,6 +161,33 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         public async Task<Client> findClient(int tenantId,string nid)
         {
             return await _context.Clients.FirstOrDefaultAsync(e=>e.TenantId==tenantId&&e.NID== nid);
+        }
+
+        // Method for showing sample statistics for clients:
+        public async Task<(List<Sample> Items, int TotalCount)>
+            GetClientSamplesAsync(
+                int tenantId,
+                int clientId,
+                int page,
+                int pageSize,
+                CancellationToken cancellationToken = default)
+        {
+            var query = _context.Samples
+                .AsNoTracking()
+                .Where(sample =>
+                    sample.TenantId == tenantId &&
+                    sample.ClientId == clientId);
+
+            var totalCount =
+                await query.CountAsync(cancellationToken);
+
+            var items = await query
+                .OrderByDescending(sample => sample.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return (items, totalCount);
         }
     }
 }

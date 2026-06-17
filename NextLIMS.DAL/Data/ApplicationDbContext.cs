@@ -30,6 +30,7 @@ namespace NextLIMS.DAL.Data
         public DbSet<SampleType> SampleTypes { get; set; }
         public DbSet<TestSampleType> TestSampleTypes { get; set; }
         public DbSet<TenantTestSampleType> TenantTestSampleTypes { get; set; }
+        public DbSet<ClientOtpVerification> ClientOtpVerifications { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -489,6 +490,38 @@ namespace NextLIMS.DAL.Data
                  .HasForeignKey(x => x.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // ── ClientOtpVerifications ──────────────────────────────────────────────────────
+
+            modelBuilder.Entity<ClientOtpVerification>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.CodeHash)
+                    .IsRequired()
+                    .HasMaxLength(128);
+
+                entity.Property(x => x.TwilioMessageSid)
+                    .HasMaxLength(50);
+
+                entity.HasIndex(x => new
+                {
+                    x.TenantId,
+                    x.ClientId,
+                    x.ExpiresAt
+                });
+
+                entity.HasOne(x => x.Tenant)
+                    .WithMany()
+                    .HasForeignKey(x => x.TenantId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Client)
+                    .WithMany()
+                    .HasForeignKey(x => x.ClientId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
 
             modelBuilder.ApplyConfiguration(new PermissionSeeder());
             modelBuilder.ApplyConfiguration(new RoleSeeder());
