@@ -23,6 +23,7 @@ using NextLIMS.DAL.Repositories;
 using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.Department;
 using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
 using NextLIMS.DAL.Repository.Test;
 using System.Text;
 
@@ -73,6 +74,7 @@ builder.Services.AddScoped<ISignupService, SignupService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IEnumerationService, EnumerationService>();
 builder.Services.AddScoped<IDetectionService, DetectionService>();
+builder.Services.AddScoped<ISampleWorkflowRepository, SampleWorkflowRepository>();
 ////////////////
 ///cors
 

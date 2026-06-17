@@ -22,5 +22,10 @@ namespace NextLIMS.DAL.Repository
             await _dbContext.Set<T>().AddAsync(entity);
             return await _dbContext.SaveChangesAsync();
         }
+        public async Task<int> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbContext.Set<T>().AddRangeAsync(entities);
+            return await _dbContext.SaveChangesAsync();
+        }
     }
 }
