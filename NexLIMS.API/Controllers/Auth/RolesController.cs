@@ -26,7 +26,8 @@ namespace NexLIMS.API.Controllers.Auth
             var status = await _roleService.getTenantById();
             return Ok(new
             {
-                result, status
+                TenantSetupStatus=status,
+                result
             });
         }
 
