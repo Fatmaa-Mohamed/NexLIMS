@@ -24,10 +24,12 @@ namespace NexLIMS.API.Controllers.Auth
         {
             var result = await _roleService.GetRoleWithItsPermissions();
             var status = await _roleService.getTenantById();
+            var userData= await _roleService.getUserData();
             return Ok(new
             {
                 TenantSetupStatus=status,
-                result
+                result,
+                userData
             });
         }
 

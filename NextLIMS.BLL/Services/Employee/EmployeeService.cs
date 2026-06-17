@@ -75,6 +75,7 @@ namespace NextLIMS.BLL.Services.EmployeeService
             {
                 u.Id,
                 u.Email,
+                u.Name,
                 u.IsActive,
                 u.RoleId
             });

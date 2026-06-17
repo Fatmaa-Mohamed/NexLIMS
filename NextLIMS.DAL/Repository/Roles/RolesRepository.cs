@@ -150,9 +150,16 @@ namespace NextLIMS.DAL.Repositories
 
             return tenant;
         }
+        public async Task <string> getMyData(int tenantId,int userid)
+        {
+            var result = await _context.Users.Where(e => e.TenantId == tenantId && e.Id == userid).Select(e => e.Name).FirstOrDefaultAsync();
+            return result;
+        }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+
+
     }
 }

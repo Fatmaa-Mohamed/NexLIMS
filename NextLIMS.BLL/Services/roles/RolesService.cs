@@ -84,7 +84,11 @@ namespace NextLIMS.BLL.Services.Roles
             var result = await _repository.getTenantByid(TenantId);
             return result.IsActive;
         }
-
+        public async Task<string> getUserData()
+        {
+            var result = await _repository.getMyData(TenantId,UserId);
+            return result;
+        }
 
         public async Task<string> AttachPermissions(
             int roleId,
