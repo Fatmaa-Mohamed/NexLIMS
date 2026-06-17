@@ -46,9 +46,15 @@ namespace NexLIMS.API.Controllers.Sample
         [Authorize]
         [HttpPost("attach/{id}")]
         [CheckPermission("Add_Sample_To_Test")]
-        public async Task attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
+        public async Task<IActionResult> attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
-            await _service.attachTestsToSample(id, TestsIds);
+          var result=  await _service.attachTestsToSample(id, TestsIds);
+            if (result)
+            {
+                return Ok("Tests added to Sample  successfully");
+            }
+            return BadRequest("Tests are not found ");
+       
         }
 
         [Authorize]
@@ -80,15 +86,7 @@ namespace NexLIMS.API.Controllers.Sample
             return Ok(result);
         }
 
-        [HttpGet("testing")]
-        [CheckPermission("test permission")]
-        public async Task<IActionResult> test()
-        {
-            return Ok(new
-            {
-                test="testing permission endpoint"
-            });
-        }
+       
 
     }
 }

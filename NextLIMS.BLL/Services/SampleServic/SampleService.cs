@@ -134,12 +134,12 @@ namespace NextLIMS.BLL.Services.SampleServic
             };
 
         }
-        public async Task attachTestsToSample(int sampleId, ICollection<int> testIds)
+        public async Task<bool> attachTestsToSample(int sampleId, ICollection<int> testIds)
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
 
-            await _sampleRepository.AttachTestsToSample(sampleId,testIds,tenantId);
-
+           var result= await _sampleRepository.AttachTestsToSample(sampleId,testIds,tenantId);
+            return result;
         }
         
         public async Task detachTestsfromSample(int sampleId, ICollection<int> testIds)

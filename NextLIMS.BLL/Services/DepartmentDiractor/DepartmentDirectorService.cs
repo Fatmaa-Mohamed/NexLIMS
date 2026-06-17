@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using NextLIMS.BLL.DTO.DepartmentDto;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.Enums;
@@ -33,7 +34,8 @@ namespace NextLIMS.BLL.Services.DepartmentDiractor
               .FindFirst(ClaimTypes.NameIdentifier).Value);
         public async Task AssignSampleToAnalystAsync(
        int sampleId,
-       int analystId
+       int analystId,
+       string? reason
        )
         {
             var sampleTests =
@@ -50,7 +52,7 @@ namespace NextLIMS.BLL.Services.DepartmentDiractor
                 Action = "Pending",
                 StartDate = DateTime.Now,
                 Flag = true,
-                Reason = "Assign sample to analyst",
+                Reason = reason??" " ,
                 Level = 1,
                 AssignedToId = analystId,
                 SampleId = sampleId,
@@ -80,20 +82,20 @@ namespace NextLIMS.BLL.Services.DepartmentDiractor
             return await repository.GetDepartmentWorkload(TenantId);
         }
 
-        public async Task<bool> applyUpdateAsync(int sampleId)
+        public async Task<bool> applyUpdateAsync(int sampleId,string reason)
         {
 
-            var result = await repository.updateStatus(sampleId, SampleStatuses.Pending, TenantId);
+            var result = await repository.updateStatus(sampleId, SampleStatuses.Pending, TenantId,reason);
             if (!result)
                 return false;
             return true;
 
 
         }
-        public async Task<bool> approveAsync(int sampleId)
+        public async Task<bool> approveAsync(int sampleId,string reason)
         {
 
-            var result = await repository.approveSample(sampleId, SampleStatuses.Approved, TenantId);
+            var result = await repository.approveSample(sampleId, SampleStatuses.Approved, TenantId,reason);
             if (!result)
                 return false;
             return true;

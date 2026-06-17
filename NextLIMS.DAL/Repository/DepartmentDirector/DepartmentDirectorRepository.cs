@@ -100,7 +100,7 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
             };
 
         }
-        public async Task<bool> updateStatus(int sampleid, string status, int tenantId)
+        public async Task<bool> updateStatus(int sampleid, string status, int tenantId,string reason)
         {
             var sample = await _context.Samples
      .FirstOrDefaultAsync(e => e.Id == sampleid && e.TenantId == tenantId);
@@ -120,8 +120,11 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
                 Action = status,
                 Level = 1,
                 Flag = true,
+                Reason=reason??"",
                 StartDate = DateTime.Now,
                 AssignedToId = firstWorkflow?.AssignedToId // safe null check
+                 
+             
             };
             await _context.SampleWorkflows.AddAsync(sampleWorkflow);
             await _context.SaveChangesAsync();
@@ -130,7 +133,7 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
 
 
 
-        public async Task<bool> approveSample(int sampleid, string status, int tenantId)
+        public async Task<bool> approveSample(int sampleid, string status, int tenantId,string reason)
         {
             var sample = await _context.Samples
      .FirstOrDefaultAsync(e => e.Id == sampleid && e.TenantId == tenantId);
@@ -146,6 +149,7 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
             var sampleWorkflow = new SampleWorkflow
             {
                  TenantId=tenantId,
+                 Reason=reason,
                 SampleId = sampleid,
                 Action = status,
                 Level = 4,

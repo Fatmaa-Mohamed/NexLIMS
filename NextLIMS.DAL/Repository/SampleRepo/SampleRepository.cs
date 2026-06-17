@@ -71,26 +71,38 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                                   s.TenantId == tenantid &&
                                   s.Status == "pending");
         }
-        public async Task AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
+        //test
+        public async Task<bool> AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
             var sample = await _context.Samples
                 .FirstOrDefaultAsync(s => s.Id == sampleId && s.TenantId == tenantId);
 
+
+            var allExist = await _context.TenantTests
+                .Where(t => t.TenantId == tenantId)
+                .CountAsync(t => testIds.Contains(t.TestId)) == testIds.Count;
+
+
+
             if (sample == null)
                 throw new Exception("Sample not found");
-
-            var sampleTests = testIds.Select(testId => new SampleTest
+            if (allExist)
             {
-                SampleId = sampleId,
-                 TenantTestId = testId,
-                Status = "pending",
-                CreatedAt = DateTime.UtcNow
-                
-            });
+                var sampleTests = testIds.Select(testId => new SampleTest
+                {
+                    SampleId = sampleId,
+                    TenantTestId = testId,
+                    Status = "pending",
+                    CreatedAt = DateTime.UtcNow
 
-            await _context.SampleTests.AddRangeAsync(sampleTests);
+                });
 
-            await _context.SaveChangesAsync();
+                await _context.SampleTests.AddRangeAsync(sampleTests);
+
+                await _context.SaveChangesAsync();
+            return true;
+            }
+            return false;
         }
         public async Task DetachTestsFromSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
