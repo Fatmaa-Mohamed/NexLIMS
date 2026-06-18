@@ -21,7 +21,7 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
         {
             return await _context.SampleTests
                 .Where(x => x.SampleId == sampleId &&
-                            x.TenantTestId == tenantId)
+                            x.Sample.TenantId == tenantId)
                 .ToListAsync();
         }
 
