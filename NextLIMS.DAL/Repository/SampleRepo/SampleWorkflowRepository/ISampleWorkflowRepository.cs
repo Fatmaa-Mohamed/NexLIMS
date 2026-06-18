@@ -9,5 +9,6 @@ namespace NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository
     public interface ISampleWorkflowRepository
     {
         Task<int> SetWorkflowToInProgressAsync(int sampleTestId, int tenantId,int Level, string Action);
+        Task<int> UpdateStutusInSampleTest(int sampleTestId, int tenantId, string? result, string Action);
     }
 }

@@ -85,9 +85,10 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
                 enumerationilutionAdded =  await _dilutionsrepository.AddRangeAsync(dilutionEntities);
             }
 
-            var workflowwadded = await _sampleWorkflowRepository.SetWorkflowToInProgressAsync(sampleTestId, tenantId, 1, "inprogress");
+            var workflowwadded = await _sampleWorkflowRepository.SetWorkflowToInProgressAsync(sampleTestId, tenantId, 2, "inprogress");
+            var SampleTestStuts = await _sampleWorkflowRepository.UpdateStutusInSampleTest(sampleTestId,tenantId ,null, "inprogress");
 
-            if (enumerationDataAdded > 0 & enumerationilutionAdded > 0 && workflowwadded > 0) return 1;
+            if (enumerationDataAdded > 0 & enumerationilutionAdded > 0 && workflowwadded > 0 && SampleTestStuts>0) return 1;
             else return 0;
             
         }

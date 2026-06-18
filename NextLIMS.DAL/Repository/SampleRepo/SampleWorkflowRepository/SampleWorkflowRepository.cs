@@ -19,7 +19,7 @@ namespace NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository
             _dbContext = dbContext;
         }
 
-        public async Task<int> SetWorkflowToInProgressAsync(int sampleTestId, int tenantId , int Level, string Action)
+        public async Task<int> SetWorkflowToInProgressAsync(int sampleTestId, int tenantId, int Level, string Action)
         {
             var sampleTest = await _dbContext.SampleTests.FirstOrDefaultAsync(st => st.Id == sampleTestId);
             var workflow = await _dbContext.SampleWorkflows.OrderByDescending(w => w.Id).FirstOrDefaultAsync(w => w.SampleId == sampleTest.SampleId && w.TenantId == tenantId);
@@ -35,10 +35,24 @@ namespace NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository
                 Level = Level,
                 AssignedToId = workflow?.AssignedToId,
                 StartDate = workflow?.EndDate ?? DateTime.UtcNow,
-                Action = Action, 
+                Action = Action,
             };
             await _dbContext.SampleWorkflows.AddAsync(newWorkflow);
             return await _dbContext.SaveChangesAsync();
         }
+        public async Task<int> UpdateStutusInSampleTest(int sampleTestId, int tenantId, string? result, string Action)
+        {
+            var sampleTest = await _dbContext.SampleTests.FirstOrDefaultAsync(st => st.Id == sampleTestId);
+            if (sampleTest != null)
+            {
+                sampleTest.Status = Action;
+                sampleTest.Result = result;
+                _dbContext.Update(sampleTest);
+                return await _dbContext.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+    
     }
 }

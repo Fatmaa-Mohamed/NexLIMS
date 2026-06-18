@@ -3,6 +3,7 @@ using NextLIMS.BLL.DTO.Client;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.DTO.SampleDTO;
 using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.RepoDTO.sampleData;
 using NextLIMS.DAL.Repository.SampleRepo;
 using System;
 using System.Collections.Generic;
@@ -145,12 +146,60 @@ namespace NextLIMS.BLL.Services.SampleServic
 
             return await _sampleRepository.filterByStatus( status,tenantId);
         }
-
         public async Task<List<string>>? GetConfirmationTemplatesByTestId(int TestId)
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
             return await _sampleRepository.GetConfirmationTemplatesByTestIdAsync(TestId, tenantId);
         }
+        public async Task<SampleDetailsResponseDto>? GetSampleDetailsWithPreps(int SampleId)
+        {
+            var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
+            var sample = await _sampleRepository.GetSampleWithAllTestDataAsync(SampleId, tenantId);
+            if (sample == null) return null;
 
+            var response = new SampleDetailsResponseDto
+            {
+                SampleId = sample.Id,
+                SampleName = sample.SampleName,
+                SampleType = sample.SampleType,
+
+                Tests = sample.SampleTests?.Select(st => new SampleTestDetailsDto
+                {
+                    SampleTestId = st.Id,
+                    Status = st.Status,
+                    TestId = st.TenantTest.Test.Id,
+                    TestName = st.TenantTest?.Test?.TestName,
+                    TestType = st.TenantTest?.Test?.TestType,
+                    EnumerationPrep = st.EnumerationData == null ? null : new EnumerationPrepResponseDto
+                    {
+                        Id = st.EnumerationData.Id,
+                        Weight = st.EnumerationData.Weight,
+                        DiluentAmount = st.EnumerationData.DiluentAmount,
+
+                        Dilutions = st.EnumerationData.EnumerationDilutions?.Select(dil => new EnumerationDilutionResponseDto
+                        {
+                            Id = dil.Id,
+                            DilutionType = dil.DilutionType,
+                            IsSelectedForCalculation = dil.IsSelectedForCalculation,
+
+                            DilutionOrVolume = dil.DilutionOrVolume ,
+                            VolumePlated = dil.VolumePlated ,
+                            ColonyCount = dil.ColonyCount 
+                        }).ToList() ?? new()
+                    },
+                    DetectionPrep = st.DetectionData == null ? null : new DetectionPrepResponseDto
+                    {
+                        Id = st.DetectionData.Id,
+                        Weight = st.DetectionData.Weight,
+                        EnrichmentMedia = st.DetectionData.EnrichmentMedia,
+                        MediaAmount = st.DetectionData.MediaAmount
+                    }
+                }).ToList() ?? new()
+            };
+
+            return response;
+        }
     }
+
+    
 }

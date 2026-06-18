@@ -11,6 +11,7 @@ using NextLIMS.BLL.Services.PasswordReset;
 using NextLIMS.BLL.Services.Permissions;
 using NextLIMS.BLL.Services.prep.DetectionService;
 using NextLIMS.BLL.Services.prep.EnumerationService;
+using NextLIMS.BLL.Services.prep.LabAnalysisService;
 using NextLIMS.BLL.Services.Roles;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
@@ -23,6 +24,7 @@ using NextLIMS.DAL.Repositories;
 using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.Department;
 using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.SampleRepo.LabRepo;
 using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
 using NextLIMS.DAL.Repository.Test;
 using System.Text;
@@ -75,6 +77,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IEnumerationService, EnumerationService>();
 builder.Services.AddScoped<IDetectionService, DetectionService>();
 builder.Services.AddScoped<ISampleWorkflowRepository, SampleWorkflowRepository>();
+builder.Services.AddScoped<ILabAnalysisRepository, LabAnalysisRepository>();
+builder.Services.AddScoped<ILabAnalysisService, LabAnalysisService>();
 ////////////////
 ///cors
 

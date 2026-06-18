@@ -34,6 +34,9 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 40, RoleId = 1, PermissionId = 17 }, // Save_Enumeration_Prep
     new RolePermission { Id = 41, RoleId = 1, PermissionId = 18 }, // Save_Detection_Prep
     new RolePermission { Id = 43, RoleId = 1, PermissionId = 19 }, // Save_Molecular_Prep
+    new RolePermission { Id = 154, RoleId = 1, PermissionId = 21 }, // Get_Sample_Details_With_Preps 
+    new RolePermission { Id = 155, RoleId = 1, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
+    new RolePermission { Id = 156, RoleId = 1, PermissionId = 28 }, // Save_Detection_Prep_Data 
 
     // ===== Receptionist (Id = 2) — View/Log samples =====
     new RolePermission { Id = 15, RoleId = 2, PermissionId = 8 },  // CreateSample
@@ -59,6 +62,10 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 26, RoleId = 4, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test 
     new RolePermission { Id = 28, RoleId = 4, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 46, RoleId = 4, PermissionId = 21 }, // Get_Sample_Details_With_Preps 
+    new RolePermission { Id = 152, RoleId = 4, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
+    new RolePermission { Id = 153, RoleId = 4, PermissionId = 28 }, // Save_Detection_Prep_Data 
+
 
     // ===== Department Director (Id = 5) — Approve results, retest, reassign tasks =====
     new RolePermission { Id = 29, RoleId = 5, PermissionId = 3 },  // GetRoles

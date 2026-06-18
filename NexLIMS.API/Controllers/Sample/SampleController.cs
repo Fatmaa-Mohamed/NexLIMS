@@ -88,6 +88,17 @@ namespace NexLIMS.API.Controllers.Sample
             var templates = await _service.GetConfirmationTemplatesByTestId(TestId);
             return Ok(new { confirmation = templates ?? new List<string>() });
         }
+        [Authorize]
+        [HttpGet("{SampleId}/Get-analyst-prep")]
+        [CheckPermission("Get_Sample_Details_With_Preps")]
+        public async Task<IActionResult> GetSampleDetailsWithPreps([FromRoute] int SampleId)
+        {
+            var templates = await _service.GetSampleDetailsWithPreps(SampleId);
+            return Ok(templates);
+            
+        }
+
+
 
     }
 }

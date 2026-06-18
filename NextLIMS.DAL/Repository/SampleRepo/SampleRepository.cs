@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.RepoDTO.sampleData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,6 +168,22 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                                 .Where(s => s.TestId == testid && s.TenantId == tenantId)
                                 .Select(S=>S.ConfirmationTestName).ToListAsync();
                                 
+        }
+
+        public async Task<Sample?> GetSampleWithAllTestDataAsync(int sampleId, int tenantId)
+        {
+            return await _context.Samples
+                .Where(s => s.Id == sampleId && s.TenantId == tenantId)
+                .Include(s => s.SampleTests)
+                    .ThenInclude(st => st.TenantTest)
+                        .ThenInclude(tt => tt.Test)
+                .Include(s => s.SampleTests)
+                    .ThenInclude(st => st.EnumerationData)
+                        .ThenInclude(ed => ed.EnumerationDilutions)
+                .Include(s => s.SampleTests)
+                    .ThenInclude(st => st.DetectionData)
+                .FirstOrDefaultAsync();
+        
         }
     }
 }

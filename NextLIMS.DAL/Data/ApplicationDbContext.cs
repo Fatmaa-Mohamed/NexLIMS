@@ -366,7 +366,6 @@ namespace NextLIMS.DAL.Data
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.Property(x => x.DilutionOrVolume).IsRequired();
                 e.Property(x => x.DilutionType).IsRequired();
-                e.Property(x => x.ColonyCount).IsRequired();
                 e.Property(x => x.IsSelectedForCalculation).HasDefaultValue(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.EnumerationDataId);

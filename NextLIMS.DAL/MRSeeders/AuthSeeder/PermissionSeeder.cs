@@ -33,7 +33,10 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
      new Permission { Id = 16 , Name = "Get_Confirmation_Templates" , Description = "Get Confirmation Templates By TestId" },
      new Permission { Id = 17 , Name = "Save_Enumeration_Prep", Description = "Save Enumeration Prep For Sample Test" },
      new Permission { Id = 18 , Name = "Save_Detection_Prep", Description = "Save Detection Prep For Sample Test" },
-     new Permission { Id = 19 , Name = "Save_Molecular_Prep", Description = "Save Molecular Prep For Sample Test" }
+     new Permission { Id = 19 , Name = "Save_Molecular_Prep", Description = "Save Molecular Prep For Sample Test" },
+     new Permission { Id = 21 , Name = "Get_Sample_Details_With_Preps", Description = "Get Sample Details With Preps" },
+     new Permission { Id = 27 , Name = "Save_Enumeration_Prep_Data", Description = "Save Enumeration Prep Data For Sample Test" },
+     new Permission { Id = 28 , Name = "Save_Detection_Prep_Data", Description = "Save Detection Prep Data For Sample Test" }
      );
 
 
