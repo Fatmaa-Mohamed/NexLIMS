@@ -105,5 +105,16 @@ namespace NextLIMS.BLL.Services.DepartmentDiractor
             var result = await repository.getPendingApprovalSamples(TenantId,SampleStatuses.Approved);
             return result.ToDto();
         }
+
+        public async Task<List<object>> getDirectors()
+        {
+            var result=await repository.directors(TenantId);
+
+            return  result.Select(e => new 
+            {
+                DirectorId= e.Id,
+            DirectorName=e.Name            
+            }).Cast<object>().ToList();
+        }
     }
 }

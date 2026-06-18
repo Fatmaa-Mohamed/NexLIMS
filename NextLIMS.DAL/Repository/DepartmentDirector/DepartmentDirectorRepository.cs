@@ -167,6 +167,16 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
             var result = await _context.Samples.Where(e=>e.TenantId == tenantid&&e.Status==status).ToListAsync();
             return result;
         }
+
+        public async Task<List<User>> directors(int tenantId)
+        {
+            var result = await _context.Users
+      .Where(u => u.TenantId == tenantId &&
+                  u.Role.RolePermissions.Any(rp =>
+                      rp.Permission.Name == "AssignToAnalystASpeciicSample"))
+      .ToListAsync();
+            return result;
+        }
     }
 }
 

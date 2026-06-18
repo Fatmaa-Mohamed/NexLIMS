@@ -19,8 +19,15 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
             _departmentDirectorService = departmentDirectorService;
         }
 
+        [HttpGet("Directors")]
+        [Authorize]
+        public async Task<IActionResult> getAlldirectors()
+        {
 
-        //public async  
+
+            var result = await _departmentDirectorService.getDirectors();
+            return Ok(result);
+        }  
 
 
 
