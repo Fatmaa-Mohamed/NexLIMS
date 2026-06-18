@@ -58,7 +58,7 @@ namespace NextLIMS.BLL.Services.SampleServic
             {
                 SampleName = sampleDto.SampleName,
                 SampleType = sampleDto.SampleType,
-                Status =SampleStatuses.Registered,
+                Status = SampleStatuses.Registered,
                 CreatedAt = DateTime.UtcNow,
                 ClientId = clientId,
                 CreatedBy = createdBy,
@@ -66,7 +66,7 @@ namespace NextLIMS.BLL.Services.SampleServic
             };
             //continue from notion
             var savedSample = await _sampleRepository.AddSample(sample);
-          //  var direcotor = await _sampleRepository.getDirectorBytenantandDepartment(tenantId);
+            //  var direcotor = await _sampleRepository.getDirectorBytenantandDepartment(tenantId);
 
 
             var sampleWorkflow = new SampleWorkflow
@@ -76,7 +76,7 @@ namespace NextLIMS.BLL.Services.SampleServic
                 Level = 0,
                 AssignedToId = null,
                 StartDate = DateTime.UtcNow,
-                 Action=SampleStatuses.Registered,
+                Action = SampleStatuses.Registered,
                 Flag = null,
                 Reason = null
             };
@@ -138,10 +138,10 @@ namespace NextLIMS.BLL.Services.SampleServic
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
 
-           var result= await _sampleRepository.AttachTestsToSample(sampleId,testIds,tenantId);
+            var result = await _sampleRepository.AttachTestsToSample(sampleId, testIds, tenantId);
             return result;
         }
-        
+
         public async Task detachTestsfromSample(int sampleId, ICollection<int> testIds)
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
@@ -158,8 +158,38 @@ namespace NextLIMS.BLL.Services.SampleServic
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
 
-            return await _sampleRepository.filterByStatus( status,tenantId);
+            return await _sampleRepository.filterByStatus(status, tenantId);
         }
+
+        public async Task AddSampleToDirector(int sampleid,int directorid)
+        {
+            var createdBy = int.Parse(_httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.NameIdentifier).Value);
+            var tenantId = int.Parse(_httpContextAccessor.HttpContext.User
+                .FindFirst("TenantId").Value);
+
+            var oldSample = await _sampleRepository.GetSampleById(sampleid, tenantId);
+            oldSample.Status = SampleStatuses.Pending;
+            
         
+            var sampleWorkflow = new SampleWorkflow
+            {
+                TenantId = tenantId,
+                SampleId = oldSample.Id,
+                Level = 0,
+                AssignedToId = directorid,
+                StartDate = DateTime.UtcNow,
+                Action = SampleStatuses.Pending,
+                Flag = true,
+                Reason =null
+            };
+            await _sampleRepository.addsampleWorkflowAsync(sampleWorkflow);
+            await _sampleRepository.savechangesasync();
+            
+          
+        }
     }
-}
+
+
+
+    }

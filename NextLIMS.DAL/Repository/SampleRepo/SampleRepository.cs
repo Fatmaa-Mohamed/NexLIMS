@@ -68,8 +68,8 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         .Include(s => s.SampleTests)
             .ThenInclude(st => st.AssignedToUser)
         .FirstOrDefaultAsync(s => s.Id == id &&
-                                  s.TenantId == tenantid &&
-                                  s.Status == "pending");
+                                  s.TenantId == tenantid 
+                                  );
         }
         //test
         public async Task<bool> AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
@@ -185,7 +185,10 @@ namespace NextLIMS.DAL.Repository.SampleRepo
             var result = await _context.Users.Include(e => e.Role).Where(e => e.Role.Name == "Department Director" && e.TenantId == tenantId).FirstOrDefaultAsync();
 
             return result;
-        
+        }
+        public async Task savechangesasync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

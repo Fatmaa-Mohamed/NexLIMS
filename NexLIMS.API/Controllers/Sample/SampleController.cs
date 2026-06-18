@@ -26,6 +26,22 @@ namespace NexLIMS.API.Controllers.Sample
             return Ok(result);
         }
         [Authorize]
+        [HttpPost("addSampleToDirector")]
+       // [CheckPermission("CreateSample")]
+       //get department direcot
+        public async Task<IActionResult> AddSampleToDepartmentDirector(int sampleid,int directorId)
+        {
+            try
+            {
+                await _service.AddSampleToDirector(sampleid, directorId);
+                return Ok("sample added to director");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            }
+        [Authorize]
         [HttpGet]
         [CheckPermission("GetAllSamples")]
         public async Task<IActionResult> GetAllSamplesAsync([FromQuery] int page, [FromQuery] int pageSize)

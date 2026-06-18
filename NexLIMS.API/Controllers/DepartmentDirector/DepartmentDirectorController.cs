@@ -19,6 +19,11 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
             _departmentDirectorService = departmentDirectorService;
         }
 
+
+        //public async  
+
+
+
         [HttpPost("assignToAnalyst")]
         [Authorize]
         [CheckPermission("AssignToAnalystASpeciicSample")]
