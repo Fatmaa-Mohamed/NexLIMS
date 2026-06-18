@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.reasons;
 using NextLIMS.BLL.Services.DepartmentDiractor;
 
@@ -20,6 +21,7 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
 
         [HttpPost("assignToAnalyst")]
         [Authorize]
+        [CheckPermission("AssignToAnalystASpeciicSample")]
         public async Task<IActionResult> assignSampleToAnalyst(int sampleid,int analystId,[FromBody] Reason reason)
         {
             await _departmentDirectorService.AssignSampleToAnalystAsync(sampleid,analystId,reason.reason);
@@ -28,6 +30,7 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
 
         [HttpGet("showMySamples")]
         [Authorize]
+        [CheckPermission("GetMySamples")]
         public async Task<IActionResult> myAssignedSamples()
         {
             var result = await _departmentDirectorService.getMySamples();
@@ -36,12 +39,14 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
 
         [HttpGet("dashboared")]
         [Authorize]
+        [CheckPermission("ShowDashboard")]
         public async Task<IActionResult> showDashboared() {
 
             return Ok(await _departmentDirectorService.dashboard()); 
         }
         [HttpPost("sampleRetest")]
         [Authorize]
+        [CheckPermission("ApplySampleRetest")]
         public async Task<IActionResult>SampleRetest(int sampleid, [FromBody] Reason reason)
         {
 
@@ -53,6 +58,7 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
 
         [HttpPost("Approve")]
         [Authorize]
+        [CheckPermission("Approve Sample By SampleId")]
         public async Task<IActionResult> Approvel(int sampleid, [FromBody] Reason reason)
         {
 
@@ -64,6 +70,7 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
 
         [HttpGet("pendingApproval")]
         [Authorize]
+        [CheckPermission("Get Pending Samples")]
         public async Task<IActionResult> PendingApprovel()
         {
 

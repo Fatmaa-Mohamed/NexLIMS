@@ -32,6 +32,12 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 14, RoleId = 1, PermissionId = 14 }, // Filter_Samples_by_Status
     new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
 
+    new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
+    new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples
+    new RolePermission { Id = 49, RoleId = 1, PermissionId = 24 }, // ShowDashboard
+    new RolePermission { Id = 50, RoleId = 1, PermissionId = 25 }, // ApplySampleRetest
+    new RolePermission { Id = 51, RoleId = 1, PermissionId = 26 }, // Appro
+
     // ===== Receptionist (Id = 2) — View/Log samples =====
     new RolePermission { Id = 15, RoleId = 2, PermissionId = 8 },  // CreateSample
     new RolePermission { Id = 16, RoleId = 2, PermissionId = 9 },  // GetAllSamples
@@ -44,12 +50,21 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 21, RoleId = 3, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 22, RoleId = 3, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 23, RoleId = 3, PermissionId = 14 }, // Filter_Samples_by_Status
+        new RolePermission { Id = 52, RoleId = 3, PermissionId = 23 }, // GetMySamples
+
     // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
+
     new RolePermission { Id = 24, RoleId = 4, PermissionId = 9 },  // GetAllSamples
     new RolePermission { Id = 25, RoleId = 4, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 26, RoleId = 4, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 28, RoleId = 4, PermissionId = 14 }, // Filter_Samples_by_Status
+
+     new RolePermission { Id = 62, RoleId = 4, PermissionId = 22 }, // AssignToAnalystASpeciicSample
+    new RolePermission { Id = 53, RoleId = 4, PermissionId = 23 }, // GetMySamples
+    new RolePermission { Id = 54, RoleId = 4, PermissionId = 24 }, // ShowDashboard
+    new RolePermission { Id = 55, RoleId = 4, PermissionId = 25 }, // ApplySampleRetest
+    new RolePermission { Id = 56, RoleId = 4, PermissionId = 26 },
 
     // ===== Department Director (Id = 5) — Approve results, retest, reassign tasks =====
     new RolePermission { Id = 29, RoleId = 5, PermissionId = 3 },  // GetRoles
@@ -57,8 +72,13 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 31, RoleId = 5, PermissionId = 9 },  // GetAllSamples
     new RolePermission { Id = 32, RoleId = 5, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 33, RoleId = 5, PermissionId = 12 }, // Remove_Sample_From_Test
-    new RolePermission { Id = 34, RoleId = 5, PermissionId = 14 } // Filter_Samples_by_Status
+    new RolePermission { Id = 34, RoleId = 5, PermissionId = 14 }, // Filter_Samples_by_Status
 
+      new RolePermission { Id = 57, RoleId = 5, PermissionId = 22 }, // AssignToAnalystASpeciicSample
+    new RolePermission { Id = 58, RoleId = 5, PermissionId = 23 }, // GetMySamples
+    new RolePermission { Id = 59, RoleId = 5, PermissionId = 24 }, // ShowDashboard
+    new RolePermission { Id = 60, RoleId = 5, PermissionId = 25 }, // ApplySampleRetest
+    new RolePermission { Id = 61, RoleId = 5, PermissionId = 26 }  // Approve Sample By SampleId
 
 
 );
