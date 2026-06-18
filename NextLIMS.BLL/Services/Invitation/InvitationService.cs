@@ -43,17 +43,46 @@ namespace NextLIMS.BLL.Services.Invitation
                 if (!int.TryParse(userIdClaim, out var createdBy))
                     return false;
 
+           
+                var roleWithPermission = await _repository.getRoleWithItsPermissions(roleId);
+
+                var newrole = new Role
+                {
+                    TenantId = tenantId,
+                    Name = roleWithPermission.Name,
+                    Description = roleWithPermission.Description,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = createdBy,
+                    IsActive = true
+                };
+                    
+                await _repository.addRoleAsync(newrole);
+                await _repository.SaveChangesAsync();
+
                 var user = new User
                 {
                     Email = email,
                     Name = string.Empty,
-                    RoleId = roleId,
+                    RoleId = newrole.Id,
                     TenantId = tenantId,
                     PasswordHash = string.Empty,
                     IsActive = false,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = createdBy
                 };
+                // ✅ THIS IS THE MISSING PART (copy permissions)
+                var rolePermissions = roleWithPermission.RolePermissions
+                    .Select(rp => new RolePermission
+                    {
+                        RoleId = newrole.Id,
+                        PermissionId = rp.PermissionId,
+                        GrantedAt= DateTime.UtcNow,
+                        GrantedBy=createdBy
+                    })
+                    .ToList();
+
+                await _repository.AddRolePermissionsAsync(rolePermissions);
+                await _repository.SaveChangesAsync();
 
                 await _repository.AddUserAsync(user);
                 await _repository.SaveChangesAsync();
@@ -72,8 +101,7 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.AddPasswordResetAsync(passwordReset);
                 await _repository.SaveChangesAsync();
 
-                var role = await _repository.GetRoleByIdAsync(roleId);
-                var roleName = role?.Name ?? "Employee";
+                var roleName = newrole?.Name ?? "Employee";
 
                 var appUrl = _config["App:BaseUrl"];
                 var link = $"{appUrl}/Employee/set-password?token={token}";
