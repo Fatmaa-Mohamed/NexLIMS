@@ -38,6 +38,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 155, RoleId = 1, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
     new RolePermission { Id = 156, RoleId = 1, PermissionId = 28 }, // Save_Detection_Prep_Data 
     new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
+    new RolePermission { Id = 44, RoleId = 1, PermissionId = 20 }, // SendClientPortalInvitation
 
     new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples
@@ -51,6 +52,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 17, RoleId = 2, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 18, RoleId = 2, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
     new RolePermission { Id = 19, RoleId = 2, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 45, RoleId = 2, PermissionId = 20 }, // SendClientPortalInvitation
 
     // ===== Analyst (Id = 3) — First step of tests =====
     new RolePermission { Id = 20, RoleId = 3, PermissionId = 9 },  // GetAllSamples

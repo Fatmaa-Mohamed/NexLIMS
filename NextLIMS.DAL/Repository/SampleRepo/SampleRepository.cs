@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace NextLIMS.DAL.Repository.SampleRepo
 {
@@ -25,23 +26,23 @@ namespace NextLIMS.DAL.Repository.SampleRepo
 
 
             var samples = await _context.Samples
-    .AsNoTracking()
-    .Where(e => e.TenantId == tenantId)
-    .OrderBy(e => e.Id)
-    .Skip((page - 1) * pageSize)
-    .Take(pageSize)
-    .Select(e => new SampleDataDto
-    {
-        sampleId = e.Id,
-        departmentName = e.Tenant.TenantDepartments
-            .Select(td => td.Department.Name)
-            .FirstOrDefault(),
-        nid = e.Client.NID,
-        RegisteredAt = e.CreatedAt,
-        status = e.Status,
-    })
-    .ToListAsync();
-            return samples;
+                .AsNoTracking()
+                .Where(e => e.TenantId == tenantId)
+                .OrderBy(e => e.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(e => new SampleDataDto
+                {
+                    sampleId = e.Id,
+                    departmentName = e.Tenant.TenantDepartments
+                    .Select(td => td.Department.Name)
+                    .FirstOrDefault(),
+                    nid = e.Client.NID,
+                    RegisteredAt = e.CreatedAt,
+                    status = e.Status,
+                })
+                .ToListAsync();
+                        return samples;
         }
         public async Task<Sample> GetSampleById(int id, int tenantId)
         {
@@ -63,14 +64,12 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         public async Task<Sample?> getSampleWithItsTests(int id, int tenantid)
         {
             return await _context.Samples
-        .Include(s => s.SampleTests)
-            .ThenInclude(st => st.TenantTest)
+                .Include(s => s.SampleTests)
+                .ThenInclude(st => st.TenantTest)
                 .ThenInclude(tt => tt.Test)
-        .Include(s => s.SampleTests)
-            .ThenInclude(st => st.AssignedToUser)
-        .FirstOrDefaultAsync(s => s.Id == id &&
-                                  s.TenantId == tenantid 
-                                  );
+                .Include(s => s.SampleTests)
+                .ThenInclude(st => st.AssignedToUser)
+                .FirstOrDefaultAsync(s => s.Id == id && s.TenantId == tenantid );
         }
         //test
         public async Task<bool> AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
@@ -138,8 +137,8 @@ namespace NextLIMS.DAL.Repository.SampleRepo
             {
                 sampleId = e.Id,
                 departmentName = e.Tenant.TenantDepartments
-                    .Select(td => td.Department.Name)
-                    .FirstOrDefault(),
+                .Select(td => td.Department.Name)
+                .FirstOrDefault(),
                 nid = e.Client.NID,
                 RegisteredAt = e.CreatedAt,
                 status = e.Status,
@@ -218,6 +217,34 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         public async Task savechangesasync()
         {
             await _context.SaveChangesAsync();
+        }
+
+
+        // Method for showing sample statistics for clients:
+        public async Task<(List<Sample> Items, int TotalCount)>
+            GetClientSamplesAsync(
+                int tenantId,
+                int clientId,
+                int page,
+                int pageSize,
+                CancellationToken cancellationToken = default)
+        {
+            var query = _context.Samples
+                .AsNoTracking()
+                .Where(sample =>
+                    sample.TenantId == tenantId &&
+                    sample.ClientId == clientId);
+
+            var totalCount =
+                await query.CountAsync(cancellationToken);
+
+            var items = await query
+                .OrderByDescending(sample => sample.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return (items, totalCount);
         }
     }
 }
