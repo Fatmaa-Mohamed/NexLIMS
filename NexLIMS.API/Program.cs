@@ -28,6 +28,9 @@ using NextLIMS.DAL.Repository.SampleRepo.LabRepo;
 using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
 using NextLIMS.DAL.Repository.Test;
 using System.Text;
+using NextLIMS.BLL.Services.PasswordReset;
+using NextLIMS.DAL.Repository.DepartmentDirector;
+using NextLIMS.BLL.Services.DepartmentDiractor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +70,8 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<DepartmentDirectorRepository>();
+builder.Services.AddScoped<DepartmentDirectorService>();
 //
 builder.Services.AddScoped<SampleRepository>();
 builder.Services.AddScoped<SampleService>();
