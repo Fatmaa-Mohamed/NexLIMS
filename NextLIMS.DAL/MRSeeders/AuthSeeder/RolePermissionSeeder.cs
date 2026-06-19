@@ -61,8 +61,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 37, RoleId = 3, PermissionId = 17 }, // Save_Enumeration_Prep
     new RolePermission { Id = 38, RoleId = 3, PermissionId = 18 }, // Save_Detection_Prep
     new RolePermission { Id = 42, RoleId = 3, PermissionId = 19 }, // Save_Molecular_Prep
-
-        new RolePermission { Id = 52, RoleId = 3, PermissionId = 23 }, // GetMySamples
+    new RolePermission { Id = 52, RoleId = 3, PermissionId = 23 }, // GetMySamples
 
     // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
 

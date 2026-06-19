@@ -197,9 +197,9 @@ namespace NextLIMS.BLL.Services.SampleServic
                             DilutionType = dil.DilutionType,
                             IsSelectedForCalculation = dil.IsSelectedForCalculation,
 
-                            DilutionOrVolume = dil.DilutionOrVolume ,
-                            VolumePlated = dil.VolumePlated ,
-                            ColonyCount = dil.ColonyCount 
+                            DilutionOrVolume = dil.DilutionOrVolume,
+                            VolumePlated = dil.VolumePlated,
+                            ColonyCount = dil.ColonyCount
                         }).ToList() ?? new()
                     },
                     DetectionPrep = st.DetectionData == null ? null : new DetectionPrepResponseDto
@@ -214,11 +214,8 @@ namespace NextLIMS.BLL.Services.SampleServic
 
             return response;
         }
-    }
 
-    
-}
-        public async Task AddSampleToDirector(int sampleid,int directorid)
+        public async Task AddSampleToDirector(int sampleid, int directorid)
         {
             var createdBy = int.Parse(_httpContextAccessor.HttpContext.User
                 .FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -227,8 +224,8 @@ namespace NextLIMS.BLL.Services.SampleServic
 
             var oldSample = await _sampleRepository.GetSampleById(sampleid, tenantId);
             oldSample.Status = SampleStatuses.Pending;
-            
-        
+
+
             var sampleWorkflow = new SampleWorkflow
             {
                 TenantId = tenantId,
@@ -238,15 +235,11 @@ namespace NextLIMS.BLL.Services.SampleServic
                 StartDate = DateTime.UtcNow,
                 Action = SampleStatuses.Pending,
                 Flag = true,
-                Reason =null
+                Reason = null
             };
             await _sampleRepository.addsampleWorkflowAsync(sampleWorkflow);
             await _sampleRepository.savechangesasync();
-            
-          
+
         }
     }
-
-
-
-    }
+}

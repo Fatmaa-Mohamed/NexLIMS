@@ -200,9 +200,10 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                 .Include(s => s.SampleTests)
                     .ThenInclude(st => st.DetectionData)
                 .FirstOrDefaultAsync();
+        }
         
 
-     public async Task addsampleWorkflowAsync(SampleWorkflow sampleWorkflow)
+        public async Task addsampleWorkflowAsync(SampleWorkflow sampleWorkflow)
         {
             await _context.SampleWorkflows.AddAsync(sampleWorkflow);
             await _context.SaveChangesAsync();
