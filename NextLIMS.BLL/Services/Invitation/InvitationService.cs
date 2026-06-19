@@ -102,9 +102,10 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.SaveChangesAsync();
 
                 var roleName = newrole?.Name ?? "Employee";
-
-                var appUrl = _config["App:BaseUrl"];
-                var link = $"{appUrl}/Employee/set-password?token={token}";
+                // var appUrl = _config["App:BaseUrl"];   //frontendAppUrl instead of appUrl
+                var appUrl = _config["frontendAppUrl"];
+             //   var link = $"{appUrl}/Employee/set-password?token={token}";
+                var link = $"{appUrl}/activate?token={token}";
 
                 var body = $@"
                     <h3>Welcome to the team!</h3>
@@ -153,8 +154,10 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.AddPasswordResetAsync(passwordReset);
                 await _repository.SaveChangesAsync();
 
-                var appUrl = _config["App:BaseUrl"];
-                var link = $"{appUrl}/Employee/reset-password?token={token}";
+                // var appUrl = _config["App:BaseUrl"];//frontendAppUrl instead of appUrl
+                //  var link = $"{appUrl}/Employee/reset-password?token={token}";
+                var appUrl = _config["frontendAppUrl"];
+                var link = $"{appUrl}/reset-password?token={token}";
 
                 var body = $@"
                     <h3>Password Reset</h3>

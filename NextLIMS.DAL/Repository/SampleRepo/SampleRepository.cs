@@ -77,17 +77,23 @@ namespace NextLIMS.DAL.Repository.SampleRepo
             var sample = await _context.Samples
                 .FirstOrDefaultAsync(s => s.Id == sampleId && s.TenantId == tenantId);
 
-
             var allExist = await _context.TenantTests
                 .Where(t => t.TenantId == tenantId)
-                .CountAsync(t => testIds.Contains(t.TestId)) == testIds.Count;
+                .CountAsync(t => testIds.Contains(t.Id)) == testIds.Count;
+          //  fetch the actual TenantTest records for this lab that match the incoming TestIds
+
+           var tenantTests = await _context.TenantTests
+               .Where(t => t.TenantId == tenantId && testIds.Contains(t.Id))
+               .ToListAsync();
+
+            if (tenantTests.Count != testIds.Count)
+                    return false;
 
 
 
             if (sample == null)
                 throw new Exception("Sample not found");
-            if (allExist)
-            {
+          
                 var sampleTests = testIds.Select(testId => new SampleTest
                 {
                     SampleId = sampleId,
@@ -102,8 +108,7 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                 await _context.SaveChangesAsync();
             return true;
             }
-            return false;
-        }
+        
         public async Task DetachTestsFromSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
             var sampleTests = await _context.SampleTests
