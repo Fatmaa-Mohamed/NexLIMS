@@ -61,34 +61,18 @@ namespace NextLIMS.BLL.Services.Roles
             return result.ToDTOList().ToList();
         }
 
-        public async Task<RoleDTO> GetRoleWithItsPermissions()
+        //get role with its ppermission
+        public async Task<List<RoleDTO>> GetRoleWithItsPermissions()
         {
+         
             int userId = int.Parse(_httpContextAccessor.HttpContext!
                 .User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var user=await _repository.getUserById(userId);
+            var result = await _repository.GetRoleAndItsPermissionsByTenantAsync(TenantId,user.RoleId);
 
-            var user = await _repository.getUserById(userId);
-            if (user == null)
-                throw new KeyNotFoundException($"User with Id {userId} was not found.");
-
-            var result = await _repository.GetRoleAndItsPermissionsByTenantAsync(TenantId, user.RoleId);
-
-            var role = result.FirstOrDefault();
-            if (role == null)
-                throw new KeyNotFoundException($"Role with Id {user.RoleId} was not found for this tenant.");
-
-            return role.ToDTO();
+            return result.ToDTOList().ToList();
         }
 
-        public async Task<bool?> getTenantById()
-        {
-            var result = await _repository.getTenantByid(TenantId);
-            return result.IsActive;
-        }
-        public async Task<string> getUserData()
-        {
-            var result = await _repository.getMyData(TenantId,UserId);
-            return result;
-        }
 
         public async Task<string> AttachPermissions(
             int roleId,
@@ -113,6 +97,10 @@ namespace NextLIMS.BLL.Services.Roles
                 await _repository.GetAttachedPermissionIdsAsync(
                     roleId);
 
+            //var permissionsToAttach =
+            //    existingPermissions
+            //        .Except(attachedPermissions)
+            //        .ToList();
             var permissionsToAttach = existingPermissions
     .Where(p => !attachedPermissions.Contains(p))
     .ToList();
@@ -169,11 +157,7 @@ namespace NextLIMS.BLL.Services.Roles
                 .GetRolePermissionsAsync(roleId);
         }
 
-        public async Task updateConfigurationStatusAsync()
-        {
 
-            await _repository.updateConfigurationStatus(TenantId);
-        }
 
     }
 }

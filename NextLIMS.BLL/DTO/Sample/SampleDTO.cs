@@ -13,6 +13,7 @@ namespace NextLIMS.BLL.DTO.Sample
 
         public string SampleName { get; set; }
         public string SampleType { get; set; }
+
         public ClientDTO Client { get; set; }
      
     }

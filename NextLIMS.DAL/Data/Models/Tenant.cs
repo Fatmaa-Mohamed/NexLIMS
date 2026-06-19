@@ -6,8 +6,6 @@ namespace NextLIMS.DAL.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public bool ?IsActive { get; set; }=false;
         public string Location { get; set; }
         public string SubscriptionTier { get; set; }
         public string SubscriptionStatus { get; set; }

@@ -476,39 +476,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 28,
                             Description = "Save Detection Prep Data For Sample Test",
                             Name = "Save_Detection_Prep_Data"
-                            Id = 15,
-                            Description = "Apply Wizard changes ",
-                            Name = "SetupWizard"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Description = "Assign a specific sample to an analyst",
-                            Name = "AssignToAnalystASpeciicSample"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Description = "View samples assigned to the current user",
-                            Name = "GetMySamples"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Description = "View dashboard information and sample statuses",
-                            Name = "ShowDashboard"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Description = "Initiate a retest for a sample",
-                            Name = "ApplySampleRetest"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Description = "Approve a sample using its ID",
-                            Name = "Approve Sample By SampleId"
                         });
                 });
 
@@ -557,7 +524,6 @@ namespace NextLIMS.DAL.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2026, 6, 19, 0, 15, 22, 671, DateTimeKind.Local).AddTicks(9948),
-                            CreatedAt = new DateTime(2026, 6, 18, 8, 54, 13, 24, DateTimeKind.Local).AddTicks(7603),
                             Description = "Has full access to lab configuration, settings, users, and system management",
                             IsActive = true,
                             Name = "Admin"
@@ -566,7 +532,6 @@ namespace NextLIMS.DAL.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2026, 6, 19, 0, 15, 22, 672, DateTimeKind.Local).AddTicks(71),
-                            CreatedAt = new DateTime(2026, 6, 18, 8, 54, 13, 24, DateTimeKind.Local).AddTicks(7658),
                             Description = "Can view and log samples into the system",
                             IsActive = true,
                             Name = "Receptionist"
@@ -575,7 +540,6 @@ namespace NextLIMS.DAL.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2026, 6, 19, 0, 15, 22, 672, DateTimeKind.Local).AddTicks(77),
-                            CreatedAt = new DateTime(2026, 6, 18, 8, 54, 13, 24, DateTimeKind.Local).AddTicks(7662),
                             Description = "Performs the first step of laboratory tests",
                             IsActive = true,
                             Name = "Analyst"
@@ -584,7 +548,6 @@ namespace NextLIMS.DAL.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2026, 6, 19, 0, 15, 22, 672, DateTimeKind.Local).AddTicks(82),
-                            CreatedAt = new DateTime(2026, 6, 18, 8, 54, 13, 24, DateTimeKind.Local).AddTicks(7664),
                             Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
                             IsActive = true,
                             Name = "Senior Analyst"
@@ -593,7 +556,6 @@ namespace NextLIMS.DAL.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2026, 6, 19, 0, 15, 22, 672, DateTimeKind.Local).AddTicks(88),
-                            CreatedAt = new DateTime(2026, 6, 18, 8, 54, 13, 24, DateTimeKind.Local).AddTicks(7665),
                             Description = "Approves test results, authorizes retests, and reassigns tasks",
                             IsActive = true,
                             Name = "Department Director"
@@ -738,9 +700,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 39,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 16,
-                            Id = 35,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 15,
                             RoleId = 1
                         },
                         new
@@ -748,9 +707,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 40,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 17,
-                            Id = 47,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
                             RoleId = 1
                         },
                         new
@@ -758,9 +714,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 41,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 18,
-                            Id = 48,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
                             RoleId = 1
                         },
                         new
@@ -768,9 +721,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 43,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 19,
-                            Id = 49,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
                             RoleId = 1
                         },
                         new
@@ -778,9 +728,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 154,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 21,
-                            Id = 50,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
                             RoleId = 1
                         },
                         new
@@ -795,9 +742,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 156,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 28,
-                            Id = 51,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
                             RoleId = 1
                         },
                         new
@@ -889,9 +833,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 42,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 19,
-                            Id = 52,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
                             RoleId = 3
                         },
                         new
@@ -934,9 +875,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 46,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 21,
-                            Id = 62,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
                             RoleId = 4
                         },
                         new
@@ -944,9 +882,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 152,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 27,
-                            Id = 53,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
                             RoleId = 4
                         },
                         new
@@ -954,23 +889,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 153,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 28,
-                            Id = 54,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 55,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 56,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
                             RoleId = 4
                         },
                         new
@@ -1013,41 +931,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 34,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 14,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 57,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 58,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 59,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 60,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 61,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
                             RoleId = 5
                         });
                 });
@@ -1272,9 +1155,6 @@ namespace NextLIMS.DAL.Migrations
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .IsRequired()

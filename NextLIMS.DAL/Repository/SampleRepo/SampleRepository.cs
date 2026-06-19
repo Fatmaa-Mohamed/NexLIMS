@@ -69,47 +69,30 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         .Include(s => s.SampleTests)
             .ThenInclude(st => st.AssignedToUser)
         .FirstOrDefaultAsync(s => s.Id == id &&
-                                  s.TenantId == tenantid 
-                                  );
+                                  s.TenantId == tenantid &&
+                                  s.Status == "pending");
         }
-        //test
-        public async Task<bool> AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
+        public async Task AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
             var sample = await _context.Samples
                 .FirstOrDefaultAsync(s => s.Id == sampleId && s.TenantId == tenantId);
 
-            var allExist = await _context.TenantTests
-                .Where(t => t.TenantId == tenantId)
-                .CountAsync(t => testIds.Contains(t.Id)) == testIds.Count;
-          //  fetch the actual TenantTest records for this lab that match the incoming TestIds
-
-           var tenantTests = await _context.TenantTests
-               .Where(t => t.TenantId == tenantId && testIds.Contains(t.Id))
-               .ToListAsync();
-
-            if (tenantTests.Count != testIds.Count)
-                    return false;
-
-
-
             if (sample == null)
                 throw new Exception("Sample not found");
-          
-                var sampleTests = testIds.Select(testId => new SampleTest
-                {
-                    SampleId = sampleId,
-                    TenantTestId = testId,
-                    Status = "pending",
-                    CreatedAt = DateTime.UtcNow
 
-                });
+            var sampleTests = testIds.Select(testId => new SampleTest
+            {
+                SampleId = sampleId,
+                 TenantTestId = testId,
+                Status = "pending",
+                CreatedAt = DateTime.UtcNow
+                
+            });
 
-                await _context.SampleTests.AddRangeAsync(sampleTests);
+            await _context.SampleTests.AddRangeAsync(sampleTests);
 
-                await _context.SaveChangesAsync();
-            return true;
-            }
-        
+            await _context.SaveChangesAsync();
+        }
         public async Task DetachTestsFromSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
             var sampleTests = await _context.SampleTests
@@ -201,22 +184,24 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                     .ThenInclude(st => st.DetectionData)
                 .FirstOrDefaultAsync();
         
-
-     public async Task addsampleWorkflowAsync(SampleWorkflow sampleWorkflow)
-        {
-            await _context.SampleWorkflows.AddAsync(sampleWorkflow);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<User> getDirectorBytenantandDepartment(int tenantId)
-        {
-            var result = await _context.Users.Include(e => e.Role).Where(e => e.Role.Name == "Department Director" && e.TenantId == tenantId).FirstOrDefaultAsync();
-
-            return result;
-        }
-        public async Task savechangesasync()
-        {
-            await _context.SaveChangesAsync();
         }
     }
 }
+//var samples = await _context.Samples.AsNoTracking()
+//    .Include(o=>o.Client)
+//    .Include(o=>o.Tenant)
+//    .ThenInclude(e=>e.TenantDepartments)
+//    .ThenInclude(e=>e.Department)
+//    .Where(e => e.TenantId == tenantId)
+//    .Select(e => new SampleDataDto
+//    {
+//        sampleId = e.Id,
+//        departmentName = e.Tenant.TenantDepartments.Select(e=>e.Department.Name).ToString(),
+//        nid=e.Client.NID,
+//        RegisteredAt=e.CreatedAt,
+//        status=e.Status,
+//    })
+//    .Skip((page-1)*pagesize)
+//    .Take(pagesize)
+//    .AsSplitQuery().
+//    ToListAsync();

@@ -15,7 +15,6 @@ namespace NextLIMS.BLL.Services.SignupService
     {
         private readonly ApplicationDbContext _context;
 
-
         public SignupService(ApplicationDbContext context)
         {
             _context = context;
@@ -59,8 +58,6 @@ namespace NextLIMS.BLL.Services.SignupService
                 _context.Tenants.Add(tenant);
                 await _context.SaveChangesAsync();
 
-
-
                 var adminUser = new User
                 {
                     TenantId = tenant.Id,
@@ -73,11 +70,7 @@ namespace NextLIMS.BLL.Services.SignupService
                 };
 
                 _context.Users.Add(adminUser);
-                
-               await _context.SaveChangesAsync();
-
-            
-
+                await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();
                 return true;
