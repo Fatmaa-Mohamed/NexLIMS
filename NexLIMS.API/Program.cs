@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NexLIMS.API.Controllers.middlewares;
 using NextLIMS.BLL.Settings;
 using NextLIMS.BLL.Services.Auth;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NextLIMS.BLL.Services.ClientPortal;
 using NextLIMS.BLL.Services.ClientService;
 using NextLIMS.BLL.Services.Department;
@@ -85,6 +88,10 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IClientPortalRepository, ClientPortalRepository>();
 builder.Services.AddScoped<IClientPortalService, ClientPortalService>();
 builder.Services.AddScoped<IWhatsAppService, TwilioWhatsAppService>();
+if (builder.Environment.IsDevelopment()) {
+    builder.Services.Replace(
+        ServiceDescriptor.Scoped<IWhatsAppService, DevelopmentWhatsAppService>()); 
+}
 builder.Services.AddScoped<IClientPortalInvitationService, ClientPortalInvitationService>();
 builder.Services.AddScoped<IClientOtpService, ClientOtpService>();
 
@@ -149,6 +156,62 @@ builder.Services.AddAuthorization(options =>
         });
 });
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode =
+        StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy(
+        "ClientOtp",
+        httpContext =>
+        {
+            var remoteIp =
+                httpContext.Connection
+                    .RemoteIpAddress?
+                    .ToString() ?? "unknown";
+
+            var slug =
+                httpContext.Request
+                    .RouteValues["slug"]?
+                    .ToString() ?? "unknown";
+
+            var partitionKey =
+                $"{remoteIp}:{slug}";
+
+            return RateLimitPartition
+                .GetFixedWindowLimiter(
+                    partitionKey,
+                    _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window =
+                            TimeSpan.FromMinutes(10),
+                        QueueLimit = 0,
+                        QueueProcessingOrder =
+                            QueueProcessingOrder
+                                .OldestFirst,
+                        AutoReplenishment = true
+                    });
+        });
+
+    options.OnRejected =
+        async (context, cancellationToken) =>
+        {
+            context.HttpContext.Response.StatusCode =
+                StatusCodes.Status429TooManyRequests;
+
+            await context.HttpContext.Response
+                .WriteAsJsonAsync(
+                    new
+                    {
+                        message =
+                            "Too many OTP requests. " +
+                            "Please try again later."
+                    },
+                    cancellationToken);
+        };
+});
+
 ///End//
 var app = builder.Build();
 
@@ -167,10 +230,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpsRedirection();
+app.UseRouting();
 app.UseCors("OpenCorsPolicy");
 
-app.UseHttpsRedirection();
-
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

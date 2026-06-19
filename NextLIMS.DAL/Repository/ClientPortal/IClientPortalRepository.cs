@@ -24,6 +24,17 @@ namespace NextLIMS.DAL.Repository.ClientPortal
             int clientId,
             CancellationToken cancellationToken = default);
 
+        Task<ClientOtpVerification?> GetLatestOtpAsync(
+            int tenantId,
+            int clientId,
+            CancellationToken cancellationToken = default);
+
+        Task<int> CountOtpsCreatedSinceAsync(
+            int tenantId,
+            int clientId,
+            DateTime createdSince,
+            CancellationToken cancellationToken = default);
+
         Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default);
     }

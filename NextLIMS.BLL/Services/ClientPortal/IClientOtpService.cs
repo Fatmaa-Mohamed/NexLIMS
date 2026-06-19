@@ -9,6 +9,11 @@ namespace NextLIMS.BLL.Services.ClientPortal
             RequestClientOtpDto request,
             CancellationToken cancellationToken = default);
 
+        Task<RequestClientOtpResponseDto> ResendOtpAsync(
+            string tenantSlug,
+            ResendClientOtpDto request,
+            CancellationToken cancellationToken = default);
+
         Task<VerifyClientOtpResponseDto> VerifyOtpAsync(
             string tenantSlug,
             VerifyClientOtpDto request,

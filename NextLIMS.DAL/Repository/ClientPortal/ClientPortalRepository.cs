@@ -73,6 +73,37 @@ namespace NextLIMS.DAL.Repository.ClientPortal
                 cancellationToken);
         }
 
+        public async Task<ClientOtpVerification?>
+    GetLatestOtpAsync(
+        int tenantId,
+        int clientId,
+        CancellationToken cancellationToken = default)
+        {
+            return await _context.ClientOtpVerifications
+                .AsNoTracking()
+                .Where(otp =>
+                    otp.TenantId == tenantId &&
+                    otp.ClientId == clientId)
+                .OrderByDescending(otp => otp.CreatedAt)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<int> CountOtpsCreatedSinceAsync(
+            int tenantId,
+            int clientId,
+            DateTime createdSince,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.ClientOtpVerifications
+                .AsNoTracking()
+                .CountAsync(
+                    otp =>
+                        otp.TenantId == tenantId &&
+                        otp.ClientId == clientId &&
+                        otp.CreatedAt >= createdSince,
+                    cancellationToken);
+        }
+
         public Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default)
         {

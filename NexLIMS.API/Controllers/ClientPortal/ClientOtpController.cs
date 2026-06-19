@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NextLIMS.BLL.DTO.ClientPortal;
 using NextLIMS.BLL.Services.ClientPortal;
+using Microsoft.AspNetCore.RateLimiting;
+using NextLIMS.BLL.Exceptions;
 
 namespace NexLIMS.API.Controllers.ClientPortal
 {
@@ -19,13 +21,13 @@ namespace NexLIMS.API.Controllers.ClientPortal
         }
 
         [AllowAnonymous]
+        [EnableRateLimiting("ClientOtp")]
         [HttpPost("request-otp")]
         public async Task<IActionResult> RequestOtp(
             [FromRoute] string slug,
             [FromBody] RequestClientOtpDto request,
             CancellationToken cancellationToken)
         {
-
             try
             {
                 var result =
@@ -35,6 +37,20 @@ namespace NexLIMS.API.Controllers.ClientPortal
                         cancellationToken);
 
                 return Ok(result);
+            }
+            catch (OtpRateLimitException exception)
+            {
+                Response.Headers.RetryAfter =
+                    exception.RetryAfterSeconds.ToString();
+
+                return StatusCode(
+                    StatusCodes.Status429TooManyRequests,
+                    new
+                    {
+                        message = exception.Message,
+                        retryAfterSeconds =
+                            exception.RetryAfterSeconds
+                    });
             }
             catch (UnauthorizedAccessException)
             {
@@ -54,11 +70,59 @@ namespace NexLIMS.API.Controllers.ClientPortal
         }
 
         [AllowAnonymous]
+        [EnableRateLimiting("ClientOtp")]
+        [HttpPost("resend-otp")]
+        public async Task<IActionResult> ResendOtp(
+            [FromRoute] string slug,
+            [FromBody] ResendClientOtpDto request,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                var result =
+                    await _clientOtpService.ResendOtpAsync(
+                        slug,
+                        request,
+                        cancellationToken);
+
+                return Ok(result);
+            }
+            catch (OtpRateLimitException exception)
+            {
+                Response.Headers.RetryAfter =
+                    exception.RetryAfterSeconds.ToString();
+
+                return StatusCode(
+                    StatusCodes.Status429TooManyRequests,
+                    new
+                    {
+                        message = exception.Message,
+                        retryAfterSeconds =
+                            exception.RetryAfterSeconds
+                    });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized(new
+                {
+                    message = "Invalid resend details."
+                });
+            }
+            catch (InvalidOperationException exception)
+            {
+                return BadRequest(new
+                {
+                    message = exception.Message
+                });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost("verify-otp")]
         public async Task<IActionResult> VerifyOtp(
-            [FromRoute] string slug,
-            [FromBody] VerifyClientOtpDto request,
-            CancellationToken cancellationToken)
+        [FromRoute] string slug,
+        [FromBody] VerifyClientOtpDto request,
+        CancellationToken cancellationToken)
         {
             try
             {
