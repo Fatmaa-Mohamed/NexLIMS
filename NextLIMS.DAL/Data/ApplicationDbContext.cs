@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using NextLIMS.DAL.Data.Models;
-using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.MRSeeders.AuthSeeder;
 
 namespace NextLIMS.DAL.Data
