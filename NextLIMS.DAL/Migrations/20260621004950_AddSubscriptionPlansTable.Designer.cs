@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260621004950_AddSubscriptionPlansTable")]
+    partial class AddSubscriptionPlansTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,18 +515,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 26,
                             Description = "Approve a sample using its ID",
                             Name = "Approve Sample By SampleId"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Description = "Tenant Profile",
-                            Name = "Profile"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Description = "Tenant Subscription",
-                            Name = "Subscription"
                         });
                 });
 
@@ -571,7 +562,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(276),
+                            CreatedAt = new DateTime(2026, 6, 21, 3, 49, 41, 709, DateTimeKind.Local).AddTicks(686),
                             Description = "Has full access to lab configuration, settings, users, and system management",
                             IsActive = true,
                             Name = "Admin"
@@ -579,7 +570,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(412),
+                            CreatedAt = new DateTime(2026, 6, 21, 3, 49, 41, 709, DateTimeKind.Local).AddTicks(816),
                             Description = "Can view and log samples into the system",
                             IsActive = true,
                             Name = "Receptionist"
@@ -587,7 +578,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(420),
+                            CreatedAt = new DateTime(2026, 6, 21, 3, 49, 41, 709, DateTimeKind.Local).AddTicks(824),
                             Description = "Performs the first step of laboratory tests",
                             IsActive = true,
                             Name = "Analyst"
@@ -595,7 +586,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(427),
+                            CreatedAt = new DateTime(2026, 6, 21, 3, 49, 41, 709, DateTimeKind.Local).AddTicks(831),
                             Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
                             IsActive = true,
                             Name = "Senior Analyst"
@@ -603,7 +594,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(432),
+                            CreatedAt = new DateTime(2026, 6, 21, 3, 49, 41, 709, DateTimeKind.Local).AddTicks(839),
                             Description = "Approves test results, authorizes retests, and reassigns tasks",
                             IsActive = true,
                             Name = "Department Director"
@@ -801,20 +792,6 @@ namespace NextLIMS.DAL.Migrations
                         },
                         new
                         {
-                            Id = 321,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 29,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 322,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 30,
-                            RoleId = 1
-                        },
-                        new
-                        {
                             Id = 47,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 22,
@@ -1000,13 +977,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 153,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 28,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 323,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 16,
                             RoleId = 4
                         },
                         new
@@ -1349,36 +1319,6 @@ namespace NextLIMS.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionPlans");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MonthlySampleLimit = 50,
-                            PlanName = "Micro Lab",
-                            Price = 1200m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            MonthlySampleLimit = 150,
-                            PlanName = "Small Lab",
-                            Price = 2500m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            MonthlySampleLimit = 500,
-                            PlanName = "Growing Lab",
-                            Price = 4200m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            MonthlySampleLimit = 999999,
-                            PlanName = "Enterprise",
-                            Price = 12000m
-                        });
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>

@@ -38,6 +38,9 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 155, RoleId = 1, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
     new RolePermission { Id = 156, RoleId = 1, PermissionId = 28 }, // Save_Detection_Prep_Data 
     new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
+    new RolePermission { Id = 321, RoleId = 1, PermissionId = 29 },//profile
+    new RolePermission { Id = 322, RoleId = 1, PermissionId = 30 },//Subscription
+
 
     new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples
@@ -73,6 +76,8 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 46, RoleId = 4, PermissionId = 21 }, // Get_Sample_Details_With_Preps 
     new RolePermission { Id = 152, RoleId = 4, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
     new RolePermission { Id = 153, RoleId = 4, PermissionId = 28 }, // Save_Detection_Prep_Data 
+    new RolePermission { Id = 323, RoleId = 4, PermissionId = 16 }, // Get_Confirmation_Templates //NEW
+
 
 
      new RolePermission { Id = 62, RoleId = 4, PermissionId = 22 }, // AssignToAnalystASpeciicSample

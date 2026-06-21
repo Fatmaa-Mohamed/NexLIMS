@@ -25,22 +25,22 @@ namespace NextLIMS.DAL.Repository.SampleRepo
 
 
             var samples = await _context.Samples
-    .AsNoTracking()
-    .Where(e => e.TenantId == tenantId)
-    .OrderBy(e => e.Id)
-    .Skip((page - 1) * pageSize)
-    .Take(pageSize)
-    .Select(e => new SampleDataDto
-    {
-        sampleId = e.Id,
-        departmentName = e.Tenant.TenantDepartments
-            .Select(td => td.Department.Name)
-            .FirstOrDefault(),
-        nid = e.Client.NID,
-        RegisteredAt = e.CreatedAt,
-        status = e.Status,
-    })
-    .ToListAsync();
+                                        .AsNoTracking()
+                                        .Where(e => e.TenantId == tenantId)
+                                        .OrderBy(e => e.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .Select(e => new SampleDataDto
+                                        {
+                                            sampleId = e.Id,
+                                            departmentName = e.Tenant.TenantDepartments
+                                                .Select(td => td.Department.Name)
+                                                .FirstOrDefault(),
+                                            nid = e.Client.NID,
+                                            RegisteredAt = e.CreatedAt,
+                                            status = e.Status,
+                                        })
+                                        .ToListAsync();
             return samples;
         }
         public async Task<Sample> GetSampleById(int id, int tenantId)

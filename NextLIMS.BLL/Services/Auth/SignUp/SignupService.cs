@@ -42,7 +42,7 @@ namespace NextLIMS.BLL.Services.SignupService
 
             try
             {
-                var tenant = new Tenant
+                var tenant = new DAL.Data.Models.Tenant
                 {
                     Name = request.TenantName,
                     Location = request.Location,
