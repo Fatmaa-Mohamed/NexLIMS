@@ -38,6 +38,8 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 155, RoleId = 1, PermissionId = 27 }, // Save_Enumeration_Prep_Data 
     new RolePermission { Id = 156, RoleId = 1, PermissionId = 28 }, // Save_Detection_Prep_Data 
     new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
+        new RolePermission { Id =178 , RoleId = 1, PermissionId = 32 },//Setup Wizard
+
 
     new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples

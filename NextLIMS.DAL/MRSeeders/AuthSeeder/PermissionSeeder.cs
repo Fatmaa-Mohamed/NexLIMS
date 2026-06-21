@@ -42,7 +42,12 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
      new Permission { Id = 23, Name = "GetMySamples", Description = "View samples assigned to the current user" },
      new Permission { Id = 24, Name = "ShowDashboard", Description = "View dashboard information and sample statuses" },
      new Permission { Id = 25, Name = "ApplySampleRetest", Description = "Initiate a retest for a sample" },
-     new Permission { Id = 26, Name = "Approve Sample By SampleId", Description = "Approve a sample using its ID" }
+     new Permission { Id = 26, Name = "Approve Sample By SampleId", Description = "Approve a sample using its ID" },
+          new Permission { Id = 32, Name = "DeleteLabEmployee", Description = "delete employee from your lab" }
+
+
+
+     
 
      );
 
