@@ -1,10 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.prep;
 using NextLIMS.BLL.DTO.PrepDTOs;
 using NextLIMS.BLL.Services.prep.DetectionService;
 using NextLIMS.BLL.Services.prep.EnumerationService;
+using NextLIMS.BLL.Services.prep.LabAnalysisService;
+using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.RepoDTO.sampleData;
+using System.Security.Permissions;
 
 namespace NexLIMS.API.Controllers.Sample
 {
@@ -14,11 +19,15 @@ namespace NexLIMS.API.Controllers.Sample
     {
         private readonly IEnumerationService _enumerationService;
         private readonly IDetectionService _detectionService;
+        private readonly ILabAnalysisService _labAnalysisService;
 
-        public SampleTestController(IEnumerationService enumerationService, IDetectionService detectionService)
+        public SampleTestController(IEnumerationService enumerationService,
+                                    IDetectionService detectionService,
+                                    ILabAnalysisService labAnalysisService)
         {
             _enumerationService = enumerationService;
             _detectionService = detectionService;
+            _labAnalysisService = labAnalysisService;
         }
 
         [Authorize]
@@ -49,6 +58,50 @@ namespace NexLIMS.API.Controllers.Sample
             if (dto == null) return BadRequest("Payload cannot be empty.");
             int preparationSaved = await _detectionService.SaveDetectionPrepAsync(sampleTestId, dto);
             return Ok(new { message = preparationSaved > 0 ? "Data saved successfully." : "Failed to save data Try Again." });
+        }
+
+        [Authorize]
+        [HttpPost("{sampleTestId}/enumeration-prep/result-Submit")]
+        [CheckPermission("Save_Enumeration_Prep_Data")]
+        public async Task<IActionResult> SaveEnumerationPrepData([FromRoute] int sampleTestId, [FromBody] SaveLabDataRequest request)
+        {
+            if (request == null) return BadRequest("Request body cannot be null.");
+
+            try
+            {
+                var reponse = await _labAnalysisService.ProcessLabDataAsync(sampleTestId, request);
+                return Ok(new { reponse });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An internal error occurred: " + ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost("{sampleTestId}/detection-prep/result-Submit")]
+        [CheckPermission("Save_Detection_Prep_Data")]
+        public async Task<IActionResult> SaveDetectionPrepData([FromRoute] int sampleTestId, [FromBody] DetectionPrepResultDTO request)
+        {
+            if (request == null) return BadRequest("Request body cannot be null.");
+
+            try
+            {
+                var reponse = await _labAnalysisService.ProcessDetectionAsync(sampleTestId, request);
+                return Ok(new { reponse });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An internal error occurred: " + ex.Message });
+            }
         }
     }
 }

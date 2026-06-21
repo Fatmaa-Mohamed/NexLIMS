@@ -44,5 +44,18 @@ namespace NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository
 
             return await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> UpdateStutusInSampleTest(int sampleTestId, int tenantId, string? result, string Action)
+        {
+            var sampleTest = await _dbContext.SampleTests.FirstOrDefaultAsync(st => st.Id == sampleTestId);
+            if (sampleTest != null)
+            {
+                sampleTest.Status = Action;
+                sampleTest.Result = result;
+                _dbContext.Update(sampleTest);
+                return await _dbContext.SaveChangesAsync();
+            }
+            return 0;
+        }
     }
 }

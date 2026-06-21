@@ -4,30 +4,34 @@ using Microsoft.IdentityModel.Tokens;
 using NexLIMS.API.Controllers.middlewares;
 using NextLIMS.BLL.Services.Auth;
 using NextLIMS.BLL.Services.Department;
+using NextLIMS.BLL.Services.DepartmentDiractor;
 using NextLIMS.BLL.Services.EmailService;
 using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
+using NextLIMS.BLL.Services.PasswordReset;
 using NextLIMS.BLL.Services.Permissions;
+using NextLIMS.BLL.Services.prep.DetectionService;
+using NextLIMS.BLL.Services.prep.EnumerationService;
+using NextLIMS.BLL.Services.prep.LabAnalysisService;
 using NextLIMS.BLL.Services.Roles;
-using NextLIMS.BLL.Services.Tests;
-using NextLIMS.DAL;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
+using NextLIMS.BLL.Services.Subscription;
+using NextLIMS.BLL.Services.Tests;
+using NextLIMS.DAL;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
-using NextLIMS.DAL.Repository.Test;
-using NextLIMS.DAL.Repository.Department;
-using NextLIMS.DAL.Repository.SampleRepo;
-using System.Text;
-using NextLIMS.BLL.Services.PasswordReset;
-using NextLIMS.DAL.Repository.DepartmentDirector;
-using NextLIMS.BLL.Services.DepartmentDiractor;
 using NextLIMS.DAL.Repository;
+using NextLIMS.DAL.Repository.Department;
+using NextLIMS.DAL.Repository.DepartmentDirector;
+using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.SampleRepo.LabRepo;
 using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
-using NextLIMS.BLL.Services.prep.DetectionService;
-using NextLIMS.BLL.Services.prep.EnumerationService;
+using NextLIMS.DAL.Repository.Subscription;
+using NextLIMS.DAL.Repository.Test;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +83,10 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IEnumerationService, EnumerationService>();
 builder.Services.AddScoped<IDetectionService, DetectionService>();
 builder.Services.AddScoped<ISampleWorkflowRepository, SampleWorkflowRepository>();
+builder.Services.AddScoped<ILabAnalysisRepository, LabAnalysisRepository>();
+builder.Services.AddScoped<ILabAnalysisService, LabAnalysisService>();
+builder.Services.AddScoped<SubscriptionRepo>();
+builder.Services.AddScoped<SubscriptionService>();
 ////////////////
 ///cors
 

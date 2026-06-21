@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.MRSeeders.AuthSeeder;
@@ -30,6 +30,7 @@ namespace NextLIMS.DAL.Data
         public DbSet<SampleType> SampleTypes { get; set; }
         public DbSet<TestSampleType> TestSampleTypes { get; set; }
         public DbSet<TenantTestSampleType> TenantTestSampleTypes { get; set; }
+        public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -494,6 +495,7 @@ namespace NextLIMS.DAL.Data
             modelBuilder.ApplyConfiguration(new RoleSeeder());
             modelBuilder.ApplyConfiguration(new RolePermissionSeeder());
             modelBuilder.ApplyConfiguration(new UserSeeder());
+            modelBuilder.ApplyConfiguration(new SubscriptionPlanSeeder());
         }
     }
 }

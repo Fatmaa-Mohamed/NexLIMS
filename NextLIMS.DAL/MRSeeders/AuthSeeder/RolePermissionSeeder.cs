@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NextLIMS.DAL.Data.Models;
 using System;
@@ -30,7 +30,16 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 12, RoleId = 1, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 13, RoleId = 1, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
     new RolePermission { Id = 14, RoleId = 1, PermissionId = 14 }, // Filter_Samples_by_Status
-    new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 },//Setup Wizard
+    new RolePermission { Id = 39, RoleId = 1, PermissionId = 16 }, // Get_Confirmation_Templates
+    new RolePermission { Id = 40, RoleId = 1, PermissionId = 17 }, // Save_Enumeration_Prep
+    new RolePermission { Id = 41, RoleId = 1, PermissionId = 18 }, // Save_Detection_Prep
+    new RolePermission { Id = 43, RoleId = 1, PermissionId = 19 }, // Save_Molecular_Prep
+    new RolePermission { Id = 154, RoleId = 1, PermissionId = 21 }, // Get_Sample_Details_With_Preps
+    new RolePermission { Id = 155, RoleId = 1, PermissionId = 27 }, // Save_Enumeration_Prep_Data
+    new RolePermission { Id = 156, RoleId = 1, PermissionId = 28 }, // Save_Detection_Prep_Data
+    new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 }, // Setup Wizard
+    new RolePermission { Id = 321, RoleId = 1, PermissionId = 29 }, // profile
+    new RolePermission { Id = 322, RoleId = 1, PermissionId = 30 }, // Subscription
 
     new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples
@@ -51,7 +60,11 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 21, RoleId = 3, PermissionId = 10 }, // GetSampleWithItsTests
     new RolePermission { Id = 22, RoleId = 3, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 23, RoleId = 3, PermissionId = 14 }, // Filter_Samples_by_Status
-        new RolePermission { Id = 52, RoleId = 3, PermissionId = 23 }, // GetMySamples
+    new RolePermission { Id = 36, RoleId = 3, PermissionId = 16 }, // Get_Confirmation_Templates
+    new RolePermission { Id = 37, RoleId = 3, PermissionId = 17 }, // Save_Enumeration_Prep
+    new RolePermission { Id = 38, RoleId = 3, PermissionId = 18 }, // Save_Detection_Prep
+    new RolePermission { Id = 42, RoleId = 3, PermissionId = 19 }, // Save_Molecular_Prep
+    new RolePermission { Id = 52, RoleId = 3, PermissionId = 23 }, // GetMySamples
 
     // ===== Senior Analyst (Id = 4) — Enumeration, detection, confirmation, molecular tests, retest =====
 
@@ -60,8 +73,12 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 26, RoleId = 4, PermissionId = 11 }, // Add_Sample_To_Test
     new RolePermission { Id = 27, RoleId = 4, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 28, RoleId = 4, PermissionId = 14 }, // Filter_Samples_by_Status
+    new RolePermission { Id = 46, RoleId = 4, PermissionId = 21 }, // Get_Sample_Details_With_Preps
+    new RolePermission { Id = 152, RoleId = 4, PermissionId = 27 }, // Save_Enumeration_Prep_Data
+    new RolePermission { Id = 153, RoleId = 4, PermissionId = 28 }, // Save_Detection_Prep_Data
+    new RolePermission { Id = 323, RoleId = 4, PermissionId = 16 }, // Get_Confirmation_Templates
 
-     new RolePermission { Id = 62, RoleId = 4, PermissionId = 22 }, // AssignToAnalystASpeciicSample
+    new RolePermission { Id = 62, RoleId = 4, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 53, RoleId = 4, PermissionId = 23 }, // GetMySamples
     new RolePermission { Id = 54, RoleId = 4, PermissionId = 24 }, // ShowDashboard
     new RolePermission { Id = 55, RoleId = 4, PermissionId = 25 }, // ApplySampleRetest
@@ -75,7 +92,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 33, RoleId = 5, PermissionId = 12 }, // Remove_Sample_From_Test
     new RolePermission { Id = 34, RoleId = 5, PermissionId = 14 }, // Filter_Samples_by_Status
 
-      new RolePermission { Id = 57, RoleId = 5, PermissionId = 22 }, // AssignToAnalystASpeciicSample
+    new RolePermission { Id = 57, RoleId = 5, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 58, RoleId = 5, PermissionId = 23 }, // GetMySamples
     new RolePermission { Id = 59, RoleId = 5, PermissionId = 24 }, // ShowDashboard
     new RolePermission { Id = 60, RoleId = 5, PermissionId = 25 }, // ApplySampleRetest

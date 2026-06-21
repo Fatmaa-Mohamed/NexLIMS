@@ -84,8 +84,9 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
             }
 
             var workflowAdded = await _sampleWorkflowRepository.SetWorkflowToInProgressAsync(sampleTestId, tenantId, 1, "inprogress");
+            var sampleTestStatus = await _sampleWorkflowRepository.UpdateStutusInSampleTest(sampleTestId, tenantId, null, "inprogress");
 
-            if (enumerationDataAdded > 0 && enumerationDilutionAdded > 0 && workflowAdded > 0) return 1;
+            if (enumerationDataAdded > 0 && enumerationDilutionAdded > 0 && workflowAdded > 0 && sampleTestStatus > 0) return 1;
             else return 0;
         }
     }

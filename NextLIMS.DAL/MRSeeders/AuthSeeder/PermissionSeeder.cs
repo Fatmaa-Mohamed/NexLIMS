@@ -30,12 +30,21 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
      new Permission { Id = 12, Name = "Remove_Sample_From_Test", Description = "Allows removing a sample from a specific test" },
      new Permission { Id = 13, Name = "Filter_Samples_by_sampleId_OR_ClientId", Description = "Allows filtering samples by sample ID or client ID" },
      new Permission { Id = 14, Name = "Filter_Samples_by_Status", Description = "Allows filtering samples by their current status" },
-          new Permission { Id = 15, Name = "SetupWizard", Description = "Apply Wizard changes " },
-          new Permission { Id = 22, Name = "AssignToAnalystASpeciicSample", Description = "Assign a specific sample to an analyst" },
-          new Permission { Id = 23, Name = "GetMySamples", Description = "View samples assigned to the current user" },
-          new Permission { Id = 24, Name = "ShowDashboard", Description = "View dashboard information and sample statuses" },
-          new Permission { Id = 25, Name = "ApplySampleRetest", Description = "Initiate a retest for a sample" },
-          new Permission { Id = 26, Name = "Approve Sample By SampleId", Description = "Approve a sample using its ID" }
+     new Permission { Id = 16 , Name = "Get_Confirmation_Templates" , Description = "Get Confirmation Templates By TestId" },
+     new Permission { Id = 17 , Name = "Save_Enumeration_Prep", Description = "Save Enumeration Prep For Sample Test" },
+     new Permission { Id = 18 , Name = "Save_Detection_Prep", Description = "Save Detection Prep For Sample Test" },
+     new Permission { Id = 19 , Name = "Save_Molecular_Prep", Description = "Save Molecular Prep For Sample Test" },
+     new Permission { Id = 21 , Name = "Get_Sample_Details_With_Preps", Description = "Get Sample Details With Preps" },
+     new Permission { Id = 27 , Name = "Save_Enumeration_Prep_Data", Description = "Save Enumeration Prep Data For Sample Test" },
+     new Permission { Id = 28 , Name = "Save_Detection_Prep_Data", Description = "Save Detection Prep Data For Sample Test" },
+     new Permission { Id = 15, Name = "SetupWizard", Description = "Apply Wizard changes " },
+     new Permission { Id = 22, Name = "AssignToAnalystASpeciicSample", Description = "Assign a specific sample to an analyst" },
+     new Permission { Id = 23, Name = "GetMySamples", Description = "View samples assigned to the current user" },
+     new Permission { Id = 24, Name = "ShowDashboard", Description = "View dashboard information and sample statuses" },
+     new Permission { Id = 25, Name = "ApplySampleRetest", Description = "Initiate a retest for a sample" },
+     new Permission { Id = 26, Name = "Approve Sample By SampleId", Description = "Approve a sample using its ID" } , 
+     new Permission { Id = 29 , Name = "Profile" , Description = "Tenant Profile" },
+     new Permission { Id = 30 , Name = "Subscription", Description = "Tenant Subscription" }
 
      );
 

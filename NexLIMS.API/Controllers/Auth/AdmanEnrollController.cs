@@ -32,7 +32,27 @@ namespace NexLIMS.API.Controllers
             if (!result)
                 return StatusCode(500);
 
-            return Ok(new { message = "Signup successful" });
+            var payload = new InvoiceRequest
+            {
+                PaymentMethodId = request.PaymentMethodId,
+                CustomerName = request.TenantName,
+                ProductName = request.SubscriptionTier,
+                CustomerEmail = request.Email,
+                Amount = request.Amount,
+            };
+
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.PostAsJsonAsync(
+                "https://localhost:7294/api/payment/create-invoice",
+                payload);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return StatusCode((int)response.StatusCode, content);
+
+            // Return the invoice info (including redirectTo URL) so frontend can redirect user to pay
+            return Content(content, "application/json");
         }
     }
 }

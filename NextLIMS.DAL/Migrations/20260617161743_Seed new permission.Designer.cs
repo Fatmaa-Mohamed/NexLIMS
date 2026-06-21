@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260617161743_Seed new permission")]
+    partial class Seednewpermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,6 +259,7 @@ namespace NextLIMS.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ColonyCount")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -464,66 +468,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 21,
                             Description = "Get Sample Details With Preps",
                             Name = "Get_Sample_Details_With_Preps"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Description = "Save Enumeration Prep Data For Sample Test",
-                            Name = "Save_Enumeration_Prep_Data"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Description = "Save Detection Prep Data For Sample Test",
-                            Name = "Save_Detection_Prep_Data"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Apply Wizard changes ",
-                            Name = "SetupWizard"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Description = "Assign a specific sample to an analyst",
-                            Name = "AssignToAnalystASpeciicSample"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Description = "View samples assigned to the current user",
-                            Name = "GetMySamples"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Description = "View dashboard information and sample statuses",
-                            Name = "ShowDashboard"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Description = "Initiate a retest for a sample",
-                            Name = "ApplySampleRetest"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Description = "Approve a sample using its ID",
-                            Name = "Approve Sample By SampleId"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Description = "Tenant Profile",
-                            Name = "Profile"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Description = "Tenant Subscription",
-                            Name = "Subscription"
                         });
                 });
 
@@ -571,7 +515,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(276),
+                            CreatedAt = new DateTime(2026, 6, 17, 19, 17, 33, 890, DateTimeKind.Local).AddTicks(6680),
                             Description = "Has full access to lab configuration, settings, users, and system management",
                             IsActive = true,
                             Name = "Admin"
@@ -579,7 +523,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(412),
+                            CreatedAt = new DateTime(2026, 6, 17, 19, 17, 33, 890, DateTimeKind.Local).AddTicks(6802),
                             Description = "Can view and log samples into the system",
                             IsActive = true,
                             Name = "Receptionist"
@@ -587,7 +531,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(420),
+                            CreatedAt = new DateTime(2026, 6, 17, 19, 17, 33, 890, DateTimeKind.Local).AddTicks(6808),
                             Description = "Performs the first step of laboratory tests",
                             IsActive = true,
                             Name = "Analyst"
@@ -595,7 +539,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(427),
+                            CreatedAt = new DateTime(2026, 6, 17, 19, 17, 33, 890, DateTimeKind.Local).AddTicks(6813),
                             Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
                             IsActive = true,
                             Name = "Senior Analyst"
@@ -603,7 +547,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 21, 8, 24, 24, 450, DateTimeKind.Local).AddTicks(432),
+                            CreatedAt = new DateTime(2026, 6, 17, 19, 17, 33, 890, DateTimeKind.Local).AddTicks(6819),
                             Description = "Approves test results, authorizes retests, and reassigns tasks",
                             IsActive = true,
                             Name = "Department Director"
@@ -773,83 +717,6 @@ namespace NextLIMS.DAL.Migrations
                         },
                         new
                         {
-                            Id = 154,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 21,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 155,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 27,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 156,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 28,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 35,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 15,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 321,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 29,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 322,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 30,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 47,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 48,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 49,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 50,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 51,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
-                            RoleId = 1
-                        },
-                        new
-                        {
                             Id = 15,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 8,
@@ -941,13 +808,6 @@ namespace NextLIMS.DAL.Migrations
                         },
                         new
                         {
-                            Id = 52,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
-                            RoleId = 3
-                        },
-                        new
-                        {
                             Id = 24,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 9,
@@ -990,62 +850,6 @@ namespace NextLIMS.DAL.Migrations
                         },
                         new
                         {
-                            Id = 152,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 27,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 153,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 28,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 323,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 16,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 62,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 53,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 54,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 55,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            Id = 56,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
-                            RoleId = 4
-                        },
-                        new
-                        {
                             Id = 29,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 3,
@@ -1084,41 +888,6 @@ namespace NextLIMS.DAL.Migrations
                             Id = 34,
                             GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 14,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 57,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 22,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 58,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 23,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 59,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 24,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 60,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 25,
-                            RoleId = 5
-                        },
-                        new
-                        {
-                            Id = 61,
-                            GrantedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PermissionId = 26,
                             RoleId = 5
                         });
                 });
@@ -1328,59 +1097,6 @@ namespace NextLIMS.DAL.Migrations
                     b.ToTable("SampleWorkflows");
                 });
 
-            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SubscriptionPlan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MonthlySampleLimit")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PlanName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscriptionPlans");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MonthlySampleLimit = 50,
-                            PlanName = "Micro Lab",
-                            Price = 1200m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            MonthlySampleLimit = 150,
-                            PlanName = "Small Lab",
-                            Price = 2500m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            MonthlySampleLimit = 500,
-                            PlanName = "Growing Lab",
-                            Price = 4200m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            MonthlySampleLimit = 999999,
-                            PlanName = "Enterprise",
-                            Price = 12000m
-                        });
-                });
-
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1396,9 +1112,6 @@ namespace NextLIMS.DAL.Migrations
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -1424,9 +1137,6 @@ namespace NextLIMS.DAL.Migrations
                     b.Property<DateOnly?>("SubscriptionEndDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("SubscriptionPlanId")
-                        .HasColumnType("int");
-
                     b.Property<DateOnly?>("SubscriptionStartDate")
                         .HasColumnType("date");
 
@@ -1444,8 +1154,6 @@ namespace NextLIMS.DAL.Migrations
 
                     b.HasIndex("Slug")
                         .IsUnique();
-
-                    b.HasIndex("SubscriptionPlanId");
 
                     b.ToTable("Tenants");
                 });
@@ -1953,15 +1661,6 @@ namespace NextLIMS.DAL.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
-                {
-                    b.HasOne("NextLIMS.DAL.Data.Models.SubscriptionPlan", "SubscriptionPlan")
-                        .WithMany("Tenants")
-                        .HasForeignKey("SubscriptionPlanId");
-
-                    b.Navigation("SubscriptionPlan");
-                });
-
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.TenantDepartment", b =>
                 {
                     b.HasOne("NextLIMS.DAL.Data.Models.Department", "Department")
@@ -2127,11 +1826,6 @@ namespace NextLIMS.DAL.Migrations
                     b.Navigation("TenantTestSampleTypes");
 
                     b.Navigation("TestSampleTypes");
-                });
-
-            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SubscriptionPlan", b =>
-                {
-                    b.Navigation("Tenants");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.Tenant", b =>
