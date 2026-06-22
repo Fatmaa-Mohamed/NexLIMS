@@ -28,7 +28,7 @@ namespace NextLIMS.DAL.Repository.Subscription
         {
             return await _dbContext.SubscriptionPlans.ToListAsync();
         }
-        public async Task<SubscriptionPlan?> GetSubscriptionPlan(int id)
+        public async Task<SubscriptionPlan> GetSubscriptionPlan(int id)
         {
             return await _dbContext.SubscriptionPlans.FirstOrDefaultAsync(s => s.Id == id);
         }
