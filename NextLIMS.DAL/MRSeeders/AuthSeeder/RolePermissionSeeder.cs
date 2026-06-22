@@ -40,6 +40,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 35, RoleId = 1, PermissionId = 15 }, // Setup Wizard
     new RolePermission { Id = 321, RoleId = 1, PermissionId = 29 }, // profile
     new RolePermission { Id = 322, RoleId = 1, PermissionId = 30 }, // Subscription
+    new RolePermission { Id = 178, RoleId = 1, PermissionId = 32 }, // DeleteLabEmployee
 
     new RolePermission { Id = 47, RoleId = 1, PermissionId = 22 }, // AssignToAnalystASpeciicSample
     new RolePermission { Id = 48, RoleId = 1, PermissionId = 23 }, // GetMySamples

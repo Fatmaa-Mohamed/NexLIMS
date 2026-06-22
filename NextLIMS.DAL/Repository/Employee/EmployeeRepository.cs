@@ -33,6 +33,19 @@ namespace NextLIMS.DAL.Repositories
                 .Where(u => u.TenantId == tenantId)
                 .ToListAsync();
         }
+        public async Task<bool> deleteEmployeeAsync(int id,int tenantid)
+        {
+
+            var result= _db.Users.FirstOrDefault(e=>e.TenantId == tenantid&&e.Id==id);
+            if (result!=null)
+            {
+                _db.Users.Remove(result);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            return false;
+        }
 
         public async Task SaveChangesAsync()
         {

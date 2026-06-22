@@ -93,5 +93,23 @@ namespace NexLIMS.API.Controllers.Employee
                 return BadRequest("you have no account");
             return Ok("reseted successfully");
         }
+
+        [HttpDelete("{id:int}")]
+        [Authorize]
+        [CheckPermission("DeleteLabEmployee")]
+        public async Task<IActionResult> deleteEmployee(int id)
+        {
+            var result = await _employeeService.deleteEmployee(id);
+            if (result)
+            {
+
+                return NoContent();
+            }
+            else return BadRequest("User Bot Found");
+        }
+
+
+
+
     }
 }
