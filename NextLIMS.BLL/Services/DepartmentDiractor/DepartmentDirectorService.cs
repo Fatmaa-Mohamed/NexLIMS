@@ -78,6 +78,9 @@ namespace NextLIMS.BLL.Services.DepartmentDiractor
             {
                 var dto = r.Sample.ToDto();
                 dto.IsAssignedToAnalyst = r.IsAssignedToAnalyst;
+                dto.TotalTests = r.Sample.SampleTests?.Count ?? 0;
+                dto.SubmittedTests = r.Sample.SampleTests?
+                    .Count(st => st.Status == "Pending Approval" || st.Status == "Approved" || st.Status == "ResultEntered") ?? 0;
                 return dto;
             }).ToList();
         }

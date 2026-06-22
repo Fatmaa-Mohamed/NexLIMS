@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.reasons;
 using NextLIMS.BLL.Services.DepartmentDiractor;
+using NextLIMS.BLL.Services.SampleServic;
 
 namespace NexLIMS.API.Controllers.DepartmentDirector
 {
@@ -13,10 +14,12 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
     public class DepartmentDirectorController : ControllerBase
     {
         private DepartmentDirectorService _departmentDirectorService;
+        private SampleService _sampleService;
 
-        public DepartmentDirectorController(DepartmentDirectorService departmentDirectorService)
+        public DepartmentDirectorController(DepartmentDirectorService departmentDirectorService, SampleService sampleService)
         {
             _departmentDirectorService = departmentDirectorService;
+            _sampleService = sampleService;
         }
 
         [HttpGet("Directors")]
@@ -87,7 +90,17 @@ namespace NexLIMS.API.Controllers.DepartmentDirector
         {
 
             var result = await _departmentDirectorService.pendingApproval();
-            
+
+            return Ok(result);
+        }
+
+        [HttpGet("sampleResults/{sampleId}")]
+        [Authorize]
+        [CheckPermission("Approve Sample By SampleId")]
+        public async Task<IActionResult> GetSampleResults(int sampleId)
+        {
+            var result = await _sampleService.GetSampleDetailsWithPreps(sampleId);
+            if (result == null) return NotFound();
             return Ok(result);
         }
 

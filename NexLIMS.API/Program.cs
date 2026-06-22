@@ -17,8 +17,10 @@ using NextLIMS.BLL.Services.Roles;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
 using NextLIMS.BLL.Services.Subscription;
+using NextLIMS.BLL.Services.Tenant;
 using NextLIMS.BLL.Services.Tests;
 using NextLIMS.DAL;
+using NextLIMS.DAL.Repository.TeuntRepo;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
@@ -87,6 +89,8 @@ builder.Services.AddScoped<ILabAnalysisRepository, LabAnalysisRepository>();
 builder.Services.AddScoped<ILabAnalysisService, LabAnalysisService>();
 builder.Services.AddScoped<SubscriptionRepo>();
 builder.Services.AddScoped<SubscriptionService>();
+builder.Services.AddScoped<TenantRepository>();
+builder.Services.AddScoped<TenantSevices>();
 ////////////////
 ///cors
 

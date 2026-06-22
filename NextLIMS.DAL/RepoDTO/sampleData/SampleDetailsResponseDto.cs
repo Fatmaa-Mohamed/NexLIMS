@@ -21,8 +21,16 @@ namespace NextLIMS.DAL.RepoDTO.sampleData
         public string? TestName { get; set; }
         public string? TestType { get; set; }
         public string? Status { get; set; }
+        public string? Result { get; set; }
         public EnumerationPrepResponseDto? EnumerationPrep { get; set; }
         public DetectionPrepResponseDto? DetectionPrep { get; set; }
+        public List<ConfirmationTestResultDto> ConfirmationTests { get; set; } = new();
+    }
+
+    public class ConfirmationTestResultDto
+    {
+        public string? Name { get; set; }
+        public string? Result { get; set; }
     }
 
     public class EnumerationPrepResponseDto

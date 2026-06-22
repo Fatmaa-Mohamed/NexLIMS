@@ -173,8 +173,8 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.TestName).IsRequired();
-                e.Property(x => x.TestType).IsRequired();
+                e.Property(x => x.TestName).IsRequired(false);
+                e.Property(x => x.TestType).IsRequired(false);
                 e.HasIndex(x => x.DepartmentId);
                 e.HasIndex(x => x.TenantId);
 
@@ -234,9 +234,9 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.SampleName).IsRequired();
-                e.Property(x => x.SampleType).IsRequired();
-                e.Property(x => x.Status).IsRequired();
+                e.Property(x => x.SampleName).IsRequired(false);
+                e.Property(x => x.SampleType).IsRequired(false);
+                e.Property(x => x.Status).IsRequired(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => new { x.TenantId, x.Id }).IsUnique();
                 e.HasIndex(x => x.ClientId);
@@ -258,7 +258,7 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Status).IsRequired();
+                e.Property(x => x.Status).IsRequired(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.SampleId);
                 e.HasIndex(x => x.TenantTestId);
@@ -364,9 +364,9 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.DilutionOrVolume).IsRequired();
-                e.Property(x => x.DilutionType).IsRequired();
-                e.Property(x => x.ColonyCount).IsRequired();
+                e.Property(x => x.DilutionOrVolume).IsRequired(false);
+                e.Property(x => x.DilutionType).IsRequired(false);
+                e.Property(x => x.ColonyCount).IsRequired(false);
                 e.Property(x => x.IsSelectedForCalculation).HasDefaultValue(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.EnumerationDataId);
@@ -411,8 +411,8 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.ConfirmationTestName).IsRequired();
-                e.Property(x => x.Result).IsRequired();
+                e.Property(x => x.ConfirmationTestName).IsRequired(false);
+                e.Property(x => x.Result).IsRequired(false);
                 e.Property(x => x.DatePerformed).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.SampleTestId);
                 e.HasIndex(x => x.PerformedBySeniorAnalystId);

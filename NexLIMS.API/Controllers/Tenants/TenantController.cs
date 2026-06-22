@@ -22,9 +22,8 @@ namespace NexLIMS.API.Controllers.Tenants_NeedRefactor_
             _context = context;
             _tenantSevices = tenantSevices;
         }
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
-        [CheckPermission("Profile")]
         public async Task<IActionResult> GetAllTenants()
         {
             var result = await _context.Tenants

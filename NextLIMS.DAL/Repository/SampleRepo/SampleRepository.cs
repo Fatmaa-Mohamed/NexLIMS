@@ -194,6 +194,8 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                         .ThenInclude(ed => ed.EnumerationDilutions)
                 .Include(s => s.SampleTests)
                     .ThenInclude(st => st.DetectionData)
+                .Include(s => s.SampleTests)
+                    .ThenInclude(st => st.SampleConfirmationTests)
                 .FirstOrDefaultAsync();
         }
 

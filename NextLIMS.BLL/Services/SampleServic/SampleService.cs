@@ -189,6 +189,12 @@ namespace NextLIMS.BLL.Services.SampleServic
                     TestId = st.TenantTest.Test.Id,
                     TestName = st.TenantTest?.Test?.TestName,
                     TestType = st.TenantTest?.Test?.TestType,
+                    Result = st.Result,
+                    ConfirmationTests = st.SampleConfirmationTests?.Select(ct => new ConfirmationTestResultDto
+                    {
+                        Name = ct.ConfirmationTestName,
+                        Result = ct.Result
+                    }).ToList() ?? new(),
                     EnumerationPrep = st.EnumerationData == null ? null : new EnumerationPrepResponseDto
                     {
                         Id = st.EnumerationData.Id,
