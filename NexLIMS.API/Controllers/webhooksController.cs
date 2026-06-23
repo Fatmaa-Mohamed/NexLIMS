@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NextLIMS.BLL.DTO;
+using NextLIMS.DAL.Data;
 
 namespace NexLIMS.API.Controllers
 {
@@ -8,12 +9,37 @@ namespace NexLIMS.API.Controllers
     [ApiController]
     public class webhooksController : ControllerBase
     {
-        [HttpPost("fawaterak/paid")]
-        public async Task<IActionResult> Fawaterak(PaymentRequestDto paymentResonse)
+        private readonly ApplicationDbContext _context;
+
+        public webhooksController(ApplicationDbContext context)
         {
-            var response = paymentResonse;
-            Console.WriteLine(response);
-            return Ok(paymentResonse);
+            _context = context;
+        }
+
+        [HttpPost("fawaterak/paid")]
+        public async Task<IActionResult> Fawaterak([FromBody] PaymentRequestDto paymentResponse)
+        {
+            if (paymentResponse?.Status != "paid" || paymentResponse.CustomerData == null)
+                return Ok();
+
+            var email = paymentResponse.CustomerData.CustomerEmail;
+            if (string.IsNullOrEmpty(email))
+                return Ok();
+
+            var user = await _context.Users
+                .Include(u => u.Tenant)
+                .FirstOrDefaultAsync(u =>
+                    u.Email == email &&
+                    u.Tenant != null &&
+                    u.Tenant.SubscriptionStatus == "PendingPayment");
+
+            if (user?.Tenant == null)
+                return Ok();
+
+            user.Tenant.SubscriptionStatus = "Active";
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

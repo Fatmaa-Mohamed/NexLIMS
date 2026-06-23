@@ -34,5 +34,12 @@ namespace NexLIMS.API.Controllers.Subscription
             return Ok(respone);
         }
 
+        [HttpGet("public-plans")]
+        public async Task<IActionResult> GetPublicPlans()
+        {
+            var plans = await _subscriptionService.Subscriptionplans();
+            return Ok(plans);
+        }
+
     }
 }

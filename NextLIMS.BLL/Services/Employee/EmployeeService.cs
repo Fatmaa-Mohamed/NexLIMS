@@ -24,7 +24,7 @@ namespace NextLIMS.BLL.Services.EmployeeService
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> InviteEmployeeAsync(InviteDTo request)
+        public async Task<int?> InviteEmployeeAsync(InviteDTo request)
         {
             return await _invitationService
                 .InviteEmployeeAsync(request.Email, request.RoleId);

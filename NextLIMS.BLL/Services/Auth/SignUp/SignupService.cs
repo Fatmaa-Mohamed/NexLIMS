@@ -51,7 +51,8 @@ namespace NextLIMS.BLL.Services.SignupService
                     SubscriptionTier = sub.PlanName,
                     SubscriptionStartDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     SubscriptionEndDate = DateOnly.FromDateTime(DateTime.UtcNow).AddMonths(1),
-                    SubscriptionStatus = "Active",
+                    SubscriptionStatus = "PendingPayment",
+                    SubscriptionPlanId = request.SubscraptionID,
                     Slug = await GenerateUniqueSlugAsync(request.TenantName),
                     CreatedAt = DateTime.UtcNow,
                     MonthlySampleLimit = sub?.MonthlySampleLimit

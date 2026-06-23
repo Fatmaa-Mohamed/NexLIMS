@@ -1,12 +1,19 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repository.Subscription;
 using System.Net.Http.Headers;
 
 namespace NexLIMS.API.Controllers
 {
+    public class ActivateRequest
+    {
+        public string Email { get; set; } = string.Empty;
+    }
+
     [ApiController]
     [Route("api/payment")]
     public class PaymentController : ControllerBase
@@ -14,9 +21,15 @@ namespace NexLIMS.API.Controllers
         private readonly HttpClient _http;
         private readonly FawaterkSettings _settings;
         private readonly SubscriptionRepo _subscription;
+        private readonly string _frontendUrl;
+        private readonly ApplicationDbContext _context;
 
-        public PaymentController(IHttpClientFactory httpClientFactory, SubscriptionRepo subscription , 
-                                    IOptions<FawaterkSettings> settings)
+        public PaymentController(
+            IHttpClientFactory httpClientFactory,
+            SubscriptionRepo subscription,
+            IOptions<FawaterkSettings> settings,
+            IConfiguration configuration,
+            ApplicationDbContext context)
         {
             _settings = settings.Value;
             _http = httpClientFactory.CreateClient();
@@ -26,6 +39,8 @@ namespace NexLIMS.API.Controllers
             _http.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             _subscription = subscription;
+            _frontendUrl = configuration["App:FrontendUrl"] ?? "http://localhost:65050";
+            _context = context;
         }
 
         // Step 1: get available payment methods
@@ -74,9 +89,9 @@ namespace NexLIMS.API.Controllers
                 },
                 redirectionUrls = new
                 {
-                    successUrl = "https://defame-detonator-aluminum.ngrok-free.dev/api/payment/success",
-                    failUrl = "https://defame-detonator-aluminum.ngrok-free.dev/api/payment/fail",
-                    pendingUrl = "https://defame-detonator-aluminum.ngrok-free.dev/api/payment/pending"
+                    successUrl = $"{_frontendUrl}/payment/success",
+                    failUrl    = $"{_frontendUrl}/payment/failed",
+                    pendingUrl = $"{_frontendUrl}/payment/pending"
                 },
                 cartItems = new[]
                 {
@@ -96,6 +111,28 @@ namespace NexLIMS.API.Controllers
                 return StatusCode((int)response.StatusCode, content);
 
             return Content(content, "application/json");
+        }
+
+        [HttpPost("activate")]
+        public async Task<IActionResult> Activate([FromBody] ActivateRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+                return BadRequest();
+
+            var user = await _context.Users
+                .Include(u => u.Tenant)
+                .FirstOrDefaultAsync(u =>
+                    u.Email == request.Email &&
+                    u.Tenant != null &&
+                    u.Tenant.SubscriptionStatus == "PendingPayment");
+
+            if (user?.Tenant == null)
+                return Ok(new { activated = false });
+
+            user.Tenant.SubscriptionStatus = "Active";
+            await _context.SaveChangesAsync();
+
+            return Ok(new { activated = true });
         }
     }
 }

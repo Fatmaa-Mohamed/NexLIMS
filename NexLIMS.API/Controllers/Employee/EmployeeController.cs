@@ -30,12 +30,12 @@ namespace NexLIMS.API.Controllers.Employee
         [CheckPermission("Invite_employee")]
         public async Task<IActionResult> InviteEmployee(InviteDTo request)
         {
-            var success = await _employeeService.InviteEmployeeAsync(request);
+            var userId = await _employeeService.InviteEmployeeAsync(request);
 
-            if (!success)
+            if (userId == null)
                 return BadRequest("Could not create the user. Email may already exist.");
 
-            return Ok("Invitation sent successfully.");
+            return Ok(new { userId, message = "Invitation sent successfully." });
         }
 
         [HttpPost("set-password/{token}")]
