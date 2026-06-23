@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NexLIMS.BLL.DTO;
 using NextLIMS.BLL.Services.SignupService;
 using NextLIMS.DAL.Data.Payment;
+using NextLIMS.DAL.Repository.Subscription;
+using System.Net.Http.Json;
 
 namespace NexLIMS.API.Controllers
 {
@@ -12,11 +14,13 @@ namespace NexLIMS.API.Controllers
     {
         private readonly ISignupService _signupService;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly SubscriptionRepo _repo;
 
-        public AdmanEnrollController(ISignupService signupService, IHttpClientFactory httpClientFactory)
+        public AdmanEnrollController(ISignupService signupService, IHttpClientFactory httpClientFactory, SubscriptionRepo repo)
         {
             _signupService = signupService;
             _httpClientFactory = httpClientFactory;
+            _repo = repo;
         }
 
         [HttpPost("Signup")]
@@ -38,9 +42,8 @@ namespace NexLIMS.API.Controllers
                 {
                     PaymentMethodId = request.PaymentMethodId,
                     CustomerName = request.TenantName,
-                    ProductName = request.SubscriptionTier,
+                    SubscraptionId = request.SubscraptionID,
                     CustomerEmail = request.Email,
-                    Amount = request.Amount,
                 };
 
                 var client = _httpClientFactory.CreateClient();
