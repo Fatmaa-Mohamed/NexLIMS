@@ -29,6 +29,9 @@ using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
 using NextLIMS.DAL.Repository.ClientPortal;
+using NextLIMS.BLL.Services.ClientPortal.Reports;
+using NextLIMS.DAL.Repository.ClientPortal.Reports;
+using QuestPDF.Infrastructure;
 using NextLIMS.DAL.Repository.ClientRepo;
 using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.Department;
@@ -104,7 +107,10 @@ if (builder.Environment.IsDevelopment()) {
 }
 builder.Services.AddScoped<IClientPortalInvitationService, ClientPortalInvitationService>();
 builder.Services.AddScoped<IClientOtpService, ClientOtpService>();
-
+QuestPDF.Settings.License = LicenseType.Community;
+builder.Services.AddScoped<ISampleReportRepository, SampleReportRepository>();
+builder.Services.AddScoped<ISampleReportPdfGenerator, QuestPdfSampleReportGenerator>();
+builder.Services.AddScoped<ISampleReportService, SampleReportService>();
 builder.Services.AddScoped<DepartmentDirectorRepository>();
 builder.Services.AddScoped<DepartmentDirectorService>();
 //
@@ -126,9 +132,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("OpenCorsPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy
+            .WithOrigins("http://localhost:65050")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithExposedHeaders("Content-Disposition");
     });
 });
 

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.11" />
+    <PackageReference Include="QuestPDF" Version="2026.6.0" />
     <PackageReference Include="Twilio" Version="7.14.9" />
   </ItemGroup>
 
