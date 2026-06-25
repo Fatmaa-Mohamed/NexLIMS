@@ -6,6 +6,8 @@ namespace NextLIMS.DAL.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public bool ?IsActive { get; set; }=false;
         public string Location { get; set; }
         public string SubscriptionTier { get; set; }
         public string SubscriptionStatus { get; set; }
@@ -16,7 +18,8 @@ namespace NextLIMS.DAL.Data.Models
         public string Slug { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
-
+        public int? SubscriptionPlanId { get; set; }
+        public SubscriptionPlan SubscriptionPlan { get; set; }
         public ICollection<User> Users { get; set; }
         public ICollection<Role> Roles { get; set; }
         public ICollection<Client> Clients { get; set; }

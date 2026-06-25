@@ -31,9 +31,28 @@ public class InvitationRepository
     {
         await _db.passwordResets.AddAsync(passwordReset);
     }
+    public async Task<Role> getRoleWithItsPermissions(int roleId)
+    {
+        return await _db.Roles.Where(e=>e.Id==roleId).Include(e => e.RolePermissions).ThenInclude(e => e.Permission).FirstOrDefaultAsync();
+    } 
+
+    public async Task addRoleAsync(Role role)
+    {
+        await _db.Roles.AddAsync(role);
+    }
+
+    public async Task AddRolePermissionsAsync(List<RolePermission> rolePermission)
+    {
+        await _db.RolePermissions.AddRangeAsync(rolePermission);
+    }
 
     public async Task SaveChangesAsync()
     {
         await _db.SaveChangesAsync();
+    }
+
+    public async Task<Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction> BeginTransactionAsync()
+    {
+        return await _db.Database.BeginTransactionAsync();
     }
 }

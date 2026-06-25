@@ -129,9 +129,37 @@ namespace NextLIMS.DAL.Repositories
             var result=await _context.Users.FirstOrDefaultAsync(e=>e.Id==userid);
             return result;
         }
+
+        public async Task updateConfigurationStatus(int tenantId)
+        {
+            var tenant = await _context.Tenants.FirstOrDefaultAsync(e => e.Id == tenantId);
+
+            if (tenant == null)
+                throw new KeyNotFoundException($"Tennant with Id {tenantId} was not found.");
+
+            tenant.IsActive = true; // replace with your actual column/property name
+            await SaveChangesAsync();
+        }
+
+        public async Task<Tenant> getTenantByid(int tenantId)
+        {
+            var tenant = await _context.Tenants.FirstOrDefaultAsync(e => e.Id == tenantId);
+
+            if (tenant == null)
+                throw new KeyNotFoundException($"Tennant with Id {tenantId} was not found.");
+
+            return tenant;
+        }
+        public async Task <string> getMyData(int tenantId,int userid)
+        {
+            var result = await _context.Users.Where(e => e.TenantId == tenantId && e.Id == userid).Select(e => e.Name).FirstOrDefaultAsync();
+            return result;
+        }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+
+
     }
 }

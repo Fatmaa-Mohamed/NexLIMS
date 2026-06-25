@@ -19,11 +19,27 @@ namespace NexLIMS.API.Controllers.Auth
         }
 
         [Authorize]
-       // [CheckPermission("GetRolesWithItsPermissions")]
         [HttpGet("me")]
         public async Task<IActionResult> GetRoleWithItsPermissions()
         {
-            return Ok(await _roleService.GetRoleWithItsPermissions());
+            var result = await _roleService.GetRoleWithItsPermissions();
+            var status = await _roleService.getTenantById();
+            var userData= await _roleService.getUserData();
+            return Ok(new
+            {
+                TenantSetupStatus=status,
+                result,
+                userData
+            });
+        }
+
+        [Authorize]
+        [CheckPermission("SetupWizard")]
+        [HttpPatch("completeWizard")]
+        public async Task<IActionResult> completeSetup()
+        {
+            await _roleService.updateConfigurationStatusAsync();
+            return Ok("Status Updated");
         }
 
 

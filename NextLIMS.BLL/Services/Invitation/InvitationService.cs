@@ -27,27 +27,52 @@ namespace NextLIMS.BLL.Services.Invitation
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> InviteEmployeeAsync(string email, int roleId)
+        public async Task<int?> InviteEmployeeAsync(string email, int roleId)
         {
+            var tenantClaim = _httpContextAccessor.HttpContext?
+                .User.FindFirst("TenantId")?.Value;
+
+            var userIdClaim = _httpContextAccessor.HttpContext?
+                .User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(tenantClaim, out var tenantId)) return null;
+            if (!int.TryParse(userIdClaim, out var createdBy)) return null;
+
+            using var transaction = await _repository.BeginTransactionAsync();
             try
             {
-                var tenantClaim = _httpContextAccessor.HttpContext?
-                    .User.FindFirst("TenantId")?.Value;
+                var roleWithPermission = await _repository.getRoleWithItsPermissions(roleId);
 
-                var userIdClaim = _httpContextAccessor.HttpContext?
-                    .User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var newrole = new Role
+                {
+                    TenantId = tenantId,
+                    Name = roleWithPermission.Name,
+                    Description = roleWithPermission.Description,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = createdBy,
+                    IsActive = true
+                };
 
-                if (!int.TryParse(tenantClaim, out var tenantId))
-                    return false;
+                await _repository.addRoleAsync(newrole);
+                await _repository.SaveChangesAsync();
 
-                if (!int.TryParse(userIdClaim, out var createdBy))
-                    return false;
+                var rolePermissions = roleWithPermission.RolePermissions
+                    .Select(rp => new RolePermission
+                    {
+                        RoleId = newrole.Id,
+                        PermissionId = rp.PermissionId,
+                        GrantedAt = DateTime.UtcNow,
+                        GrantedBy = createdBy
+                    })
+                    .ToList();
+
+                await _repository.AddRolePermissionsAsync(rolePermissions);
 
                 var user = new User
                 {
                     Email = email,
                     Name = string.Empty,
-                    RoleId = roleId,
+                    RoleId = newrole.Id,
                     TenantId = tenantId,
                     PasswordHash = string.Empty,
                     IsActive = false,
@@ -58,8 +83,7 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.AddUserAsync(user);
                 await _repository.SaveChangesAsync();
 
-                var token = Convert.ToHexString(
-                    RandomNumberGenerator.GetBytes(32));
+                var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
 
                 var passwordReset = new DAL.Data.Models.PasswordReset
                 {
@@ -72,33 +96,27 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.AddPasswordResetAsync(passwordReset);
                 await _repository.SaveChangesAsync();
 
-                var role = await _repository.GetRoleByIdAsync(roleId);
-                var roleName = role?.Name ?? "Employee";
-
-                var appUrl = _config["App:BaseUrl"];
-                var link = $"{appUrl}/set-password?token={token}";
-
+                var appUrl = _config["App:FrontendUrl"];
+                var link = $"{appUrl}/activate?token={token}";
                 var body = $@"
                     <h3>Welcome to the team!</h3>
                     <p>Your account has been created with the role:
-                    <strong>{roleName}</strong></p>
-
+                    <strong>{newrole.Name}</strong></p>
                     <p>Please click the link below to set your password.
                     This link expires in 48 hours.</p>
-
                     <a href='{link}'>Set My Password</a>
                 ";
 
-                await _emailService.SendAsync(
-                    email,
-                    "Set Your Password",
-                    body);
+                await _emailService.SendAsync(email, "Set Your Password", body);
 
-                return true;
+                await transaction.CommitAsync();
+                return user.Id;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                await transaction.RollbackAsync();
+                Console.Error.WriteLine($"[InviteEmployee] FAILED: {ex.Message}\n{ex.StackTrace}");
+                return null;
             }
         }
 
@@ -125,7 +143,7 @@ namespace NextLIMS.BLL.Services.Invitation
                 await _repository.AddPasswordResetAsync(passwordReset);
                 await _repository.SaveChangesAsync();
 
-                var appUrl = _config["App:BaseUrl"];
+                var appUrl = _config["App:FrontendUrl"];
                 var link = $"{appUrl}/reset-password?token={token}";
 
                 var body = $@"

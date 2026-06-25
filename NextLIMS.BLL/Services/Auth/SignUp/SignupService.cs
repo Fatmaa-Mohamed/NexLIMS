@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NexLIMS.BLL.DTO;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Models;
+using NextLIMS.DAL.Repository.Subscription;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace NextLIMS.BLL.Services.SignupService
     public class SignupService : ISignupService
     {
         private readonly ApplicationDbContext _context;
+        private readonly SubscriptionRepo _subscription;
 
-        public SignupService(ApplicationDbContext context)
+        public SignupService(ApplicationDbContext context , SubscriptionRepo subscription)
         {
             _context = context;
+            _subscription = subscription;
         }
 
         private async Task<string> GenerateUniqueSlugAsync(string tenantName)
@@ -38,25 +41,28 @@ namespace NextLIMS.BLL.Services.SignupService
         public async Task<bool> SignupAsync(RegisterDto request)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
-
+            var sub = await _subscription.GetSubscriptionPlan(request.SubscraptionID);
             try
             {
-                var tenant = new Tenant
+                var tenant = new NextLIMS.DAL.Data.Models.Tenant
                 {
                     Name = request.TenantName,
                     Location = request.Location,
-                    SubscriptionTier = request.SubscriptionTier,
+                    SubscriptionTier = sub.PlanName,
                     SubscriptionStartDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     SubscriptionEndDate = DateOnly.FromDateTime(DateTime.UtcNow).AddMonths(1),
-                    SubscriptionStatus = "Active",
+                    SubscriptionStatus = "PendingPayment",
+                    SubscriptionPlanId = request.SubscraptionID,
                     Slug = await GenerateUniqueSlugAsync(request.TenantName),
                     CreatedAt = DateTime.UtcNow,
-                    MonthlySampleLimit = request.NumberofSampleInMonth
+                    MonthlySampleLimit = sub?.MonthlySampleLimit
 
                 };
 
                 _context.Tenants.Add(tenant);
                 await _context.SaveChangesAsync();
+
+
 
                 var adminUser = new User
                 {
@@ -70,7 +76,11 @@ namespace NextLIMS.BLL.Services.SignupService
                 };
 
                 _context.Users.Add(adminUser);
-                await _context.SaveChangesAsync();
+                
+               await _context.SaveChangesAsync();
+
+            
+
 
                 await transaction.CommitAsync();
                 return true;

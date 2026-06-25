@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.Services.SampleServic;
+using NextLIMS.DAL.Repository.SampleRepo;
 
 namespace NexLIMS.API.Controllers.Sample
 {
@@ -26,6 +27,22 @@ namespace NexLIMS.API.Controllers.Sample
             return Ok(result);
         }
         [Authorize]
+        [HttpPost("addSampleToDirector")]
+       // [CheckPermission("CreateSample")]
+       //get department direcot
+        public async Task<IActionResult> AddSampleToDepartmentDirector(int sampleid,int directorId)
+        {
+            try
+            {
+                await _service.AddSampleToDirector(sampleid, directorId);
+                return Ok("sample added to director");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            }
+        [Authorize]
         [HttpGet]
         [CheckPermission("GetAllSamples")]
         public async Task<IActionResult> GetAllSamplesAsync([FromQuery] int page, [FromQuery] int pageSize)
@@ -46,9 +63,15 @@ namespace NexLIMS.API.Controllers.Sample
         [Authorize]
         [HttpPost("attach/{id}")]
         [CheckPermission("Add_Sample_To_Test")]
-        public async Task attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
+        public async Task<IActionResult> attachTestsToSample([FromRoute] int id, [FromBody] List<int> TestsIds)
         {
-            await _service.attachTestsToSample(id, TestsIds);
+          var result=  await _service.attachTestsToSample(id, TestsIds);
+            if (result)
+            {
+                return Ok("Tests added to Sample  successfully");
+            }
+            return BadRequest("Tests are not found ");
+       
         }
 
         [Authorize]
@@ -79,5 +102,27 @@ namespace NexLIMS.API.Controllers.Sample
             var result = await _service.filterSampleByStatus(status);
             return Ok(result);
         }
+        [Authorize]
+        [HttpGet("confirmation/{TestId}")]
+        [CheckPermission("Get_Confirmation_Templates")]
+        public async Task<IActionResult> GetConfirmationTemplates([FromRoute] int TestId)
+        {
+            var templates = await _service.GetConfirmationTemplatesByTestId(TestId);
+            return Ok(new { confirmation = templates ?? new List<string>() });
+        }
+        [Authorize]
+        [HttpGet("{SampleId}/Get-analyst-prep")]
+        [CheckPermission("Get_Sample_Details_With_Preps")]
+        public async Task<IActionResult> GetSampleDetailsWithPreps([FromRoute] int SampleId)
+        {
+            var templates = await _service.GetSampleDetailsWithPreps(SampleId);
+            return Ok(templates);
+            
+        }
+
+
+
+       
+
     }
 }

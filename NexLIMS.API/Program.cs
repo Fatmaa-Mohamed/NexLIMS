@@ -1,27 +1,54 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NexLIMS.API.Controllers.middlewares;
+using NexLIMS.API.Middlewares;
+using NextLIMS.BLL.Settings;
 using NextLIMS.BLL.Services.Auth;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using NextLIMS.BLL.Services.ClientPortal;
+using NextLIMS.BLL.Services.ClientService;
 using NextLIMS.BLL.Services.Department;
+using NextLIMS.BLL.Services.DepartmentDiractor;
 using NextLIMS.BLL.Services.EmailService;
 using NextLIMS.BLL.Services.EmployeeService;
 using NextLIMS.BLL.Services.Invitation;
+using NextLIMS.BLL.Services.PasswordReset;
 using NextLIMS.BLL.Services.Permissions;
+using NextLIMS.BLL.Services.prep.DetectionService;
+using NextLIMS.BLL.Services.prep.EnumerationService;
+using NextLIMS.BLL.Services.prep.LabAnalysisService;
 using NextLIMS.BLL.Services.Roles;
-using NextLIMS.BLL.Services.Tests;
-using NextLIMS.DAL;
 using NextLIMS.BLL.Services.SampleServic;
 using NextLIMS.BLL.Services.SignupService;
+using NextLIMS.BLL.Services.Subscription;
+using NextLIMS.BLL.Services.Tenant;
+using NextLIMS.BLL.Services.Tests;
+using NextLIMS.DAL;
+using NextLIMS.DAL.Repository.TeuntRepo;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.DataSeed;
 using NextLIMS.DAL.Data.Payment;
 using NextLIMS.DAL.Repositories;
-using NextLIMS.DAL.Repository.Test;
+using NextLIMS.DAL.Repository.ClientPortal;
+using NextLIMS.BLL.Services.ClientPortal.Reports;
+using NextLIMS.DAL.Repository.ClientPortal.Reports;
+using QuestPDF.Infrastructure;
+using NextLIMS.DAL.Repository.ClientRepo;
+using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.Department;
+using NextLIMS.DAL.Repository.DepartmentDirector;
 using NextLIMS.DAL.Repository.SampleRepo;
+using NextLIMS.DAL.Repository.TenantRepo;
+using NextLIMS.DAL.Repository.Test;
+using NextLIMS.DAL.Repository.SampleRepo.LabRepo;
+using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
+using NextLIMS.DAL.Repository.Subscription;
+using NextLIMS.DAL.Repository.Test;
 using System.Text;
-using NextLIMS.BLL.Services.PasswordReset;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +70,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default"));
 });
+
+// Twilio Configurations and Client Portal Settings
+builder.Services.Configure<TwilioSettings>(
+    builder.Configuration.GetSection("Twilio"));
+
+builder.Services.Configure<ClientPortalSettings>(
+    builder.Configuration.GetSection("ClientPortal"));
+
+builder.Services.Configure<ClientOtpSettings>(
+    builder.Configuration.GetSection("ClientOtp"));
+
 ////////
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<InvitationService>();
@@ -61,13 +99,44 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IJwtAuthenticationService, JwtAuthenticationService>();
+builder.Services.AddScoped<IClientTenantRepository, ClientTenantRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientPortalRepository, ClientPortalRepository>();
+builder.Services.AddScoped<IClientPortalService, ClientPortalService>();
+builder.Services.AddScoped<IWhatsAppService, TwilioWhatsAppService>();
+if (builder.Environment.IsDevelopment()) {
+    builder.Services.Replace(
+        ServiceDescriptor.Scoped<IWhatsAppService, DevelopmentWhatsAppService>()); 
+}
+builder.Services.AddScoped<IClientPortalInvitationService, ClientPortalInvitationService>();
+builder.Services.AddScoped<IClientOtpService, ClientOtpService>();
+QuestPDF.Settings.License = LicenseType.Community;
+builder.Services.AddScoped<ISampleReportRepository, SampleReportRepository>();
+builder.Services.AddScoped<ISampleReportPdfGenerator, QuestPdfSampleReportGenerator>();
+builder.Services.AddScoped<ISampleReportService, SampleReportService>();
+builder.Services.AddScoped<DepartmentDirectorRepository>();
+builder.Services.AddScoped<DepartmentDirectorService>();
 //
 builder.Services.AddScoped<SampleRepository>();
 builder.Services.AddScoped<SampleService>();
 ////////////////
 //sayed/////////////
 builder.Services.AddScoped<ISignupService, SignupService>();
-
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IEnumerationService, EnumerationService>();
+builder.Services.AddScoped<IDetectionService, DetectionService>();
+builder.Services.AddScoped<ISampleWorkflowRepository, SampleWorkflowRepository>();
+builder.Services.AddScoped<ILabAnalysisRepository, LabAnalysisRepository>();
+builder.Services.AddScoped<ILabAnalysisService, LabAnalysisService>();
+builder.Services.AddScoped<SubscriptionRepo>();
+builder.Services.AddScoped<SubscriptionService>();
+builder.Services.AddScoped<SubscriptionUpdateRepo>();
+builder.Services.AddScoped<SubscriptionUpdateServices>();
+builder.Services.AddScoped<SubscriptionPaymentRepo>();
+builder.Services.AddScoped<SubscriptionPaymentService>();
+builder.Services.AddScoped<TenantRepository>();
+builder.Services.AddScoped<TenantSevices>();
 ////////////////
 ///cors
 
@@ -75,9 +144,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("OpenCorsPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy
+            .WithOrigins("http://localhost:65050")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithExposedHeaders("Content-Disposition");
     });
 });
 
@@ -104,6 +176,80 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(
+        "ClientOnly",
+        policy =>
+        {
+            policy.RequireAuthenticatedUser();
+
+            policy.RequireClaim(
+                "ActorType",
+                "Client");
+
+            policy.RequireClaim("ClientId");
+            policy.RequireClaim("TenantId");
+            policy.RequireClaim("TenantSlug");
+        });
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode =
+        StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy(
+        "ClientOtp",
+        httpContext =>
+        {
+            var remoteIp =
+                httpContext.Connection
+                    .RemoteIpAddress?
+                    .ToString() ?? "unknown";
+
+            var slug =
+                httpContext.Request
+                    .RouteValues["slug"]?
+                    .ToString() ?? "unknown";
+
+            var partitionKey =
+                $"{remoteIp}:{slug}";
+
+            return RateLimitPartition
+                .GetFixedWindowLimiter(
+                    partitionKey,
+                    _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window =
+                            TimeSpan.FromMinutes(10),
+                        QueueLimit = 0,
+                        QueueProcessingOrder =
+                            QueueProcessingOrder
+                                .OldestFirst,
+                        AutoReplenishment = true
+                    });
+        });
+
+    options.OnRejected =
+        async (context, cancellationToken) =>
+        {
+            context.HttpContext.Response.StatusCode =
+                StatusCodes.Status429TooManyRequests;
+
+            await context.HttpContext.Response
+                .WriteAsJsonAsync(
+                    new
+                    {
+                        message =
+                            "Too many OTP requests. " +
+                            "Please try again later."
+                    },
+                    cancellationToken);
+        };
+});
+
 ///End//
 var app = builder.Build();
 
@@ -117,15 +263,18 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpsRedirection();
+app.UseRouting();
 app.UseCors("OpenCorsPolicy");
 
-app.UseHttpsRedirection();
-
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -18,6 +18,7 @@ namespace NextLIMS.DAL.Repositories
             int tenantId)
         {
             return await _context.Users
+                .Include(u => u.Tenant)
                 .FirstOrDefaultAsync(u =>
                     u.Email == email &&
                     u.TenantId == tenantId);

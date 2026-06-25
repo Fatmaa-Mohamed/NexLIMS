@@ -33,7 +33,10 @@ namespace NextLIMS.BLL.Services.Auth
 
 
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                throw new UnauthorizedAccessException("Invalid credentials");  // ✅ throw, not return
+                throw new UnauthorizedAccessException("Invalid credentials");
+
+            if (user.Tenant?.SubscriptionStatus != "Active")
+                throw new UnauthorizedAccessException("Account is pending payment. Please complete your payment to activate.");
 
             var claims = new List<Claim>
             {
