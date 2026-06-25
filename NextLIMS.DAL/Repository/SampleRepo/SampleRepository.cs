@@ -178,7 +178,7 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         public async Task<List<string>>? GetConfirmationTemplatesByTestIdAsync(int testid, int tenantId)
         {
             return await _context.ConfirmationTestTemplates
-                                .Where(s => s.TestId == testid && s.TenantId == tenantId)
+                                .Where(s => s.TestId == testid && (s.TenantId == null || s.TenantId == tenantId))
                                 .Select(S=>S.ConfirmationTestName).ToListAsync();
         }
 

@@ -30,6 +30,7 @@ namespace NextLIMS.DAL.Data
         public DbSet<TestSampleType> TestSampleTypes { get; set; }
         public DbSet<TenantTestSampleType> TenantTestSampleTypes { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
+        public DbSet<SubscriptionPaymentIntent> SubscriptionPaymentIntents { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -488,6 +489,19 @@ namespace NextLIMS.DAL.Data
                  .WithMany()
                  .HasForeignKey(x => x.UserId)
                  .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<SubscriptionPaymentIntent>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.Property(x => x.InvoiceId).IsRequired().HasMaxLength(200);
+                e.Property(x => x.Action).IsRequired().HasMaxLength(50);
+                e.Property(x => x.Amount).HasColumnType("decimal(18,2)");
+                e.Property(x => x.Status).IsRequired().HasMaxLength(20).HasDefaultValue("Pending");
+                e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                e.HasIndex(x => x.InvoiceId).IsUnique();
+                e.HasIndex(x => x.TenantId);
             });
 
             modelBuilder.ApplyConfiguration(new PermissionSeeder());

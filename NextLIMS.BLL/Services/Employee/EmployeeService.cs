@@ -83,7 +83,10 @@ namespace NextLIMS.BLL.Services.EmployeeService
                 u.Name,
                 u.IsActive,
                 u.RoleId,
-                RoleName = u.Role.Name
+                RoleName = u.Role.Name,
+                Permissions = u.Role.RolePermissions
+                    .Select(rp => rp.Permission.Name)
+                    .ToList()
             });
         }
 

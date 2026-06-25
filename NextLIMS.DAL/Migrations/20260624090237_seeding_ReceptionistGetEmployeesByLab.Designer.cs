@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLIMS.DAL.Data;
 
@@ -11,9 +12,11 @@ using NextLIMS.DAL.Data;
 namespace NextLIMS.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260624090237_seeding_ReceptionistGetEmployeesByLab")]
+    partial class seeding_ReceptionistGetEmployeesByLab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -575,7 +578,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 24, 17, 43, 39, 630, DateTimeKind.Local).AddTicks(9200),
+                            CreatedAt = new DateTime(2026, 6, 24, 12, 2, 36, 522, DateTimeKind.Local).AddTicks(5716),
                             Description = "Has full access to lab configuration, settings, users, and system management",
                             IsActive = true,
                             Name = "Admin"
@@ -583,7 +586,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 6, 24, 17, 43, 39, 630, DateTimeKind.Local).AddTicks(9259),
+                            CreatedAt = new DateTime(2026, 6, 24, 12, 2, 36, 522, DateTimeKind.Local).AddTicks(5765),
                             Description = "Can view and log samples into the system",
                             IsActive = true,
                             Name = "Receptionist"
@@ -591,7 +594,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 6, 24, 17, 43, 39, 630, DateTimeKind.Local).AddTicks(9317),
+                            CreatedAt = new DateTime(2026, 6, 24, 12, 2, 36, 522, DateTimeKind.Local).AddTicks(5767),
                             Description = "Performs the first step of laboratory tests",
                             IsActive = true,
                             Name = "Analyst"
@@ -599,7 +602,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 6, 24, 17, 43, 39, 630, DateTimeKind.Local).AddTicks(9321),
+                            CreatedAt = new DateTime(2026, 6, 24, 12, 2, 36, 522, DateTimeKind.Local).AddTicks(5769),
                             Description = "Enters enumeration colony counts, records detection results (P/N), performs confirmation tests, performs advanced molecular tests, and requests retests",
                             IsActive = true,
                             Name = "Senior Analyst"
@@ -607,7 +610,7 @@ namespace NextLIMS.DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2026, 6, 24, 17, 43, 39, 630, DateTimeKind.Local).AddTicks(9325),
+                            CreatedAt = new DateTime(2026, 6, 24, 12, 2, 36, 522, DateTimeKind.Local).AddTicks(5771),
                             Description = "Approves test results, authorizes retests, and reassigns tasks",
                             IsActive = true,
                             Name = "Department Director"
@@ -1344,58 +1347,6 @@ namespace NextLIMS.DAL.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("SampleWorkflows");
-                });
-
-            modelBuilder.Entity("NextLIMS.DAL.Data.Models.SubscriptionPaymentIntent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("InvoiceId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("PlanId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SampleNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValue("Pending");
-
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("SubscriptionPaymentIntents");
                 });
 
             modelBuilder.Entity("NextLIMS.DAL.Data.Models.SubscriptionPlan", b =>

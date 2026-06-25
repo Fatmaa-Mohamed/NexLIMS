@@ -30,6 +30,8 @@ namespace NextLIMS.DAL.Repositories
         {
             return await _db.Users
                 .Include(u => u.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
                 .Where(u => u.TenantId == tenantId)
                 .ToListAsync();
         }

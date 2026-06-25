@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NexLIMS.API.Controllers.middlewares;
+using NexLIMS.API.Middlewares;
 using NextLIMS.BLL.Services.Auth;
 using NextLIMS.BLL.Services.Department;
 using NextLIMS.BLL.Services.DepartmentDiractor;
@@ -89,6 +90,10 @@ builder.Services.AddScoped<ILabAnalysisRepository, LabAnalysisRepository>();
 builder.Services.AddScoped<ILabAnalysisService, LabAnalysisService>();
 builder.Services.AddScoped<SubscriptionRepo>();
 builder.Services.AddScoped<SubscriptionService>();
+builder.Services.AddScoped<SubscriptionUpdateRepo>();
+builder.Services.AddScoped<SubscriptionUpdateServices>();
+builder.Services.AddScoped<SubscriptionPaymentRepo>();
+builder.Services.AddScoped<SubscriptionPaymentService>();
 builder.Services.AddScoped<TenantRepository>();
 builder.Services.AddScoped<TenantSevices>();
 ////////////////
@@ -140,6 +145,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -35,6 +35,15 @@ namespace NextLIMS.BLL.Services.prep.DetectionService
 
                 if (sampleTest == null) throw new Exception("Sample Test not found.");
 
+                // Delete existing prep data for this test (e.g. after a retest)
+                var existing = await _context.DetectionData
+                    .FirstOrDefaultAsync(dd => dd.SampleTestId == sampleTestId);
+                if (existing != null)
+                {
+                    _context.DetectionData.Remove(existing);
+                    await _context.SaveChangesAsync();
+                }
+
                 var detectionData = new DetectionData
                 {
                     SampleTestId = sampleTestId,

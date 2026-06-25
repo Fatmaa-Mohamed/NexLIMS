@@ -55,6 +55,7 @@ namespace NextLIMS.DAL.MRSeeders.AuthSeeder
     new RolePermission { Id = 18, RoleId = 2, PermissionId = 13 }, // Filter_Samples_by_sampleId_OR_ClientId
     new RolePermission { Id = 19, RoleId = 2, PermissionId = 14 }, // Filter_Samples_by_Status
     new RolePermission { Id = 63, RoleId = 2, PermissionId = 11 }, // Add_Sample_To_Test
+    new RolePermission { Id = 324, RoleId = 2, PermissionId = 7 }, // GetEmployeesByLab — needed to load director list in assign modal
 
     // ===== Analyst (Id = 3) — First step of tests =====
     new RolePermission { Id = 20, RoleId = 3, PermissionId = 9 },  // GetAllSamples

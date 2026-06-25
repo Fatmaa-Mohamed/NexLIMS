@@ -42,6 +42,17 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
 
             if (sampleTest == null) throw new Exception("Sample Test not found.");
 
+            // Delete existing prep data for this test (e.g. after a retest)
+            var existing = await _context.EnumerationData
+                .Include(ed => ed.EnumerationDilutions)
+                .FirstOrDefaultAsync(ed => ed.SampleTestId == sampleTestId);
+            if (existing != null)
+            {
+                _context.EnumerationDilutions.RemoveRange(existing.EnumerationDilutions);
+                _context.EnumerationData.Remove(existing);
+                await _context.SaveChangesAsync();
+            }
+
             var enumerationData = new EnumerationData
             {
                 SampleTestId = sampleTestId,
