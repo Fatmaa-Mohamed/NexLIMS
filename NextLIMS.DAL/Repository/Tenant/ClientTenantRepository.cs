@@ -4,11 +4,11 @@ using NextLIMS.DAL.Data.Models;
 
 namespace NextLIMS.DAL.Repository.TenantRepo
 {
-    public class TenantRepository : ITenantRepository
+    public class ClientTenantRepository : IClientTenantRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public TenantRepository(ApplicationDbContext context)
+        public ClientTenantRepository(ApplicationDbContext context)
         {
             _context = context;
         }

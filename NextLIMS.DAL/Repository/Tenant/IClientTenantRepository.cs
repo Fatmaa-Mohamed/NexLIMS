@@ -2,7 +2,7 @@
 
 namespace NextLIMS.DAL.Repository.TenantRepo
 {
-    public interface ITenantRepository
+    public interface IClientTenantRepository
     {
         Task<Tenant?> GetActiveBySlugAsync(
             string slug,

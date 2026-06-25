@@ -15,14 +15,14 @@ namespace NextLIMS.BLL.Services.ClientPortal
 {
     public class ClientOtpService : IClientOtpService
     {
-        private readonly ITenantRepository _tenantRepository;
+        private readonly IClientTenantRepository _tenantRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IClientPortalRepository _clientPortalRepository;
         private readonly IWhatsAppService _whatsAppService;
         private readonly IJwtAuthenticationService _jwtAuthenticationService;
         private readonly ClientOtpSettings _otpSettings;
         public ClientOtpService(
-            ITenantRepository tenantRepository,
+            IClientTenantRepository tenantRepository,
             IClientRepository clientRepository,
             IClientPortalRepository clientPortalRepository,
             IWhatsAppService whatsAppService,
@@ -200,7 +200,7 @@ namespace NextLIMS.BLL.Services.ClientPortal
         }
 
         private async Task<RequestClientOtpResponseDto> IssueOtpAsync(
-            Tenant tenant,
+            DAL.Data.Models.Tenant tenant,
             Client client,
             CancellationToken cancellationToken)
         {
@@ -342,7 +342,7 @@ namespace NextLIMS.BLL.Services.ClientPortal
             }
         }
 
-        private async Task<(Tenant Tenant, Client Client)>
+        private async Task<(DAL.Data.Models.Tenant Tenant, Client Client)>
             GetTenantAndClientAsync(
                 string tenantSlug,
                 string nationalId,
@@ -377,7 +377,7 @@ namespace NextLIMS.BLL.Services.ClientPortal
         }
 
         private static IEnumerable<Claim> CreateClientClaims(
-            Tenant tenant,
+            DAL.Data.Models.Tenant tenant,
             Client client)
         {
             return new List<Claim>

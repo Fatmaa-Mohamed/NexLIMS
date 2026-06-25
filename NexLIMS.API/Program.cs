@@ -100,7 +100,7 @@ builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IJwtAuthenticationService, JwtAuthenticationService>();
-builder.Services.AddScoped<ITenantRepository, TenantRepository>();
+builder.Services.AddScoped<IClientTenantRepository, ClientTenantRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IClientPortalRepository, ClientPortalRepository>();
 builder.Services.AddScoped<IClientPortalService, ClientPortalService>();
