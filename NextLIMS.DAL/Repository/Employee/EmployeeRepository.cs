@@ -29,8 +29,24 @@ namespace NextLIMS.DAL.Repositories
         public async Task<List<User>> GetEmployeesByTenantAsync(int tenantId)
         {
             return await _db.Users
+                .Include(u => u.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
                 .Where(u => u.TenantId == tenantId)
                 .ToListAsync();
+        }
+        public async Task<bool> deleteEmployeeAsync(int id,int tenantid)
+        {
+
+            var result= _db.Users.FirstOrDefault(e=>e.TenantId == tenantid&&e.Id==id);
+            if (result!=null)
+            {
+                _db.Users.Remove(result);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            return false;
         }
 
         public async Task SaveChangesAsync()

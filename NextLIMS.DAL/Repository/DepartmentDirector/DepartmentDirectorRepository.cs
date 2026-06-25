@@ -41,22 +41,22 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Sample>> GetMySamplesAsync(int tenantId, int analystId)
+        public async Task<List<(Sample Sample, bool IsAssignedToAnalyst)>> GetMySamplesAsync(int tenantId, int userId)
         {
             var sampleIds = await _context.SampleWorkflows
-          .Where(x => x.AssignedToId == analystId)
-          .Select(x => x.SampleId)
-          .Distinct()
-          .ToListAsync();
-
-            var result = await _context.Samples
-                .Where(x =>
-                    x.TenantId == tenantId &&
-                    //   x.Status == status &&
-                    sampleIds.Contains(x.Id))
+                .Where(x => x.AssignedToId == userId)
+                .Select(x => x.SampleId)
+                .Distinct()
                 .ToListAsync();
 
-            return result;
+            var samples = await _context.Samples
+                .Include(s => s.SampleTests)
+                .Where(x => x.TenantId == tenantId && sampleIds.Contains(x.Id))
+                .ToListAsync();
+
+            return samples
+                .Select(s => (s, s.SampleTests.Any(st => st.AssignedToUserId.HasValue)))
+                .ToList();
         }
 
         public async Task<DepartmentWorkloadDto> GetDepartmentWorkload(int tenantId)
@@ -108,25 +108,62 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
             if (sample == null)
                 return false;
 
-            sample.Status = status;
+            sample.Status = "Pending";
+
+            var sampleTests = await _context.SampleTests
+                .Where(st => st.SampleId == sampleid)
+                .ToListAsync();
+            foreach (var st in sampleTests)
+                st.Status = "Pending";
+
+            var sampleTestIds = sampleTests.Select(st => st.Id).ToList();
+
+            // Clear confirmation tests
+            var confirmationTests = await _context.SampleConfirmationTests
+                .Where(ct => sampleTestIds.Contains(ct.SampleTestId))
+                .ToListAsync();
+            _context.SampleConfirmationTests.RemoveRange(confirmationTests);
+
+            // Clear enumeration dilutions then enumeration data
+            var enumerationDataList = await _context.EnumerationData
+                .Where(ed => sampleTestIds.Contains(ed.SampleTestId))
+                .ToListAsync();
+            var enumerationDataIds = enumerationDataList.Select(ed => ed.Id).ToList();
+            var dilutions = await _context.EnumerationDilutions
+                .Where(d => enumerationDataIds.Contains(d.EnumerationDataId))
+                .ToListAsync();
+            _context.EnumerationDilutions.RemoveRange(dilutions);
+            _context.EnumerationData.RemoveRange(enumerationDataList);
+
+            // Clear detection data
+            var detectionDataList = await _context.DetectionData
+                .Where(dd => sampleTestIds.Contains(dd.SampleTestId))
+                .ToListAsync();
+            _context.DetectionData.RemoveRange(detectionDataList);
+
             var firstWorkflow = await _context.SampleWorkflows
                 .Where(w => w.SampleId == sampleid && w.TenantId == tenantId)
                 .OrderBy(w => w.Id)
                 .FirstOrDefaultAsync();
-            var sampleWorkflow = new SampleWorkflow
+
+            var latestWorkflow = await _context.SampleWorkflows
+                .Where(w => w.SampleId == sampleid && w.TenantId == tenantId)
+                .OrderByDescending(w => w.Id)
+                .FirstOrDefaultAsync();
+            if (latestWorkflow != null)
+                latestWorkflow.EndDate = DateTime.UtcNow;
+
+            await _context.SampleWorkflows.AddAsync(new SampleWorkflow
             {
-                TenantId=tenantId,
-                SampleId = sampleid,
-                Action = status,
-                Level = 1,
-                Flag = true,
-                Reason=reason??"",
-                StartDate = DateTime.Now,
-                AssignedToId = firstWorkflow?.AssignedToId // safe null check
-                 
-             
-            };
-            await _context.SampleWorkflows.AddAsync(sampleWorkflow);
+                TenantId     = tenantId,
+                SampleId     = sampleid,
+                Action       = "InProgress",
+                Level        = 1,
+                Flag         = true,
+                Reason       = reason ?? "",
+                StartDate    = DateTime.UtcNow,
+                AssignedToId = firstWorkflow?.AssignedToId,
+            });
             await _context.SaveChangesAsync();
             return true;
         }
@@ -170,18 +207,31 @@ namespace NextLIMS.DAL.Repository.DepartmentDirector
 
         public async Task<List<object>> directors(int tenantId)
         {
-            var result = await _context.Users
-             .Where(u => u.TenantId == tenantId &&
-                         u.Role.RolePermissions.Any(rp =>
-                             rp.Permission.Name == "AssignToAnalystASpeciicSample"))
-             .Select(u => new
-             {
-                 UserId = u.Id,
-                 UserName = u.Name,
-                 RoleName = u.Role.Name
-             })
-             .Cast<object>().ToListAsync();
-            return result;
+            var knownRoles = new HashSet<string>
+                { "Admin", "Analyst", "Senior Analyst", "Department Director", "Receptionist" };
+
+            var users = await _context.Users
+                .Include(u => u.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
+                .Where(u => u.TenantId == tenantId && u.IsActive)
+                .ToListAsync();
+
+            return users
+                .Where(u => u.Role != null && (
+                    (knownRoles.Contains(u.Role.Name) && u.Role.Name == "Department Director") ||
+                    (!knownRoles.Contains(u.Role.Name) &&
+                     u.Role.RolePermissions.Any(rp => rp.Permission.Name == "AssignToAnalystASpeciicSample") &&
+                     !u.Role.RolePermissions.Any(rp => rp.Permission.Name == "GET_ALL_Permissions"))
+                ))
+                .Select(u => (object)new
+                {
+                    UserId   = u.Id,
+                    UserName = u.Name,
+                    Email    = u.Email,
+                    IsActive = u.IsActive
+                })
+                .ToList();
         }
     }
 }

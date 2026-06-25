@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NexLIMS.API.Middlewares;
@@ -21,9 +21,8 @@ namespace NexLIMS.API.Controllers.Sample
         private readonly IDetectionService _detectionService;
         private readonly ILabAnalysisService _labAnalysisService;
 
-        // The DI container will automatically supply this parameter now!
         public SampleTestController(IEnumerationService enumerationService,
-                                    IDetectionService detectionService , 
+                                    IDetectionService detectionService,
                                     ILabAnalysisService labAnalysisService)
         {
             _enumerationService = enumerationService;
@@ -40,6 +39,7 @@ namespace NexLIMS.API.Controllers.Sample
             int preparationSaved = await _enumerationService.SaveEnumerationPrepAsync(sampleTestId, dto);
             return Ok(new { message = preparationSaved > 0 ? "Data saved successfully." : "Failed to save data Try Again." });
         }
+
         [Authorize]
         [HttpPost("{sampleTestId}/detection-prep")]
         [CheckPermission("Save_Detection_Prep")]
@@ -48,8 +48,8 @@ namespace NexLIMS.API.Controllers.Sample
             if (dto == null) return BadRequest("Payload cannot be empty.");
             int preparationSaved = await _detectionService.SaveDetectionPrepAsync(sampleTestId, dto);
             return Ok(new { message = preparationSaved > 0 ? "Data saved successfully." : "Failed to save data Try Again." });
-
         }
+
         [Authorize]
         [HttpPost("{sampleTestId}/molecular-prep")]
         [CheckPermission("Save_Molecular_Prep")]
@@ -58,8 +58,8 @@ namespace NexLIMS.API.Controllers.Sample
             if (dto == null) return BadRequest("Payload cannot be empty.");
             int preparationSaved = await _detectionService.SaveDetectionPrepAsync(sampleTestId, dto);
             return Ok(new { message = preparationSaved > 0 ? "Data saved successfully." : "Failed to save data Try Again." });
-
         }
+
         [Authorize]
         [HttpPost("{sampleTestId}/enumeration-prep/result-Submit")]
         [CheckPermission("Save_Enumeration_Prep_Data")]
@@ -81,6 +81,7 @@ namespace NexLIMS.API.Controllers.Sample
                 return StatusCode(500, new { error = "An internal error occurred: " + ex.Message });
             }
         }
+
         [Authorize]
         [HttpPost("{sampleTestId}/detection-prep/result-Submit")]
         [CheckPermission("Save_Detection_Prep_Data")]

@@ -20,9 +20,13 @@
     {
         public int Id { get; set; }
 
-        public int ?TenantTestId { get; set; }
+        public int? TenantTestId { get; set; }
+
+        public int? TestId { get; set; }
 
         public string TestName { get; set; }
+
+        public string? TestType { get; set; }
 
         public string Status { get; set; }
 

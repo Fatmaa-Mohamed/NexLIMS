@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NextLIMS.BLL.DTO.prep;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Repository;
 using NextLIMS.DAL.Repository.SampleRepo.SampleWorkflowRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextLIMS.BLL.Services.prep.EnumerationService
 {
@@ -21,29 +16,42 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
         private readonly ApplicationDbContext _context;
         private readonly ISampleWorkflowRepository _sampleWorkflowRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public EnumerationService(IGenericRepository<EnumerationData> repository,
-            IGenericRepository<EnumerationDilution> Dilutionsrepository,
+
+        public EnumerationService(
+            IGenericRepository<EnumerationData> repository,
+            IGenericRepository<EnumerationDilution> dilutionsrepository,
             ApplicationDbContext context,
             ISampleWorkflowRepository sampleWorkflowRepository,
             IHttpContextAccessor httpContextAccessor)
         {
             _repo = repository;
-            _dilutionsrepository = Dilutionsrepository;
+            _dilutionsrepository = dilutionsrepository;
             _context = context;
             _sampleWorkflowRepository = sampleWorkflowRepository;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public async Task<int> SaveEnumerationPrepAsync(int sampleTestId, EnumerationPrepDto dto)
         {
             var createdBy = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
 
-            
             var sampleTest = await _context.SampleTests
                                             .Include(st => st.Sample)
                                             .FirstOrDefaultAsync(st => st.Id == sampleTestId);
 
             if (sampleTest == null) throw new Exception("Sample Test not found.");
+
+            // Delete existing prep data for this test (e.g. after a retest)
+            var existing = await _context.EnumerationData
+                .Include(ed => ed.EnumerationDilutions)
+                .FirstOrDefaultAsync(ed => ed.SampleTestId == sampleTestId);
+            if (existing != null)
+            {
+                _context.EnumerationDilutions.RemoveRange(existing.EnumerationDilutions);
+                _context.EnumerationData.Remove(existing);
+                await _context.SaveChangesAsync();
+            }
 
             var enumerationData = new EnumerationData
             {
@@ -64,7 +72,8 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
                 if (cleanType == "water") dilutionType = "Volume";
                 else if (cleanType == "swab" || cleanType == "soil" || cleanType == "food") dilutionType = "dilution";
             }
-            var enumerationilutionAdded = 0;
+
+            var enumerationDilutionAdded = 0;
             if (dto.dilutions != null && dto.dilutions.Any())
             {
                 var dilutionEntities = new List<EnumerationDilution>();
@@ -72,7 +81,7 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
                 {
                     dilutionEntities.Add(new EnumerationDilution
                     {
-                        EnumerationDataId = enumerationData.Id, 
+                        EnumerationDataId = enumerationData.Id,
                         TenantId = tenantId,
                         DilutionOrVolume = dilutionDto.DilutionOrVolume,
                         VolumePlated = dilutionDto.VolumePlated,
@@ -82,15 +91,14 @@ namespace NextLIMS.BLL.Services.prep.EnumerationService
                         CreatedBy = createdBy
                     });
                 }
-                enumerationilutionAdded =  await _dilutionsrepository.AddRangeAsync(dilutionEntities);
+                enumerationDilutionAdded = await _dilutionsrepository.AddRangeAsync(dilutionEntities);
             }
 
-            var workflowwadded = await _sampleWorkflowRepository.SetWorkflowToInProgressAsync(sampleTestId, tenantId, 2, "inprogress");
-            var SampleTestStuts = await _sampleWorkflowRepository.UpdateStutusInSampleTest(sampleTestId,tenantId ,null, "inprogress");
+            var workflowAdded = await _sampleWorkflowRepository.SetWorkflowToInProgressAsync(sampleTestId, tenantId, 1, "inprogress");
+            var sampleTestStatus = await _sampleWorkflowRepository.UpdateStutusInSampleTest(sampleTestId, tenantId, null, "inprogress");
 
-            if (enumerationDataAdded > 0 & enumerationilutionAdded > 0 && workflowwadded > 0 && SampleTestStuts>0) return 1;
+            if (enumerationDataAdded > 0 && enumerationDilutionAdded > 0 && workflowAdded > 0 && sampleTestStatus > 0) return 1;
             else return 0;
-            
         }
     }
 }

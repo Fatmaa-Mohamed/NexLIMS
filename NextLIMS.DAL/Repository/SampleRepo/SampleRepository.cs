@@ -1,4 +1,4 @@
-﻿using Azure;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.DAL.Data;
@@ -23,8 +23,6 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         }
         public async Task<List<SampleDataDto>> GetAllSamplesAsync(int tenantId, int page, int pageSize)
         {
-
-
             var samples = await _context.Samples
                 .AsNoTracking()
                 .Where(e => e.TenantId == tenantId)
@@ -35,14 +33,14 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                 {
                     sampleId = e.Id,
                     departmentName = e.Tenant.TenantDepartments
-                    .Select(td => td.Department.Name)
-                    .FirstOrDefault(),
+                        .Select(td => td.Department.Name)
+                        .FirstOrDefault(),
                     nid = e.Client.NID,
                     RegisteredAt = e.CreatedAt,
                     status = e.Status,
                 })
                 .ToListAsync();
-                        return samples;
+            return samples;
         }
         public async Task<Sample> GetSampleById(int id, int tenantId)
         {
@@ -67,9 +65,10 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                 .Include(s => s.SampleTests)
                 .ThenInclude(st => st.TenantTest)
                 .ThenInclude(tt => tt.Test)
-                .Include(s => s.SampleTests)
-                .ThenInclude(st => st.AssignedToUser)
-                .FirstOrDefaultAsync(s => s.Id == id && s.TenantId == tenantid );
+        .Include(s => s.SampleTests)
+            .ThenInclude(st => st.AssignedToUser)
+        .FirstOrDefaultAsync(s => s.Id == id &&
+                                  s.TenantId == tenantid);
         }
         //test
         public async Task<bool> AttachTestsToSample(int sampleId, ICollection<int> testIds, int tenantId)
@@ -89,11 +88,9 @@ namespace NextLIMS.DAL.Repository.SampleRepo
             if (tenantTests.Count != testIds.Count)
                     return false;
 
-
-
             if (sample == null)
                 throw new Exception("Sample not found");
-          
+
                 var sampleTests = testIds.Select(testId => new SampleTest
                 {
                     SampleId = sampleId,
@@ -108,7 +105,7 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                 await _context.SaveChangesAsync();
             return true;
             }
-        
+
         public async Task DetachTestsFromSample(int sampleId, ICollection<int> testIds, int tenantId)
         {
             var sampleTests = await _context.SampleTests
@@ -178,12 +175,12 @@ namespace NextLIMS.DAL.Repository.SampleRepo
         {
             return await _context.Clients.FirstOrDefaultAsync(e=>e.TenantId==tenantId&&e.NID== nid);
         }
+
         public async Task<List<string>>? GetConfirmationTemplatesByTestIdAsync(int testid, int tenantId)
         {
             return await _context.ConfirmationTestTemplates
-                                .Where(s => s.TestId == testid && s.TenantId == tenantId)
+                                .Where(s => s.TestId == testid && (s.TenantId == null || s.TenantId == tenantId))
                                 .Select(S=>S.ConfirmationTestName).ToListAsync();
-                                
         }
 
         public async Task<Sample?> GetSampleWithAllTestDataAsync(int sampleId, int tenantId)
@@ -198,9 +195,10 @@ namespace NextLIMS.DAL.Repository.SampleRepo
                         .ThenInclude(ed => ed.EnumerationDilutions)
                 .Include(s => s.SampleTests)
                     .ThenInclude(st => st.DetectionData)
+                .Include(s => s.SampleTests)
+                    .ThenInclude(st => st.SampleConfirmationTests)
                 .FirstOrDefaultAsync();
         }
-        
 
         public async Task addsampleWorkflowAsync(SampleWorkflow sampleWorkflow)
         {

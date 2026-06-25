@@ -30,12 +30,12 @@ namespace NexLIMS.API.Controllers.Employee
         [CheckPermission("Invite_employee")]
         public async Task<IActionResult> InviteEmployee(InviteDTo request)
         {
-            var success = await _employeeService.InviteEmployeeAsync(request);
+            var userId = await _employeeService.InviteEmployeeAsync(request);
 
-            if (!success)
+            if (userId == null)
                 return BadRequest("Could not create the user. Email may already exist.");
 
-            return Ok("Invitation sent successfully.");
+            return Ok(new { userId, message = "Invitation sent successfully." });
         }
 
         [HttpPost("set-password/{token}")]
@@ -93,5 +93,23 @@ namespace NexLIMS.API.Controllers.Employee
                 return BadRequest("you have no account");
             return Ok("reseted successfully");
         }
+
+        [HttpDelete("{id:int}")]
+        [Authorize]
+        [CheckPermission("DeleteLabEmployee")]
+        public async Task<IActionResult> deleteEmployee(int id)
+        {
+            var result = await _employeeService.deleteEmployee(id);
+            if (result)
+            {
+
+                return NoContent();
+            }
+            else return BadRequest("User Bot Found");
+        }
+
+
+
+
     }
 }

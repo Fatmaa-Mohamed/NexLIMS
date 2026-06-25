@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NextLIMS.DAL.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.MRSeeders.AuthSeeder;
 
@@ -30,6 +29,8 @@ namespace NextLIMS.DAL.Data
         public DbSet<SampleType> SampleTypes { get; set; }
         public DbSet<TestSampleType> TestSampleTypes { get; set; }
         public DbSet<TenantTestSampleType> TenantTestSampleTypes { get; set; }
+        public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
+        public DbSet<SubscriptionPaymentIntent> SubscriptionPaymentIntents { get; set; }
         public DbSet<ClientOtpVerification> ClientOtpVerifications { get; set; }
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
@@ -174,8 +175,8 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.TestName).IsRequired();
-                e.Property(x => x.TestType).IsRequired();
+                e.Property(x => x.TestName).IsRequired(false);
+                e.Property(x => x.TestType).IsRequired(false);
                 e.HasIndex(x => x.DepartmentId);
                 e.HasIndex(x => x.TenantId);
 
@@ -235,9 +236,9 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.SampleName).IsRequired();
-                e.Property(x => x.SampleType).IsRequired();
-                e.Property(x => x.Status).IsRequired();
+                e.Property(x => x.SampleName).IsRequired(false);
+                e.Property(x => x.SampleType).IsRequired(false);
+                e.Property(x => x.Status).IsRequired(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => new { x.TenantId, x.Id }).IsUnique();
                 e.HasIndex(x => x.ClientId);
@@ -259,7 +260,7 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.Status).IsRequired();
+                e.Property(x => x.Status).IsRequired(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.SampleId);
                 e.HasIndex(x => x.TenantTestId);
@@ -365,8 +366,9 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.DilutionOrVolume).IsRequired();
-                e.Property(x => x.DilutionType).IsRequired();
+                e.Property(x => x.DilutionOrVolume).IsRequired(false);
+                e.Property(x => x.DilutionType).IsRequired(false);
+                e.Property(x => x.ColonyCount).IsRequired(false);
                 e.Property(x => x.IsSelectedForCalculation).HasDefaultValue(false);
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.EnumerationDataId);
@@ -411,8 +413,8 @@ namespace NextLIMS.DAL.Data
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
-                e.Property(x => x.ConfirmationTestName).IsRequired();
-                e.Property(x => x.Result).IsRequired();
+                e.Property(x => x.ConfirmationTestName).IsRequired(false);
+                e.Property(x => x.Result).IsRequired(false);
                 e.Property(x => x.DatePerformed).HasDefaultValueSql("GETUTCDATE()");
                 e.HasIndex(x => x.SampleTestId);
                 e.HasIndex(x => x.PerformedBySeniorAnalystId);
@@ -490,6 +492,19 @@ namespace NextLIMS.DAL.Data
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<SubscriptionPaymentIntent>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedOnAdd();
+                e.Property(x => x.InvoiceId).IsRequired().HasMaxLength(200);
+                e.Property(x => x.Action).IsRequired().HasMaxLength(50);
+                e.Property(x => x.Amount).HasColumnType("decimal(18,2)");
+                e.Property(x => x.Status).IsRequired().HasMaxLength(20).HasDefaultValue("Pending");
+                e.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                e.HasIndex(x => x.InvoiceId).IsUnique();
+                e.HasIndex(x => x.TenantId);
+            });
+
             // ── ClientOtpVerifications ──────────────────────────────────────────────────────
 
             modelBuilder.Entity<ClientOtpVerification>(entity =>
@@ -526,6 +541,7 @@ namespace NextLIMS.DAL.Data
             modelBuilder.ApplyConfiguration(new RoleSeeder());
             modelBuilder.ApplyConfiguration(new RolePermissionSeeder());
             modelBuilder.ApplyConfiguration(new UserSeeder());
+            modelBuilder.ApplyConfiguration(new SubscriptionPlanSeeder());
         }
     }
 }

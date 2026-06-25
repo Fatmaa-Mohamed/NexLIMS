@@ -1,9 +1,4 @@
-﻿using NextLIMS.BLL.DTO.PrepDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NextLIMS.BLL.DTO.PrepDTOs;
 
 namespace NextLIMS.BLL.Services.prep.DetectionService
 {

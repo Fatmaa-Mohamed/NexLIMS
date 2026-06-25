@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using NextLIMS.BLL.DTO.Client;
 using NextLIMS.BLL.DTO.Sample;
 using NextLIMS.BLL.DTO.SampleDTO;
@@ -123,7 +123,9 @@ namespace NextLIMS.BLL.Services.SampleServic
                 {
                     Id = st.Id,
                     TenantTestId = st.TenantTestId,
-                    TestName = st.TenantTest?.Test.TestName, // adjust to your model
+                    TestId = st.TenantTest?.TestId,
+                    TestName = st.TenantTest?.Test.TestName,
+                    TestType = st.TenantTest?.Test.TestType,
                     Status = st.Status,
                     Result = st.Result,
                     AssignedToUserId = st.AssignedToUserId,
@@ -161,11 +163,13 @@ namespace NextLIMS.BLL.Services.SampleServic
 
             return await _sampleRepository.filterByStatus(status, tenantId);
         }
+
         public async Task<List<string>>? GetConfirmationTemplatesByTestId(int TestId)
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
             return await _sampleRepository.GetConfirmationTemplatesByTestIdAsync(TestId, tenantId);
         }
+
         public async Task<SampleDetailsResponseDto>? GetSampleDetailsWithPreps(int SampleId)
         {
             var tenantId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
@@ -185,6 +189,12 @@ namespace NextLIMS.BLL.Services.SampleServic
                     TestId = st.TenantTest.Test.Id,
                     TestName = st.TenantTest?.Test?.TestName,
                     TestType = st.TenantTest?.Test?.TestType,
+                    Result = st.Result,
+                    ConfirmationTests = st.SampleConfirmationTests?.Select(ct => new ConfirmationTestResultDto
+                    {
+                        Name = ct.ConfirmationTestName,
+                        Result = ct.Result
+                    }).ToList() ?? new(),
                     EnumerationPrep = st.EnumerationData == null ? null : new EnumerationPrepResponseDto
                     {
                         Id = st.EnumerationData.Id,
@@ -225,7 +235,6 @@ namespace NextLIMS.BLL.Services.SampleServic
             var oldSample = await _sampleRepository.GetSampleById(sampleid, tenantId);
             oldSample.Status = SampleStatuses.Pending;
 
-
             var sampleWorkflow = new SampleWorkflow
             {
                 TenantId = tenantId,
@@ -239,7 +248,6 @@ namespace NextLIMS.BLL.Services.SampleServic
             };
             await _sampleRepository.addsampleWorkflowAsync(sampleWorkflow);
             await _sampleRepository.savechangesasync();
-
         }
     }
 }

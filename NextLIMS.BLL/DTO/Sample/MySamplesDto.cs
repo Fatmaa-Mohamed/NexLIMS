@@ -16,5 +16,8 @@ namespace NextLIMS.BLL.DTO.Sample
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
+        public bool IsAssignedToAnalyst { get; set; }
+        public int TotalTests { get; set; }
+        public int SubmittedTests { get; set; }
     }
 }

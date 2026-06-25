@@ -106,10 +106,10 @@ namespace NextLIMS.BLL.Services.prep.LabAnalysisService
             var sum = 0;
             if (EnumerationDilution != null)
             {
-                if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "food" ||
-                    EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "liquid food" ||
-                    EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "swab" ||  
-                    (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "water" 
+                if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "food" ||
+                    EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "liquid food" ||
+                    EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "swab" ||
+                    (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "water"
                     && (new[] { 3, 4, 10, 11 }.Contains(EnumerationDilution.EnumerationData.SampleTest.TenantTest?.Test?.Id ?? 0)
                     )))
                 {
@@ -123,7 +123,7 @@ namespace NextLIMS.BLL.Services.prep.LabAnalysisService
                     }                    
 
                 }
-                else if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "Water")
+                else if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "water")
                 {
                     if (double.TryParse(EnumerationDilution.ColonyCount, out double colonies)
                         && double.TryParse(EnumerationDilution.DilutionOrVolume, out double DilutionOrVolume)
@@ -133,7 +133,7 @@ namespace NextLIMS.BLL.Services.prep.LabAnalysisService
                     }
 
                 }
-                else if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType.ToLower() == "air")
+                else if (EnumerationDilution.EnumerationData.SampleTest.Sample?.SampleType?.ToLower() == "air")
                 {
                     if (double.TryParse(EnumerationDilution.ColonyCount, out double colonies))
                     {

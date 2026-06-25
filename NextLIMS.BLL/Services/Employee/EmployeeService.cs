@@ -1,7 +1,9 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using NexLIMS.BLL.DTO.Invite;
 using NextLIMS.BLL.DTO.ForgetPassword;
 using NextLIMS.BLL.Services.Invitation;
+using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Repositories;
 
 namespace NextLIMS.BLL.Services.EmployeeService
@@ -10,16 +12,19 @@ namespace NextLIMS.BLL.Services.EmployeeService
     {
         private readonly InvitationService _invitationService;
         private readonly EmployeeRepository _employeeRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public EmployeeService(
             InvitationService invitationService,
-            EmployeeRepository employeeRepository)
+            EmployeeRepository employeeRepository,
+            IHttpContextAccessor httpContextAccessor)
         {
             _invitationService = invitationService;
             _employeeRepository = employeeRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> InviteEmployeeAsync(InviteDTo request)
+        public async Task<int?> InviteEmployeeAsync(InviteDTo request)
         {
             return await _invitationService
                 .InviteEmployeeAsync(request.Email, request.RoleId);
@@ -77,7 +82,11 @@ namespace NextLIMS.BLL.Services.EmployeeService
                 u.Email,
                 u.Name,
                 u.IsActive,
-                u.RoleId
+                u.RoleId,
+                RoleName = u.Role.Name,
+                Permissions = u.Role.RolePermissions
+                    .Select(rp => rp.Permission.Name)
+                    .ToList()
             });
         }
 
@@ -93,6 +102,16 @@ namespace NextLIMS.BLL.Services.EmployeeService
                 .EmployeeForgetPasswordAsync(email);
         }
 
+        public int tenantId=> int.Parse(_httpContextAccessor.HttpContext.User.FindFirst("TenantId").Value);
+        public async Task<bool> deleteEmployee(int id)
+        {
+            var result = await _employeeRepository.deleteEmployeeAsync(id, tenantId);
+            if (result)
+            {
+                return true;
+            }
+            return false;
+        }
         
     }
 }

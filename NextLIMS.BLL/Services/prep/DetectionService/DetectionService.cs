@@ -1,28 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NextLIMS.BLL.DTO.PrepDTOs;
 using NextLIMS.DAL.Data;
 using NextLIMS.DAL.Data.Models;
 using NextLIMS.DAL.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextLIMS.BLL.Services.prep.DetectionService
 {
     public class DetectionService : IDetectionService
     {
         private readonly IGenericRepository<DetectionData> _repo;
-        private readonly ApplicationDbContext _context; // Added to manage queries and transactions
+        private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DetectionService(IGenericRepository<DetectionData> repository, ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _repo = repository;
-            _context = context; // Initialized
+            _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -39,6 +34,15 @@ namespace NextLIMS.BLL.Services.prep.DetectionService
                                                .FirstOrDefaultAsync(st => st.Id == sampleTestId);
 
                 if (sampleTest == null) throw new Exception("Sample Test not found.");
+
+                // Delete existing prep data for this test (e.g. after a retest)
+                var existing = await _context.DetectionData
+                    .FirstOrDefaultAsync(dd => dd.SampleTestId == sampleTestId);
+                if (existing != null)
+                {
+                    _context.DetectionData.Remove(existing);
+                    await _context.SaveChangesAsync();
+                }
 
                 var detectionData = new DetectionData
                 {
@@ -61,6 +65,10 @@ namespace NextLIMS.BLL.Services.prep.DetectionService
                     workflow.StartDate = workflow.EndDate;
                     _context.SampleWorkflows.Update(workflow);
                 }
+
+                if (sampleTest.Sample != null)
+                    sampleTest.Sample.Status = "InProgress";
+
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
                 return detectionData.Id;

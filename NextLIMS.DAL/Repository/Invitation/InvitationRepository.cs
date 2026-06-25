@@ -50,4 +50,9 @@ public class InvitationRepository
     {
         await _db.SaveChangesAsync();
     }
+
+    public async Task<Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction> BeginTransactionAsync()
+    {
+        return await _db.Database.BeginTransactionAsync();
+    }
 }

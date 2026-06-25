@@ -1,10 +1,4 @@
-﻿using NextLIMS.DAL.Data;
-using NextLIMS.DAL.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NextLIMS.DAL.Data;
 
 namespace NextLIMS.DAL.Repository
 {
@@ -22,6 +16,7 @@ namespace NextLIMS.DAL.Repository
             await _dbContext.Set<T>().AddAsync(entity);
             return await _dbContext.SaveChangesAsync();
         }
+
         public async Task<int> AddRangeAsync(IEnumerable<T> entities)
         {
             await _dbContext.Set<T>().AddRangeAsync(entities);
