@@ -1,0 +1,542 @@
+[
+  {
+    "TenantId": null,
+    "TestId": 12,
+    "ConfirmationTestName": "Brilliant green lactose bile broth"
+  },
+  {
+    "TenantId": null,
+    "TestId": 12,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 13,
+    "ConfirmationTestName": "Brilliant green lactose bile broth"
+  },
+  {
+    "TenantId": null,
+    "TestId": 13,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 14,
+    "ConfirmationTestName": "EC Broth"
+  },
+  {
+    "TenantId": null,
+    "TestId": 15,
+    "ConfirmationTestName": "EC Broth"
+  },
+  {
+    "TenantId": null,
+    "TestId": 16,
+    "ConfirmationTestName": "Glucose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 16,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 17,
+    "ConfirmationTestName": "Glucose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 17,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 23,
+    "ConfirmationTestName": "Sulfite Indole Motility Agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 23,
+    "ConfirmationTestName": "Acid Phosphatase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 24,
+    "ConfirmationTestName": "Sulfite Indole Motility Agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 24,
+    "ConfirmationTestName": "Acid Phosphatase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 26,
+    "ConfirmationTestName": "Bile-aesculin-azide agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 27,
+    "ConfirmationTestName": "Bile-aesculin-azide agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 28,
+    "ConfirmationTestName": "Blood agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 29,
+    "ConfirmationTestName": "Blood agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 30,
+    "ConfirmationTestName": "Coagulase test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 31,
+    "ConfirmationTestName": "Coagulase test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 32,
+    "ConfirmationTestName": "Beta-haemolysis"
+  },
+  {
+    "TenantId": null,
+    "TestId": 32,
+    "ConfirmationTestName": "L-Rhamnose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 32,
+    "ConfirmationTestName": "D-Xylose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 32,
+    "ConfirmationTestName": "Microscopic aspect"
+  },
+  {
+    "TenantId": null,
+    "TestId": 33,
+    "ConfirmationTestName": "Motility"
+  },
+  {
+    "TenantId": null,
+    "TestId": 33,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 33,
+    "ConfirmationTestName": "Absence of aerobic growth at 25°C"
+  },
+  {
+    "TenantId": null,
+    "TestId": 34,
+    "ConfirmationTestName": "Oxidase (non-fluorescent)"
+  },
+  {
+    "TenantId": null,
+    "TestId": 34,
+    "ConfirmationTestName": "Ammonia production from Acetamide"
+  },
+  {
+    "TenantId": null,
+    "TestId": 35,
+    "ConfirmationTestName": "Triple-Sugar-Iron"
+  },
+  {
+    "TenantId": null,
+    "TestId": 35,
+    "ConfirmationTestName": "Urea"
+  },
+  {
+    "TenantId": null,
+    "TestId": 35,
+    "ConfirmationTestName": "Lysine"
+  },
+  {
+    "TenantId": null,
+    "TestId": 35,
+    "ConfirmationTestName": "Serological tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 36,
+    "ConfirmationTestName": "Triple-Sugar-Iron"
+  },
+  {
+    "TenantId": null,
+    "TestId": 36,
+    "ConfirmationTestName": "Urea"
+  },
+  {
+    "TenantId": null,
+    "TestId": 36,
+    "ConfirmationTestName": "Lysine"
+  },
+  {
+    "TenantId": null,
+    "TestId": 36,
+    "ConfirmationTestName": "Serological tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 38,
+    "ConfirmationTestName": "Beta-haemolysis"
+  },
+  {
+    "TenantId": null,
+    "TestId": 38,
+    "ConfirmationTestName": "L-Rhamnose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 38,
+    "ConfirmationTestName": "D-Xylose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 38,
+    "ConfirmationTestName": "Microscopic aspect"
+  },
+  {
+    "TenantId": null,
+    "TestId": 39,
+    "ConfirmationTestName": "Beta-haemolysis"
+  },
+  {
+    "TenantId": null,
+    "TestId": 39,
+    "ConfirmationTestName": "L-Rhamnose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 39,
+    "ConfirmationTestName": "D-Xylose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 39,
+    "ConfirmationTestName": "Microscopic aspect"
+  },
+  {
+    "TenantId": null,
+    "TestId": 40,
+    "ConfirmationTestName": "Beta-haemolysis"
+  },
+  {
+    "TenantId": null,
+    "TestId": 40,
+    "ConfirmationTestName": "L-Rhamnose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 40,
+    "ConfirmationTestName": "D-Xylose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 40,
+    "ConfirmationTestName": "Microscopic aspect"
+  },
+  {
+    "TenantId": null,
+    "TestId": 41,
+    "ConfirmationTestName": "Beta-haemolysis"
+  },
+  {
+    "TenantId": null,
+    "TestId": 41,
+    "ConfirmationTestName": "L-Rhamnose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 41,
+    "ConfirmationTestName": "D-Xylose"
+  },
+  {
+    "TenantId": null,
+    "TestId": 41,
+    "ConfirmationTestName": "Microscopic aspect"
+  },
+  {
+    "TenantId": null,
+    "TestId": 42,
+    "ConfirmationTestName": "Motility"
+  },
+  {
+    "TenantId": null,
+    "TestId": 42,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 42,
+    "ConfirmationTestName": "Absence of aerobic growth at 25°C"
+  },
+  {
+    "TenantId": null,
+    "TestId": 43,
+    "ConfirmationTestName": "Triple-Sugar-Iron"
+  },
+  {
+    "TenantId": null,
+    "TestId": 43,
+    "ConfirmationTestName": "Urea"
+  },
+  {
+    "TenantId": null,
+    "TestId": 43,
+    "ConfirmationTestName": "Lysine"
+  },
+  {
+    "TenantId": null,
+    "TestId": 43,
+    "ConfirmationTestName": "Serological tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 44,
+    "ConfirmationTestName": "Triple-Sugar-Iron"
+  },
+  {
+    "TenantId": null,
+    "TestId": 44,
+    "ConfirmationTestName": "Urea"
+  },
+  {
+    "TenantId": null,
+    "TestId": 44,
+    "ConfirmationTestName": "Lysine"
+  },
+  {
+    "TenantId": null,
+    "TestId": 44,
+    "ConfirmationTestName": "Serological tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 45,
+    "ConfirmationTestName": "Oxidase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 45,
+    "ConfirmationTestName": "Hydrolysis of 4-Nitrophenyl α-D-glucopyranoside substrate"
+  },
+  {
+    "TenantId": null,
+    "TestId": 45,
+    "ConfirmationTestName": "L-Lysine decarboxylase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 45,
+    "ConfirmationTestName": "L-Ornithine decarboxylase"
+  },
+  {
+    "TenantId": null,
+    "TestId": 46,
+    "ConfirmationTestName": "Biochemical tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 46,
+    "ConfirmationTestName": "PCR test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 47,
+    "ConfirmationTestName": "Biochemical tests"
+  },
+  {
+    "TenantId": null,
+    "TestId": 47,
+    "ConfirmationTestName": "PCR test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 48,
+    "ConfirmationTestName": "MacConkey agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 48,
+    "ConfirmationTestName": "Indole production"
+  },
+  {
+    "TenantId": null,
+    "TestId": 48,
+    "ConfirmationTestName": "Serological test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 49,
+    "ConfirmationTestName": "MacConkey agar"
+  },
+  {
+    "TenantId": null,
+    "TestId": 49,
+    "ConfirmationTestName": "Indole production"
+  },
+  {
+    "TenantId": null,
+    "TestId": 49,
+    "ConfirmationTestName": "Serological test"
+  },
+  {
+    "TenantId": null,
+    "TestId": 50,
+    "ConfirmationTestName": "Oxidase (non-fluorescent)"
+  },
+  {
+    "TenantId": null,
+    "TestId": 50,
+    "ConfirmationTestName": "Ammonia production from Acetamide"
+  },
+  {
+    "TenantId": null,
+    "TestId": 51,
+    "ConfirmationTestName": "Oxidase (non-fluorescent)"
+  },
+  {
+    "TenantId": null,
+    "TestId": 51,
+    "ConfirmationTestName": "Ammonia production from Acetamide"
+  },
+  {
+    "TenantId": null,
+    "TestId": 52,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 53,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 54,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 55,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 56,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 57,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 58,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 59,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 60,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 61,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 62,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 63,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 64,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 65,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 66,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 67,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 68,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 69,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 70,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 71,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 72,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 73,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 74,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 75,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 76,
+    "ConfirmationTestName": "Reference culture isolation"
+  },
+  {
+    "TenantId": null,
+    "TestId": 77,
+    "ConfirmationTestName": "Reference culture isolation"
+  }
+]

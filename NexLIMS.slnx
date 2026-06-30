@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="NexLIMS.API/NexLIMS.API.csproj" />
+  <Project Path="NextLIMS.BLL/NextLIMS.BLL.csproj" Id="3466b372-ec9c-4b7e-bae7-694b468d8ff6" />
+  <Project Path="NextLIMS.DAL/NextLIMS.DAL.csproj" Id="dd2c26f2-123b-4292-b5e6-24969d1a8f22" />
+</Solution>

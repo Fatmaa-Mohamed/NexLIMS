@@ -1,0 +1,57 @@
+﻿using Microsoft.EntityFrameworkCore;
+using NextLIMS.DAL.Data;
+using NextLIMS.DAL.Data.Models;
+
+namespace NextLIMS.DAL.Repositories
+{
+    public class EmployeeRepository 
+    {
+        private readonly ApplicationDbContext _db;
+
+        public EmployeeRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _db.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<PasswordReset?> GetPasswordResetWithUserAsync(string token)
+        {
+            return await _db.passwordResets
+                .Include(x => x.user)
+                .FirstOrDefaultAsync(x => x.Token == token);
+        }
+
+        public async Task<List<User>> GetEmployeesByTenantAsync(int tenantId)
+        {
+            return await _db.Users
+                .Include(u => u.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
+                .Where(u => u.TenantId == tenantId)
+                .ToListAsync();
+        }
+        public async Task<bool> deleteEmployeeAsync(int id,int tenantid)
+        {
+
+            var result= _db.Users.FirstOrDefault(e=>e.TenantId == tenantid&&e.Id==id);
+            if (result!=null)
+            {
+                _db.Users.Remove(result);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            return false;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
+    }
+}
